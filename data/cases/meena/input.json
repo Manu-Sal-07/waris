@@ -1,0 +1,19 @@
+{
+  "case_id": "meena",
+  "deceased": {
+    "name": "Ramaswamy Subramanian",
+    "aliases": [],
+    "dob": "1944-03-12",
+    "dod": "2019-06-21",
+    "city": "Chennai",
+    "addresses": ["Chennai"]
+  },
+  "claimant": {
+    "name": "Meena Krishnan",
+    "relationship": "granddaughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": ["DOC_DEATH_CERT", "DOC_CLAIMANT_KYC"]
+  },
+  "scans": []
+}

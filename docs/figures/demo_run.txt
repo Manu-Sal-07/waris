@@ -1,0 +1,73 @@
+
+WARIS advisory only: never files a claim, never decides heirship; synthetic data
+model: llama3.1:8b | limits: rounds 6, re-queries 2, LLM calls 40 | Langfuse: on
+
+[GUARD   ] supervisor   input validated for case 'meena' (deceased: Ramaswamy Subramanian, claimant is a legal_heir)
+[PLAN    ] supervisor   plan: one task per asset type -> bank_deposit (search_bank), life_insurance (search_insurer), shares (search_registry)
+[THINK   ] tracer       No information about Ramaswamy Subramanian's assets, so I start with the bank because deposits are the most common asset. -> search_bank
+[TOOL    ] tracer       search_bank(name='Ramaswamy Subramanian') -> 3 record(s)
+[MATCH   ] tracer       bank_deposit:B001 'R. Subramanian' ACCEPTED: initials name variant, score 0.94
+[MATCH   ] tracer       bank_deposit:B002 'Ramaswamy Subramanian' REJECTED: namesake: date of birth conflicts (score 0.5)
+[MATCH   ] tracer       bank_deposit:B003 'Lakshmi Subramanian' REJECTED: namesake: date of birth conflicts (score 0.57)
+[THINK   ] tracer       Since there are already records found in the bank, I will search the insurer next because it is a common place for deceased individuals to have life insurance policies. -> search_insurer
+[TOOL    ] tracer       search_insurer(name='Ramaswamy Subramanian') -> 1 record(s)
+[MATCH   ] tracer       life_insurance:I001 'R. Subramanian' ACCEPTED: initials name variant, score 0.94
+[THINK   ] tracer       Since there are already records found in the bank and insurer, I will search the registry next. -> search_registry
+[TOOL    ] tracer       search_registry(name='Ramaswamy Subramanian') -> 2 record(s)
+[MATCH   ] tracer       shares:R001 'Ramaswamy Subramanian' UNSURE -> must ask the family: exact name variant, score 0.65
+[GUARD   ] tracer       instruction-like text in portal record R002 treated as data and dropped (prompt-injection guard)
+[MATCH   ] tracer       shares:R002 'Ramaswamy Subramanian' REJECTED: namesake: date of birth conflicts (score 0.5)
+
+>>> WAITING FOR THE FAMILY <<<
+Is this record your relative? shares 'Ramaswamy Subramanian', 50 equity shares + unpaid dividends, city Coimbatore. name: 'Ramaswamy Subramanian' ~ 'Ramaswamy Subramanian' -> exact (1.0); dob: not available on record; city: differs (record Coimbatore, family knows ['chennai'])
+(scripted answer: y)
+
+[HUMAN   ] human        shares:R001: family answered 'yes' -> identity confirmed; saved to case file
+[RAG     ] rules_expert bank_deposit:B001 [claim_procedure] query #0: top match BANK-NOM-01 (distance 0.249)
+[GRADE   ] rules_expert BANK-NOM-01 UNFIT: rule applies to a nominee; claimant is a legal_heir
+[REQUERY ] rules_expert bank_deposit:B001 [claim_procedure] re-query 1/2: refining the query with the claimant's situation and excluding the unfit rule
+[RAG     ] rules_expert bank_deposit:B001 [claim_procedure] query #1: top match BANK-LH-01 (distance 0.367)
+[GRADE   ] rules_expert BANK-LH-01 FITS: rule applies to a legal_heir; claimant is a legal_heir
+[RAG     ] rules_expert life_insurance:I001 [claim_procedure] query #0: top match INS-NOM-01 (distance 0.599)
+[GRADE   ] rules_expert INS-NOM-01 UNFIT: rule applies to a nominee; claimant is a legal_heir
+[REQUERY ] rules_expert life_insurance:I001 [claim_procedure] re-query 1/2: refining the query with the claimant's situation and excluding the unfit rule
+[ABSTAIN ] rules_expert life_insurance:I001: I don't know. no trusted claim procedure rule found for this situation (rejected: INS-NOM-01). Marked NEEDS_HUMAN_REVIEW instead of guessing.
+[RAG     ] rules_expert shares:R001 [claim_procedure] query #0: top match REG-LH-01 (distance 0.637)
+[GRADE   ] rules_expert REG-LH-01 FITS: rule applies to a legal_heir; claimant is a legal_heir
+[BUILD   ] builder      bank_deposit:B001: checklist of 5 document(s), 3 missing, cited to BANK-LH-01
+[BUILD   ] builder      shares:R001: checklist of 4 document(s), 2 missing, cited to REG-LH-01
+[VERIFY  ] verifier     round 1: bank_deposit:B001 FAIL V3: name variant 'initials' was found but the checklist has no name-variation proof -> send back to rules_expert
+[VERIFY  ] verifier     round 1: shares:R001 PASS (V1, V2, V3, V4, V5)
+[RAG     ] rules_expert bank_deposit:B001 [name_variation] query #0: top match BANK-NAME-01 (distance 0.428)
+[GRADE   ] rules_expert BANK-NAME-01 FITS: applies to any claimant
+[BUILD   ] builder      bank_deposit:B001: checklist of 6 document(s), 4 missing, cited to BANK-LH-01, BANK-NAME-01
+[BUILD   ] builder      shares:R001: checklist of 4 document(s), 2 missing, cited to REG-LH-01
+[VERIFY  ] verifier     round 2: bank_deposit:B001 PASS (V1, V2, V3, V4, V5)
+[VERIFY  ] verifier     round 2: shares:R001 PASS (V1, V2, V3, V4, V5)
+[RESULT  ] supervisor   bank_deposit:B001: MISSING_ITEMS  (DOC_CLAIM_FORM_BANK, DOC_LEGAL_HEIR_CERT, DOC_INDEMNITY_BOND, DOC_NAME_VARIATION_AFFIDAVIT)
+[RESULT  ] supervisor   life_insurance:I001: NEEDS_HUMAN_REVIEW  (no trusted claim procedure rule found for this situation (rejected: INS-NOM-01))
+[RESULT  ] supervisor   shares:R001: MISSING_ITEMS  (DOC_TRANSMISSION_FORM, DOC_LEGAL_HEIR_CERT)
+[RESULT  ] supervisor   bank_deposit:B002: not claimed (namesake: date of birth conflicts)
+[RESULT  ] supervisor   bank_deposit:B003: not claimed (namesake: date of birth conflicts)
+[RESULT  ] supervisor   shares:R002: not claimed (namesake: date of birth conflicts)
+
+>>> WAITING FOR THE FAMILY <<<
+Release this claim pack to the family for review? (Waris never files anything itself.)
+(scripted answer: y)
+
+[HUMAN   ] human        release approval: approved (advisory output only; nothing is submitted to any institution)
+
+FINAL CLAIM PACKS  (rounds used: 2, LLM calls: 3/40)
+  bank_deposit:B001      MISSING_ITEMS        missing: DOC_CLAIM_FORM_BANK, DOC_LEGAL_HEIR_CERT, DOC_INDEMNITY_BOND, DOC_NAME_VARIATION_AFFIDAVIT
+  life_insurance:I001    NEEDS_HUMAN_REVIEW   missing: -
+  shares:R001            MISSING_ITEMS        missing: DOC_TRANSMISSION_FORM, DOC_LEGAL_HEIR_CERT
+
+SCORECARD vs answer key (labels come from the generator, never from an LLM)
+  asset recall         100%
+  wrong-person matches 0   (target 0)
+  status accuracy      100%
+  checklist P / R      100% / 100%
+  citation coverage    100%   (target 100%)
+  abstention correct   True
+
+trace: C:\Users\manoh\Desktop\waris\traces\meena.html   (also sent to Langfuse)

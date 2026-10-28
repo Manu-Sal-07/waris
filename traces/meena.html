@@ -1,0 +1,71 @@
+<!doctype html><meta charset='utf-8'><title>Waris trace: meena</title>
+<style>body{font:14px Calibri,Arial;margin:24px;color:#222}h1{color:#0b6e6e}
+table{border-collapse:collapse;width:100%}td{padding:6px 10px;border-bottom:1px solid #e3e3e3;vertical-align:top}
+.chip{color:#fff;padding:2px 8px;border-radius:10px;font-size:12px}pre{background:#f6f6f6;padding:6px;margin:4px 0;font-size:12px}</style>
+<h1>Waris trace: meena</h1>
+<p>Generated 2026-10-28 18:29. All data synthetic; PII masked. 44 events.</p>
+<table><tr><th>t</th><th>agent</th><th>event</th><th>detail</th></tr><tr><td>3.6s</td><td><span class='chip' style='background:#8e5ea2'>supervisor</span></td><td><b>GUARD</b></td><td>input validated for case &#x27;meena&#x27; (deceased: Ramaswamy Subramanian, claimant is a legal_heir)</td></tr><tr><td>3.61s</td><td><span class='chip' style='background:#8e5ea2'>supervisor</span></td><td><b>PLAN</b></td><td>plan: one task per asset type -&gt; bank_deposit (search_bank), life_insurance (search_insurer), shares (search_registry)<pre>{
+ &quot;limits&quot;: {
+  &quot;rounds&quot;: 6,
+  &quot;requery&quot;: 2,
+  &quot;llm_calls&quot;: 40,
+  &quot;tracer_steps&quot;: 8
+ }
+}</pre></td></tr><tr><td>5.28s</td><td><span class='chip' style='background:#0e8a9a'>tracer</span></td><td><b>THINK</b></td><td>No information about Ramaswamy Subramanian&#x27;s assets, so I start with the bank because deposits are the most common asset. -&gt; search_bank</td></tr><tr><td>6.0s</td><td><span class='chip' style='background:#0e8a9a'>tracer</span></td><td><b>TOOL</b></td><td>search_bank(name=&#x27;Ramaswamy Subramanian&#x27;) -&gt; 3 record(s)</td></tr><tr><td>6.01s</td><td><span class='chip' style='background:#0e8a9a'>tracer</span></td><td><b>MATCH</b></td><td>bank_deposit:B001 &#x27;R. Subramanian&#x27; ACCEPTED: initials name variant, score 0.94<pre>[
+ &quot;name: &#x27;R. Subramanian&#x27; ~ &#x27;Ramaswamy Subramanian&#x27; -&gt; initials (0.88)&quot;,
+ &quot;dob: match&quot;,
+ &quot;city: match (Chennai)&quot;
+]</pre></td></tr><tr><td>6.01s</td><td><span class='chip' style='background:#0e8a9a'>tracer</span></td><td><b>MATCH</b></td><td>bank_deposit:B002 &#x27;Ramaswamy Subramanian&#x27; REJECTED: namesake: date of birth conflicts (score 0.5)<pre>[
+ &quot;name: &#x27;Ramaswamy Subramanian&#x27; ~ &#x27;Ramaswamy Subramanian&#x27; -&gt; exact (1.0)&quot;,
+ &quot;dob: CONFLICT (1951-08-02 vs 1944-03-12)&quot;,
+ &quot;city: differs (record Madurai, family knows [&#x27;chennai&#x27;])&quot;
+]</pre></td></tr><tr><td>6.01s</td><td><span class='chip' style='background:#0e8a9a'>tracer</span></td><td><b>MATCH</b></td><td>bank_deposit:B003 &#x27;Lakshmi Subramanian&#x27; REJECTED: namesake: date of birth conflicts (score 0.57)<pre>[
+ &quot;name: &#x27;Lakshmi Subramanian&#x27; ~ &#x27;Ramaswamy Subramanian&#x27; -&gt; none (0.75)&quot;,
+ &quot;dob: CONFLICT (1960-01-19 vs 1944-03-12)&quot;,
+ &quot;city: match (Chennai)&quot;
+]</pre></td></tr><tr><td>7.02s</td><td><span class='chip' style='background:#0e8a9a'>tracer</span></td><td><b>THINK</b></td><td>Since there are already records found in the bank, I will search the insurer next because it is a common place for deceased individuals to have life insurance policies. -&gt; search_insurer</td></tr><tr><td>7.03s</td><td><span class='chip' style='background:#0e8a9a'>tracer</span></td><td><b>TOOL</b></td><td>search_insurer(name=&#x27;Ramaswamy Subramanian&#x27;) -&gt; 1 record(s)</td></tr><tr><td>7.03s</td><td><span class='chip' style='background:#0e8a9a'>tracer</span></td><td><b>MATCH</b></td><td>life_insurance:I001 &#x27;R. Subramanian&#x27; ACCEPTED: initials name variant, score 0.94<pre>[
+ &quot;name: &#x27;R. Subramanian&#x27; ~ &#x27;Ramaswamy Subramanian&#x27; -&gt; initials (0.88)&quot;,
+ &quot;dob: match&quot;,
+ &quot;city: match (Chennai)&quot;
+]</pre></td></tr><tr><td>7.81s</td><td><span class='chip' style='background:#0e8a9a'>tracer</span></td><td><b>THINK</b></td><td>Since there are already records found in the bank and insurer, I will search the registry next. -&gt; search_registry</td></tr><tr><td>7.81s</td><td><span class='chip' style='background:#0e8a9a'>tracer</span></td><td><b>TOOL</b></td><td>search_registry(name=&#x27;Ramaswamy Subramanian&#x27;) -&gt; 2 record(s)</td></tr><tr><td>7.81s</td><td><span class='chip' style='background:#0e8a9a'>tracer</span></td><td><b>MATCH</b></td><td>shares:R001 &#x27;Ramaswamy Subramanian&#x27; UNSURE -&gt; must ask the family: exact name variant, score 0.65<pre>[
+ &quot;name: &#x27;Ramaswamy Subramanian&#x27; ~ &#x27;Ramaswamy Subramanian&#x27; -&gt; exact (1.0)&quot;,
+ &quot;dob: not available on record&quot;,
+ &quot;city: differs (record Coimbatore, family knows [&#x27;chennai&#x27;])&quot;
+]</pre></td></tr><tr><td>7.81s</td><td><span class='chip' style='background:#0e8a9a'>tracer</span></td><td><b>GUARD</b></td><td>instruction-like text in portal record R002 treated as data and dropped (prompt-injection guard)</td></tr><tr><td>7.81s</td><td><span class='chip' style='background:#0e8a9a'>tracer</span></td><td><b>MATCH</b></td><td>shares:R002 &#x27;Ramaswamy Subramanian&#x27; REJECTED: namesake: date of birth conflicts (score 0.5)<pre>[
+ &quot;name: &#x27;Ramaswamy Subramanian&#x27; ~ &#x27;Ramaswamy Subramanian&#x27; -&gt; exact (1.0)&quot;,
+ &quot;dob: CONFLICT (1951-08-02 vs 1944-03-12)&quot;,
+ &quot;city: differs (record Salem, family knows [&#x27;chennai&#x27;])&quot;
+]</pre></td></tr><tr><td>27.95s</td><td><span class='chip' style='background:#1f4e9c'>human</span></td><td><b>HUMAN</b></td><td>shares:R001: family answered &#x27;yes&#x27; -&gt; identity confirmed; saved to case file</td></tr><tr><td>28.77s</td><td><span class='chip' style='background:#c98a00'>rules_expert</span></td><td><b>RAG</b></td><td>bank_deposit:B001 [claim_procedure] query #0: top match BANK-NOM-01 (distance 0.07)<pre>{
+ &quot;query&quot;: &quot;bank deposit claim procedure: documents required to claim the deposit of a deceased account holder&quot;
+}</pre></td></tr><tr><td>28.77s</td><td><span class='chip' style='background:#c98a00'>rules_expert</span></td><td><b>GRADE</b></td><td>BANK-NOM-01 UNFIT: rule applies to a nominee; claimant is a legal_heir</td></tr><tr><td>28.77s</td><td><span class='chip' style='background:#c98a00'>rules_expert</span></td><td><b>REQUERY</b></td><td>bank_deposit:B001 [claim_procedure] re-query 1/2: refining the query with the claimant&#x27;s situation and excluding the unfit rule</td></tr><tr><td>29.57s</td><td><span class='chip' style='background:#c98a00'>rules_expert</span></td><td><b>RAG</b></td><td>bank_deposit:B001 [claim_procedure] query #1: top match BANK-LH-01 (distance 0.089)<pre>{
+ &quot;query&quot;: &quot;bank deposit claim procedure: documents required to claim the deposit of a deceased account holder, for a legal heir claimant where no living nominee is registered&quot;
+}</pre></td></tr><tr><td>29.57s</td><td><span class='chip' style='background:#c98a00'>rules_expert</span></td><td><b>GRADE</b></td><td>BANK-LH-01 FITS: rule applies to a legal_heir; claimant is a legal_heir</td></tr><tr><td>30.39s</td><td><span class='chip' style='background:#c98a00'>rules_expert</span></td><td><b>RAG</b></td><td>life_insurance:I001 [claim_procedure] query #0: top match INS-NOM-01 (distance 0.171)<pre>{
+ &quot;query&quot;: &quot;life insurance policy claim procedure: documents required to claim the policy of a deceased policyholder&quot;
+}</pre></td></tr><tr><td>30.39s</td><td><span class='chip' style='background:#c98a00'>rules_expert</span></td><td><b>GRADE</b></td><td>INS-NOM-01 UNFIT: rule applies to a nominee; claimant is a legal_heir</td></tr><tr><td>30.39s</td><td><span class='chip' style='background:#c98a00'>rules_expert</span></td><td><b>REQUERY</b></td><td>life_insurance:I001 [claim_procedure] re-query 1/2: refining the query with the claimant&#x27;s situation and excluding the unfit rule</td></tr><tr><td>31.1s</td><td><span class='chip' style='background:#c98a00'>rules_expert</span></td><td><b>ABSTAIN</b></td><td>life_insurance:I001: I don&#x27;t know. no trusted claim procedure rule found for this situation (rejected: INS-NOM-01). Marked NEEDS_HUMAN_REVIEW instead of guessing.</td></tr><tr><td>31.79s</td><td><span class='chip' style='background:#c98a00'>rules_expert</span></td><td><b>RAG</b></td><td>shares:R001 [claim_procedure] query #0: top match REG-LH-01 (distance 0.168)<pre>{
+ &quot;query&quot;: &quot;shares and dividends claim procedure: documents required to claim the shares of a deceased holder&quot;
+}</pre></td></tr><tr><td>31.79s</td><td><span class='chip' style='background:#c98a00'>rules_expert</span></td><td><b>GRADE</b></td><td>REG-LH-01 FITS: rule applies to a legal_heir; claimant is a legal_heir</td></tr><tr><td>31.8s</td><td><span class='chip' style='background:#2e8b57'>builder</span></td><td><b>BUILD</b></td><td>bank_deposit:B001: checklist of 5 document(s), 3 missing, cited to BANK-LH-01<pre>[
+ &quot;DOC_CLAIM_FORM_BANK &lt;- BANK-LH-01&quot;,
+ &quot;DOC_DEATH_CERT &lt;- BANK-LH-01&quot;,
+ &quot;DOC_LEGAL_HEIR_CERT &lt;- BANK-LH-01&quot;,
+ &quot;DOC_INDEMNITY_BOND &lt;- BANK-LH-01&quot;,
+ &quot;DOC_CLAIMANT_KYC &lt;- BANK-LH-01&quot;
+]</pre></td></tr><tr><td>31.8s</td><td><span class='chip' style='background:#2e8b57'>builder</span></td><td><b>BUILD</b></td><td>shares:R001: checklist of 4 document(s), 2 missing, cited to REG-LH-01<pre>[
+ &quot;DOC_TRANSMISSION_FORM &lt;- REG-LH-01&quot;,
+ &quot;DOC_DEATH_CERT &lt;- REG-LH-01&quot;,
+ &quot;DOC_LEGAL_HEIR_CERT &lt;- REG-LH-01&quot;,
+ &quot;DOC_CLAIMANT_KYC &lt;- REG-LH-01&quot;
+]</pre></td></tr><tr><td>31.81s</td><td><span class='chip' style='background:#c0392b'>verifier</span></td><td><b>VERIFY</b></td><td>round 1: bank_deposit:B001 FAIL V3: name variant &#x27;initials&#x27; was found but the checklist has no name-variation proof -&gt; send back to rules_expert</td></tr><tr><td>31.81s</td><td><span class='chip' style='background:#c0392b'>verifier</span></td><td><b>VERIFY</b></td><td>round 1: shares:R001 PASS (V1, V2, V3, V4, V5)</td></tr><tr><td>32.57s</td><td><span class='chip' style='background:#c98a00'>rules_expert</span></td><td><b>RAG</b></td><td>bank_deposit:B001 [name_variation] query #0: top match BANK-NAME-01 (distance 0.096)<pre>{
+ &quot;query&quot;: &quot;bank deposit name variation between records: initials or spelling difference, affidavit proof required before the claim is processed&quot;
+}</pre></td></tr><tr><td>32.57s</td><td><span class='chip' style='background:#c98a00'>rules_expert</span></td><td><b>GRADE</b></td><td>BANK-NAME-01 FITS: applies to any claimant</td></tr><tr><td>32.58s</td><td><span class='chip' style='background:#2e8b57'>builder</span></td><td><b>BUILD</b></td><td>bank_deposit:B001: checklist of 6 document(s), 4 missing, cited to BANK-LH-01, BANK-NAME-01<pre>[
+ &quot;DOC_CLAIM_FORM_BANK &lt;- BANK-LH-01&quot;,
+ &quot;DOC_DEATH_CERT &lt;- BANK-LH-01&quot;,
+ &quot;DOC_LEGAL_HEIR_CERT &lt;- BANK-LH-01&quot;,
+ &quot;DOC_INDEMNITY_BOND &lt;- BANK-LH-01&quot;,
+ &quot;DOC_CLAIMANT_KYC &lt;- BANK-LH-01&quot;,
+ &quot;DOC_NAME_VARIATION_AFFIDAVIT &lt;- BANK-NAME-01&quot;
+]</pre></td></tr><tr><td>32.58s</td><td><span class='chip' style='background:#2e8b57'>builder</span></td><td><b>BUILD</b></td><td>shares:R001: checklist of 4 document(s), 2 missing, cited to REG-LH-01<pre>[
+ &quot;DOC_TRANSMISSION_FORM &lt;- REG-LH-01&quot;,
+ &quot;DOC_DEATH_CERT &lt;- REG-LH-01&quot;,
+ &quot;DOC_LEGAL_HEIR_CERT &lt;- REG-LH-01&quot;,
+ &quot;DOC_CLAIMANT_KYC &lt;- REG-LH-01&quot;
+]</pre></td></tr><tr><td>32.58s</td><td><span class='chip' style='background:#c0392b'>verifier</span></td><td><b>VERIFY</b></td><td>round 2: bank_deposit:B001 PASS (V1, V2, V3, V4, V5)</td></tr><tr><td>32.58s</td><td><span class='chip' style='background:#c0392b'>verifier</span></td><td><b>VERIFY</b></td><td>round 2: shares:R001 PASS (V1, V2, V3, V4, V5)</td></tr><tr><td>32.59s</td><td><span class='chip' style='background:#8e5ea2'>supervisor</span></td><td><b>RESULT</b></td><td>bank_deposit:B001: MISSING_ITEMS  (DOC_CLAIM_FORM_BANK, DOC_LEGAL_HEIR_CERT, DOC_INDEMNITY_BOND, DOC_NAME_VARIATION_AFFIDAVIT)</td></tr><tr><td>32.59s</td><td><span class='chip' style='background:#8e5ea2'>supervisor</span></td><td><b>RESULT</b></td><td>life_insurance:I001: NEEDS_HUMAN_REVIEW  (no trusted claim procedure rule found for this situation (rejected: INS-NOM-01))</td></tr><tr><td>32.59s</td><td><span class='chip' style='background:#8e5ea2'>supervisor</span></td><td><b>RESULT</b></td><td>shares:R001: MISSING_ITEMS  (DOC_TRANSMISSION_FORM, DOC_LEGAL_HEIR_CERT)</td></tr><tr><td>32.59s</td><td><span class='chip' style='background:#8e5ea2'>supervisor</span></td><td><b>RESULT</b></td><td>bank_deposit:B002: not claimed (namesake: date of birth conflicts)</td></tr><tr><td>32.59s</td><td><span class='chip' style='background:#8e5ea2'>supervisor</span></td><td><b>RESULT</b></td><td>bank_deposit:B003: not claimed (namesake: date of birth conflicts)</td></tr><tr><td>32.59s</td><td><span class='chip' style='background:#8e5ea2'>supervisor</span></td><td><b>RESULT</b></td><td>shares:R002: not claimed (namesake: date of birth conflicts)</td></tr><tr><td>50.54s</td><td><span class='chip' style='background:#1f4e9c'>human</span></td><td><b>HUMAN</b></td><td>release approval: approved (advisory output only; nothing is submitted to any institution)</td></tr></table>

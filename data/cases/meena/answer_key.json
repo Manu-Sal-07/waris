@@ -1,0 +1,19 @@
+{
+  "case_id": "meena",
+  "note": "Written by hand from the generator's ground truth. Never produced by an LLM.",
+  "assets": [
+    {"asset_type": "bank_deposit", "record_id": "B001", "needs_human_confirmation": false,
+     "status": "MISSING_ITEMS",
+     "required_docs": ["DOC_CLAIM_FORM_BANK", "DOC_DEATH_CERT", "DOC_LEGAL_HEIR_CERT", "DOC_INDEMNITY_BOND",
+                       "DOC_CLAIMANT_KYC", "DOC_NAME_VARIATION_AFFIDAVIT"],
+     "missing": ["DOC_CLAIM_FORM_BANK", "DOC_LEGAL_HEIR_CERT", "DOC_INDEMNITY_BOND", "DOC_NAME_VARIATION_AFFIDAVIT"]},
+    {"asset_type": "life_insurance", "record_id": "I001", "needs_human_confirmation": false,
+     "status": "NEEDS_HUMAN_REVIEW", "required_docs": [], "missing": [],
+     "reason": "nominee deceased: no rule in corpus (deliberate gap)"},
+    {"asset_type": "shares", "record_id": "R001", "needs_human_confirmation": true,
+     "status": "MISSING_ITEMS",
+     "required_docs": ["DOC_TRANSMISSION_FORM", "DOC_DEATH_CERT", "DOC_LEGAL_HEIR_CERT", "DOC_CLAIMANT_KYC"],
+     "missing": ["DOC_TRANSMISSION_FORM", "DOC_LEGAL_HEIR_CERT"]}
+  ],
+  "namesake_record_ids": ["B002", "B003", "R002"]
+}
