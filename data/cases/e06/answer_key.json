@@ -1,11 +1,19 @@
 {
   "case_id": "e06",
   "difficulty": "easy",
+  "proof_folder": "seshadri_ramachandran_easy",
+  "form": {
+    "claim_for": [
+      "insurer"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "life_insurance",
-      "record_id": "I001",
+      "record_id": "I0601",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -27,14 +35,15 @@
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",
     "claimant_nominee",
     "clean",
     "clean_case",
-    "docs_missing"
+    "docs_missing",
+    "scan_clean"
   ]
 }

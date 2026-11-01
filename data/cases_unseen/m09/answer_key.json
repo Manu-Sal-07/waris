@@ -1,11 +1,19 @@
 {
   "case_id": "m09",
   "difficulty": "medium",
+  "proof_folder": "mohammed_nasir_hussain_medium",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "bank_deposit",
-      "record_id": "B002",
+      "record_id": "B2402",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -31,13 +39,14 @@
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",
     "claimant_legal_heir",
     "docs_missing",
-    "name_translit"
+    "name_translit",
+    "scan_clean"
   ]
 }

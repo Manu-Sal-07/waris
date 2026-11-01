@@ -1,11 +1,19 @@
 {
   "case_id": "h05",
   "difficulty": "hard",
+  "proof_folder": "parthasarathy_pillai_hard",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "bank_deposit",
-      "record_id": "B003",
+      "record_id": "B4503",
       "needs_human_confirmation": true,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -24,18 +32,18 @@
     }
   ],
   "namesake_record_ids": [
-    "B002"
+    "B4502"
   ],
   "lookalike_record_ids": [],
   "expected_questions": [
-    "B002",
-    "B003"
+    "B4502",
+    "B4503"
   ],
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",
@@ -43,6 +51,7 @@
     "clean",
     "docs_missing",
     "namesake_ambiguous",
-    "partial_info"
+    "partial_info",
+    "scan_clean"
   ]
 }

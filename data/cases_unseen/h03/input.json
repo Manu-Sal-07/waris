@@ -1,24 +1,34 @@
 {
   "case_id": "h03",
   "deceased": {
-    "name": "Sundaram Nair",
+    "name": "Gopalakrishnan Chandrasekhar",
     "aliases": [],
-    "dob": "1951-10-19",
-    "dod": "2020-05-23",
-    "city": "Vijayawada",
+    "dob": "1946-08-26",
+    "dod": "2023-08-25",
+    "city": "Madurai",
     "addresses": [
-      "Vijayawada"
+      "Madurai"
     ]
   },
   "claimant": {
-    "name": "Tamanna Chada",
-    "relationship": "son",
+    "name": "Neel Zacharia",
+    "relationship": "daughter",
     "claimant_type": "legal_heir",
     "has_nomination": false,
     "documents_available": [
       "DOC_CLAIMANT_KYC",
-      "DOC_DEATH_CERT"
+      "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "gopalakrishnan_chandrasekhar_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "registry"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

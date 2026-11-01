@@ -1,26 +1,33 @@
 {
   "case_id": "h14",
   "deceased": {
-    "name": "Venkatesh Krishnamurthy",
+    "name": "Thyagarajan Krishnamurthy",
     "aliases": [],
-    "dob": "1943-10-11",
-    "dod": "2020-03-06",
-    "city": "Salem",
+    "dob": "1940-05-24",
+    "dod": "2021-06-18",
+    "city": "Hyderabad",
     "addresses": [
-      "Salem"
+      "Hyderabad"
     ]
   },
   "claimant": {
     "name": "Ekapad Din",
-    "relationship": "spouse",
+    "relationship": "brother",
     "claimant_type": "nominee",
     "has_nomination": true,
     "documents_available": [
-      "DOC_NOMINEE_KYC"
+      "DOC_NOMINEE_KYC",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": [
-    "scans/identity_proof.png",
-    "scans/death_certificate.png"
-  ]
+  "scans": [],
+  "proof_folder": "thyagarajan_krishnamurthy_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "insurer"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  }
 }

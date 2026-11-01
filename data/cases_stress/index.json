@@ -1,121 +1,145 @@
 [
  {
   "case_id": "s01",
+  "folder": "seshadri_iyer_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
-   "name_initials"
+   "name_initials",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "s02",
+  "folder": "narasimhan_raghavan_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
-   "name_spelling"
+   "name_spelling",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "s03",
+  "folder": "krishnan_rao_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
-   "name_order"
+   "name_order",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "s04",
+  "folder": "sundaram_pillai_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_nominee",
-   "name_initials"
+   "name_initials",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "s05",
+  "folder": "mohammed_nasir_hussain_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
-   "name_translit"
+   "name_translit",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "s06",
+  "folder": "rukmini_iyer_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
-   "name_maiden"
+   "name_maiden",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "s07",
+  "folder": "gopalakrishnan_srinivasan_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_nominee",
-   "name_initials"
+   "name_initials",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "s08",
+  "folder": "muthuswamy_balasubramanian_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
-   "name_spelling"
+   "name_spelling",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "s09",
+  "folder": "janaki_srinivasan_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_nominee",
-   "name_maiden"
+   "name_maiden",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "s10",
+  "folder": "ramaswamy_raghavan_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
-   "name_initials"
+   "name_initials",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "s11",
+  "folder": "gopalakrishnan_venkataraman_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_nominee",
-   "name_spelling"
+   "name_spelling",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "s12",
+  "folder": "mohammed_rafiq_sheikh_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
-   "name_translit"
+   "name_translit",
+   "scan_clean"
   ],
   "assets": 1
  }

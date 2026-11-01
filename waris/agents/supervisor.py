@@ -16,13 +16,13 @@ ASSET_PLAN = [
 
 @TRACE.node("intake_validate")
 def intake_validate(state: dict) -> dict:
-    case = validate_case_input({k: state[k] for k in ("case_id", "deceased", "claimant", "scans") if k in state})
+    case = validate_case_input({k: state[k] for k in ("case_id", "deceased", "claimant", "scans", "claim_for") if k in state})
     TRACE.event("supervisor", "GUARD", f"input validated for case '{case['case_id']}' "
                 f"(deceased: {case['deceased']['name']}, claimant is a {case['claimant']['claimant_type']})")
     prior = memory.load_answers(case["case_id"])
     if prior:
         TRACE.event("memory", "MEMORY", f"case file found: {len(prior)} earlier family answer(s) on record")
-    return {"deceased": case["deceased"], "claimant": case["claimant"], "scans": case["scans"],
+    return {"deceased": case["deceased"], "claimant": case["claimant"], "scans": case["scans"], "claim_for": case["claim_for"],
             "memory_answers": prior, "round": state.get("round", 0), "llm_calls": state.get("llm_calls", 0),
             "tools_done": [], "candidate_assets": [], "rejected_candidates": [], "applicable_rules": {},
             "need_rules": {}, "abstained": {}, "requery_count": {}, "claim_packs": {}, "verifier_feedback": [],
@@ -32,8 +32,8 @@ def intake_validate(state: dict) -> dict:
 
 @TRACE.node("supervisor_plan")
 def supervisor_plan(state: dict) -> dict:
-    plan = [dict(t, status="pending") for t in ASSET_PLAN]
-    TRACE.event("supervisor", "PLAN", "plan: one task per asset type -> "
+    plan = [dict(t, status="pending") for t in ASSET_PLAN if t["institution_type"] in state.get("claim_for", ["bank", "insurer", "registry"])]
+    TRACE.event("supervisor", "PLAN", "plan: one task per asset type the family asked about -> "
                 + ", ".join(f"{t['asset_type']} ({t['tool']})" for t in plan),
                 data={"limits": {"rounds": config.MAX_ROUNDS, "requery": config.MAX_REQUERY,
                                  "llm_calls": config.MAX_LLM_CALLS, "tracer_steps": config.MAX_TRACER_STEPS}})

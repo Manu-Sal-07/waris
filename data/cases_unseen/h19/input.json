@@ -1,26 +1,35 @@
 {
   "case_id": "h19",
   "deceased": {
-    "name": "Lakshmi Venkataraman",
+    "name": "Padmavathi Iyer",
     "aliases": [
-      "Lakshmi Rao"
+      "Padmavathi Gowda"
     ],
-    "dob": "1949-01-05",
-    "dod": "2016-10-01",
-    "city": "Kolkata",
+    "dob": "1934-10-01",
+    "dod": "2022-06-20",
+    "city": "Mangaluru",
     "addresses": [
-      "Kolkata"
+      "Mangaluru"
     ]
   },
   "claimant": {
     "name": "Megha Devi",
-    "relationship": "spouse",
+    "relationship": "son",
     "claimant_type": "legal_heir",
     "has_nomination": false,
     "documents_available": [
       "DOC_CLAIMANT_KYC",
-      "DOC_DEATH_CERT"
+      "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "padmavathi_iyer_hard",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

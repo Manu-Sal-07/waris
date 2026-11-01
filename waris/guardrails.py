@@ -82,6 +82,7 @@ class CaseInput(BaseModel):
     deceased: _Deceased
     claimant: _Claimant
     scans: list[str] = []
+    claim_for: list[Literal["bank", "insurer", "registry"]] = ["bank", "insurer", "registry"]   # which institutions to check
 
 
 def validate_case_input(raw: dict) -> dict:

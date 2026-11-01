@@ -17,8 +17,19 @@
     "has_nomination": true,
     "documents_available": [
       "DOC_DEATH_CERT",
-      "DOC_NOMINEE_KYC"
+      "DOC_NOMINEE_KYC",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "krishnan_naidu_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "insurer",
+      "registry"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  }
 }

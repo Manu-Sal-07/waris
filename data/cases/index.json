@@ -1,123 +1,144 @@
 [
  {
   "case_id": "e01",
+  "folder": "sundaram_iyer_easy",
   "difficulty": "easy",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "clean",
    "clean_case",
-   "docs_missing"
+   "docs_missing",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "e02",
+  "folder": "seshadri_venkataraman_easy",
   "difficulty": "easy",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "clean",
    "clean_case",
-   "docs_missing"
+   "docs_missing",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "e03",
+  "folder": "venkatesh_krishnamurthy_easy",
   "difficulty": "easy",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "clean",
    "clean_case",
-   "docs_missing"
+   "docs_missing",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "e04",
+  "folder": "ranganathan_balasubramanian_easy",
   "difficulty": "easy",
   "tags": [
    "amount_small",
    "claimant_nominee",
    "clean",
-   "clean_case"
+   "clean_case",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "e05",
+  "folder": "ranganathan_raghavan_easy",
   "difficulty": "easy",
   "tags": [
    "amount_small",
    "claimant_nominee",
    "clean",
    "clean_case",
-   "ready"
+   "ready",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "e06",
+  "folder": "seshadri_ramachandran_easy",
   "difficulty": "easy",
   "tags": [
    "amount_small",
    "claimant_nominee",
    "clean",
    "clean_case",
-   "docs_missing"
+   "docs_missing",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "e07",
+  "folder": "narasimhan_raghavan_easy",
   "difficulty": "easy",
   "tags": [
    "amount_small",
    "claimant_nominee",
    "clean",
-   "clean_case"
+   "clean_case",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "e08",
+  "folder": "thyagarajan_chandrasekhar_easy",
   "difficulty": "easy",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "clean",
    "clean_case",
-   "docs_missing"
+   "docs_missing",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "e09",
+  "folder": "narasimhan_chandrasekhar_easy",
   "difficulty": "easy",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "clean",
    "clean_case",
-   "docs_missing"
+   "docs_missing",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "e10",
+  "folder": "muthuswamy_menon_easy",
   "difficulty": "easy",
   "tags": [
    "amount_small",
    "claimant_nominee",
    "clean",
-   "clean_case"
+   "clean_case",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "e11",
+  "folder": "krishnan_raghavan_easy",
   "difficulty": "easy",
   "tags": [
    "amount_small",
@@ -130,6 +151,7 @@
  },
  {
   "case_id": "e12",
+  "folder": "anantharaman_raghavan_easy",
   "difficulty": "easy",
   "tags": [
    "amount_small",
@@ -142,6 +164,7 @@
  },
  {
   "case_id": "e13",
+  "folder": "sundaram_gowda_easy",
   "difficulty": "easy",
   "tags": [
    "amount_small",
@@ -154,18 +177,21 @@
  },
  {
   "case_id": "e14",
+  "folder": "thyagarajan_subramanian_easy",
   "difficulty": "easy",
   "tags": [
    "amount_small",
    "claimant_nominee",
    "clean",
    "docs_missing",
+   "scan_clean",
    "scan_rotated"
   ],
   "assets": 2
  },
  {
   "case_id": "e15",
+  "folder": "muthuswamy_subramanian_easy",
   "difficulty": "easy",
   "tags": [
    "amount_small",
@@ -179,161 +205,190 @@
  },
  {
   "case_id": "m01",
+  "folder": "gopalakrishnan_ramachandran_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "docs_missing",
-   "name_initials"
+   "name_initials",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m02",
+  "folder": "gopalakrishnan_menon_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_nominee",
    "docs_missing",
-   "name_initials"
+   "name_initials",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m03",
+  "folder": "thyagarajan_balasubramanian_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "name_initials",
-   "ready"
+   "ready",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m04",
+  "folder": "gopalakrishnan_subramanian_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "docs_missing",
-   "name_spelling"
+   "name_spelling",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m05",
+  "folder": "anantharaman_balasubramanian_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_nominee",
    "docs_missing",
-   "name_spelling"
+   "name_spelling",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m06",
+  "folder": "sundaram_subramanian_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "docs_missing",
-   "name_spelling"
+   "name_spelling",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m07",
+  "folder": "mohammed_farooq_siddiqui_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_nominee",
    "docs_missing",
-   "name_translit"
+   "name_translit",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m08",
+  "folder": "mohammed_imran_ansari_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "docs_missing",
-   "name_translit"
+   "name_translit",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m09",
+  "folder": "mohammed_rafiq_sheikh_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "docs_missing",
-   "name_translit"
+   "name_translit",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m10",
+  "folder": "ramaswamy_ramachandran_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "docs_missing",
-   "name_order"
+   "name_order",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m11",
+  "folder": "ranganathan_reddy_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_nominee",
    "docs_missing",
-   "name_order"
+   "name_order",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m12",
+  "folder": "rukmini_naidu_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "docs_missing",
    "name_maiden",
+   "scan_clean",
    "scan_rotated"
   ],
   "assets": 1
  },
  {
   "case_id": "m13",
+  "folder": "janaki_srinivasan_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_nominee",
    "docs_missing",
-   "name_maiden"
+   "name_maiden",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m14",
+  "folder": "kamala_krishnamurthy_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "docs_missing",
-   "name_maiden"
+   "name_maiden",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m15",
+  "folder": "venkatesh_naidu_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
@@ -349,18 +404,21 @@
  },
  {
   "case_id": "m16",
+  "folder": "ranganathan_pillai_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_nominee",
    "clean",
    "clean_case",
-   "partial_info"
+   "partial_info",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m17",
+  "folder": "parthasarathy_raghavan_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
@@ -376,33 +434,40 @@
  },
  {
   "case_id": "m18",
+  "folder": "seshadri_raghavan_medium",
   "difficulty": "medium",
   "tags": [
    "claimant_legal_heir",
-   "no_assets"
+   "no_assets",
+   "scan_clean"
   ],
   "assets": 0
  },
  {
   "case_id": "m19",
+  "folder": "venkatesh_menon_medium",
   "difficulty": "medium",
   "tags": [
    "claimant_nominee",
-   "no_assets"
+   "no_assets",
+   "scan_clean"
   ],
   "assets": 0
  },
  {
   "case_id": "m20",
+  "folder": "saraswathi_srinivasan_medium",
   "difficulty": "medium",
   "tags": [
    "claimant_legal_heir",
-   "no_assets"
+   "no_assets",
+   "scan_clean"
   ],
   "assets": 0
  },
  {
   "case_id": "m21",
+  "folder": "venkatesh_shetty_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
@@ -410,12 +475,14 @@
    "clean",
    "clean_case",
    "docs_missing",
-   "multi_account"
+   "multi_account",
+   "scan_clean"
   ],
   "assets": 2
  },
  {
   "case_id": "m22",
+  "folder": "ranganathan_srinivasan_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
@@ -423,48 +490,56 @@
    "clean",
    "clean_case",
    "multi_account",
+   "scan_clean",
    "tool_fault"
   ],
   "assets": 2
  },
  {
   "case_id": "m23",
+  "folder": "seshadri_balasubramanian_medium",
   "difficulty": "medium",
   "tags": [
    "amount_large",
    "claimant_legal_heir",
    "clean",
    "clean_case",
-   "docs_missing"
+   "docs_missing",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m24",
+  "folder": "parthasarathy_chandrasekhar_medium",
   "difficulty": "medium",
   "tags": [
    "amount_large",
    "claimant_legal_heir",
    "clean",
    "clean_case",
-   "docs_missing"
+   "docs_missing",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "m25",
+  "folder": "muthuswamy_chandrasekhar_medium",
   "difficulty": "medium",
   "tags": [
    "amount_small",
    "claimant_joint_holder",
    "clean",
    "clean_case",
-   "joint_account"
+   "joint_account",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "h01",
+  "folder": "seshadri_naidu_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -473,12 +548,14 @@
    "docs_missing",
    "multi_account",
    "name_initials",
-   "namesake"
+   "namesake",
+   "scan_clean"
   ],
   "assets": 2
  },
  {
   "case_id": "h02",
+  "folder": "ramaswamy_chandrasekhar_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -486,12 +563,14 @@
    "clean",
    "docs_missing",
    "name_spelling",
-   "namesake"
+   "namesake",
+   "scan_clean"
   ],
   "assets": 2
  },
  {
   "case_id": "h03",
+  "folder": "ramaswamy_venkataraman_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -499,24 +578,14 @@
    "clean",
    "docs_missing",
    "name_order",
-   "namesake"
+   "namesake",
+   "scan_clean"
   ],
   "assets": 2
  },
  {
   "case_id": "h04",
-  "difficulty": "hard",
-  "tags": [
-   "amount_small",
-   "claimant_legal_heir",
-   "clean",
-   "docs_missing",
-   "namesake_ambiguous"
-  ],
-  "assets": 2
- },
- {
-  "case_id": "h05",
+  "folder": "gopalakrishnan_srinivasan_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -524,24 +593,42 @@
    "clean",
    "docs_missing",
    "namesake_ambiguous",
-   "partial_info"
+   "scan_clean"
   ],
-  "assets": 1
+  "assets": 2
  },
  {
-  "case_id": "h06",
+  "case_id": "h05",
+  "folder": "gopalakrishnan_chandrasekhar_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "clean",
    "docs_missing",
-   "namesake_ambiguous"
+   "namesake_ambiguous",
+   "partial_info",
+   "scan_clean"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "h06",
+  "folder": "ramaswamy_krishnamurthy_hard",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "docs_missing",
+   "namesake_ambiguous",
+   "scan_clean"
   ],
   "assets": 2
  },
  {
   "case_id": "h07",
+  "folder": "sundaram_pillai_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -556,6 +643,7 @@
  },
  {
   "case_id": "h08",
+  "folder": "krishnan_chandrasekhar_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -570,6 +658,7 @@
  },
  {
   "case_id": "h09",
+  "folder": "anantharaman_krishnamurthy_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -578,12 +667,14 @@
    "doc_conflict",
    "docs_missing",
    "name_spelling",
+   "scan_clean",
    "scan_rotated"
   ],
   "assets": 2
  },
  {
   "case_id": "h10",
+  "folder": "thyagarajan_shetty_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -592,12 +683,14 @@
    "docs_missing",
    "name_initials",
    "no_rule",
+   "scan_clean",
    "scan_faded"
   ],
   "assets": 2
  },
  {
   "case_id": "h11",
+  "folder": "sundaram_shetty_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -612,18 +705,21 @@
  },
  {
   "case_id": "h12",
+  "folder": "gopalakrishnan_gowda_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
    "claimant_legal_heir",
    "clean",
    "namesake",
-   "no_rule"
+   "no_rule",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "h13",
+  "folder": "narasimhan_rao_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -638,6 +734,7 @@
  },
  {
   "case_id": "h14",
+  "folder": "thyagarajan_krishnamurthy_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -652,6 +749,7 @@
  },
  {
   "case_id": "h15",
+  "folder": "anantharaman_nair_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -667,6 +765,7 @@
  },
  {
   "case_id": "h16",
+  "folder": "seshadri_rao_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -674,12 +773,14 @@
    "clean",
    "clean_case",
    "joint_account",
-   "no_rule"
+   "no_rule",
+   "scan_clean"
   ],
   "assets": 2
  },
  {
   "case_id": "h17",
+  "folder": "krishnan_ramachandran_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -687,12 +788,14 @@
    "docs_missing",
    "joint_account",
    "name_spelling",
-   "namesake"
+   "namesake",
+   "scan_clean"
   ],
   "assets": 1
  },
  {
   "case_id": "h18",
+  "folder": "gopalakrishnan_krishnamurthy_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -708,6 +811,7 @@
  },
  {
   "case_id": "h19",
+  "folder": "meenakshi_rao_hard",
   "difficulty": "hard",
   "tags": [
    "amount_large",
@@ -715,12 +819,14 @@
    "docs_missing",
    "name_maiden",
    "namesake",
+   "scan_clean",
    "tool_fault"
   ],
   "assets": 1
  },
  {
   "case_id": "h20",
+  "folder": "parthasarathy_menon_hard",
   "difficulty": "hard",
   "tags": [
    "amount_small",
@@ -728,6 +834,7 @@
    "clean",
    "docs_missing",
    "namesake",
+   "scan_clean",
    "tool_fault"
   ],
   "assets": 2

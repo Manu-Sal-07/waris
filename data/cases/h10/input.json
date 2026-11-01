@@ -16,10 +16,18 @@
     "claimant_type": "legal_heir",
     "has_nomination": false,
     "documents_available": [
-      "DOC_CLAIMANT_KYC"
+      "DOC_CLAIMANT_KYC",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": [
-    "scans/death_certificate.png"
-  ]
+  "scans": [],
+  "proof_folder": "thyagarajan_shetty_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "insurer"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

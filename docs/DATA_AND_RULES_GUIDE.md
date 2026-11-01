@@ -130,33 +130,51 @@ Waris only ever sees steps 2 and 3, plus what the family tells it.
 It does not know which records are really the person. It must decide from the evidence, and it may say "unsure" (ask the family) or "I don't know" (no rule), but it never invents a fact.
 
 
-## 9. The 60-case benchmark and the final rule corpus (final system)
+## 9. The 60 families, their proof documents and the final rule corpus (final system)
 
-**Generator** (`data/generate_cases.py`, seed 20261031): truth first, mess second.
-1. builds the hidden truth (person, assets, family, the documents the claimant holds);
+**What the family uploads.** The product input is a set of *documents*, not a form: the deceased's **death certificate**, the claimant's own
+**ID (KYC)**, a **proof of relationship**, and any forms or certificates the family already holds (claim form, indemnity bond,
+name-difference affidavit, legal heir certificate ...). Three text fields go with them: which institutions to check (bank / insurance /
+shares), the capacity the claimant claims in (legal heir / nominee / joint holder), and optional other names of the deceased.
+Waris reads every file with OCR (`waris/tools/ocr.py`), works out what each file is, and builds the case (`waris/intake.py`):
+
+| Document | What OCR reads | Used for |
+|---|---|---|
+| death certificate | name, date of birth (if recorded), date of death, place, "also known as" | the deceased's identity, other names |
+| claimant ID | name, ID number | the claimant, the KYC document the rules ask for (nominee KYC when claiming as nominee) |
+| relationship proof | deceased, deceased's date of birth (if printed), claimant, relationship | relationship; cross-check against the other documents |
+| any form / certificate | document type, deceased, claimant | counts as a held document (it leaves the "missing" list) |
+
+An unreadable document is never counted; a field OCR cannot read falls back to what the family types on the confirm screen; two documents that
+disagree are flagged as a conflict and the asset goes to a human.
+
+**The generator** (`data/generate_cases.py`, seed 20261031): truth first, mess second.
+1. builds the hidden truth (person, assets, family, the documents the claimant holds), with every person unique across the dataset;
 2. writes each institution's messy record of it (initials, spelling, transliteration, name order, maiden name, current vs old city),
-   then adds namesakes (same name, different date of birth), ambiguous namesakes (same name, no date of birth, other city),
-   look-alikes (same surname, different given name) and unrelated customers;
-3. writes the family's partial knowledge (`input.json`), and draws scanned documents with Pillow (clean, rotated, blurry, faded);
+   then namesakes (same name, different date of birth), ambiguous namesakes (same name, no date of birth, a city nobody lives in),
+   look-alikes (same surname, different given name) and unrelated customers, **all into one shared portal database**
+   (`data/cases/portals.db`; global record ids such as `B0701`), so a search returns other families' records exactly as a real portal would;
+3. draws the family's proof documents with Pillow into **`demo_proofs/<deceased>_<difficulty>/`** (for example `ramana_easy` style names:
+   `sundaram_pillai_hard`). Clean documents are checked with the real OCR and redrawn until they read exactly; degraded ones (blurry, faded,
+   rotated) are meant to fail or be skipped; one family's documents carry an injection attack and one pair of documents disagrees;
 4. writes the answer key with plain-Python rules. Labels never come from an LLM and never from the agent's own retrieval code.
 
-It then checks itself: the identity policy must classify every record as designed, and the real OCR must read every scan as designed.
-Mix: 15 easy, 25 medium, 20 hard; stratified split 40 dev / 20 held-out test (`data/cases/split.json`). Every scenario of the
-catalogue appears at least three times (`data/cases/index.json` lists tags per case).
+It then checks itself: the identity policy must treat every record as designed (and every record of every *other* family as a reject), and the
+case Waris rebuilds from the documents must equal the case the generator started from.
+Mix: 15 easy, 25 medium, 20 hard; stratified split 40 dev / 20 held-out (`data/cases/split.json`); every scenario of the catalogue at least three times
+(`data/cases/index.json` lists the tags). Two more datasets use the same generator: `data/cases_unseen` (new seed, a fresh draw) and
+`data/cases_stress` (the Verifier stress set).
 
-| Case folder file | What it is |
+| File | What it is |
 |---|---|
-| `input.json` | what the family submits (deceased facts, claimant, documents held, scan file names, `session2_scans` if a document arrives later) |
-| `portals.db` | that case's bank / insurer / registry sandbox (+ a `meta` table that can make a portal fail the first N calls) |
-| `scans/*.png` | synthetic death certificates, legal-heir certificates and ID proofs, some degraded |
-| `answer_key.json` | truth: per asset the status, required documents, missing documents, the rule that should apply; expected family questions; whether a document conflict / tool error is expected |
+| `demo_proofs/<name>_<difficulty>/*.png` | the documents to upload (01 death certificate, 02 claimant ID, 03 relationship proof, 04+ other forms) |
+| `.../fields.json`, `.../README.txt` | the three form values to type, and the 3-step instructions for the evaluator (no answers) |
+| `.../later/*.png` | documents that arrive in a second session ("Add more documents") |
+| `data/cases/<id>/input.json` | the hidden truth the case should be rebuilt as (used to score extraction) |
+| `data/cases/<id>/answer_key.json` | per asset: status, required documents, missing documents, the rule that should apply; expected family questions; expected conflict / tool error |
+| `data/cases/portals.db` | one database: every customer of every institution (+ declared faults in a `meta` table) |
 
 **Final rule corpus (11 rules, all `verified: illustrative`):** BANK-NOM-01, BANK-LH-01 (small, up to Rs 5 lakh), BANK-LH-LARGE-01 (large),
 BANK-JOINT-01, BANK-NAME-01, INS-NOM-01, INS-LH-01 (policy with no nominee), INS-NAME-01, REG-NOM-01, REG-LH-01, REG-NAME-01.
 Deliberate gaps (Waris must say "I don't know"): an insurance policy whose named nominee has died, and joint holders of shares.
 A legal heir where a living nominee exists is also not covered (the nominee comes first).
-
-**New agent behaviours:** OCR intake (`doc_intake`): readable scans count as held documents, unreadable ones never do, a death certificate that
-disagrees with what the family said is flagged (not resolved), injection text inside a scan is dropped; the Tracer also searches under the
-maiden / other names the family gives; claim letters (`draft_letters`); a document arriving in a second session (`--session2`) with the
-family's earlier answers remembered.

@@ -17,8 +17,17 @@
     "has_nomination": true,
     "documents_available": [
       "DOC_DEATH_CERT",
-      "DOC_NOMINEE_KYC"
+      "DOC_NOMINEE_KYC",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "ranganathan_reddy_medium",
+  "form": {
+    "claim_for": [
+      "insurer"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  }
 }

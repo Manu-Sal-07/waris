@@ -1,24 +1,33 @@
 {
   "case_id": "m22",
   "deceased": {
-    "name": "Ramaswamy Balasubramanian",
+    "name": "Thyagarajan Ramachandran",
     "aliases": [],
-    "dob": "1952-11-04",
-    "dod": "2024-01-10",
-    "city": "Pune",
+    "dob": "1937-10-01",
+    "dod": "2019-04-10",
+    "city": "Thrissur",
     "addresses": [
-      "Pune"
+      "Thrissur"
     ]
   },
   "claimant": {
     "name": "Anjali Taneja",
-    "relationship": "daughter",
+    "relationship": "brother",
     "claimant_type": "nominee",
     "has_nomination": true,
     "documents_available": [
       "DOC_DEATH_CERT",
-      "DOC_NOMINEE_KYC"
+      "DOC_NOMINEE_KYC",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "thyagarajan_ramachandran_medium",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  }
 }

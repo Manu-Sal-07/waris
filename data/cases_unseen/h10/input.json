@@ -1,25 +1,33 @@
 {
   "case_id": "h10",
   "deceased": {
-    "name": "Sundaram Menon",
+    "name": "Venkatesh Venkataraman",
     "aliases": [],
-    "dob": "1941-08-24",
-    "dod": "2016-09-26",
-    "city": "Coimbatore",
+    "dob": "1932-05-22",
+    "dod": "2023-03-03",
+    "city": "Mysuru",
     "addresses": [
-      "Coimbatore"
+      "Mysuru"
     ]
   },
   "claimant": {
     "name": "Hema Gole",
-    "relationship": "spouse",
+    "relationship": "daughter",
     "claimant_type": "legal_heir",
     "has_nomination": false,
     "documents_available": [
-      "DOC_CLAIMANT_KYC"
+      "DOC_CLAIMANT_KYC",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": [
-    "scans/death_certificate.png"
-  ]
+  "scans": [],
+  "proof_folder": "venkatesh_venkataraman_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "insurer"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

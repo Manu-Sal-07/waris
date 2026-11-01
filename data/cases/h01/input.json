@@ -1,25 +1,35 @@
 {
   "case_id": "h01",
   "deceased": {
-    "name": "Gopalakrishnan Ramachandran",
+    "name": "Seshadri Naidu",
     "aliases": [],
-    "dob": "1930-04-21",
-    "dod": "2024-12-05",
-    "city": "Chennai",
+    "dob": "1960-02-04",
+    "dod": "2016-09-25",
+    "city": "Jaipur",
     "addresses": [
-      "Chennai"
+      "Jaipur"
     ]
   },
   "claimant": {
     "name": "Gaurangi Aurora",
-    "relationship": "daughter",
+    "relationship": "grandson",
     "claimant_type": "legal_heir",
     "has_nomination": false,
     "documents_available": [
       "DOC_CLAIMANT_KYC",
       "DOC_DEATH_CERT",
-      "DOC_NAME_VARIATION_AFFIDAVIT"
+      "DOC_LEGAL_HEIR_CERT",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "seshadri_naidu_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "registry"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

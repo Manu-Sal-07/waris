@@ -1,11 +1,19 @@
 {
   "case_id": "s09",
   "difficulty": "medium",
+  "proof_folder": "janaki_srinivasan_medium",
+  "form": {
+    "claim_for": [
+      "insurer"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "life_insurance",
-      "record_id": "I002",
+      "record_id": "I0902",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -28,12 +36,13 @@
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",
     "claimant_nominee",
-    "name_maiden"
+    "name_maiden",
+    "scan_clean"
   ]
 }

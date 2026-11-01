@@ -21,7 +21,7 @@ _load_dotenv()
 # --- paths ---
 RULES_DIR = ROOT / "data" / "rules"
 CASES_DIR = ROOT / "data" / "cases"
-PORTAL_DB = ROOT / "data" / "portals" / "portals.db"
+PORTAL_DB = ROOT / "data" / "cases" / "portals.db"       # ONE shared database for every case (built by data/generate_cases.py)
 STATE_DIR = ROOT / "data" / "state"
 CHECKPOINT_DB = STATE_DIR / "checkpoints.db"   # short-term memory (graph state), keyed by thread_id = case_id
 CASE_FILE_DB = STATE_DIR / "case_files.db"     # long-term memory (family answers, past results)

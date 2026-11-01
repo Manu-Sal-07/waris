@@ -1,11 +1,19 @@
 {
   "case_id": "e13",
   "difficulty": "easy",
+  "proof_folder": "sundaram_gowda_easy",
+  "form": {
+    "claim_for": [
+      "insurer"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "life_insurance",
-      "record_id": "I001",
+      "record_id": "I1301",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -29,8 +37,8 @@
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",

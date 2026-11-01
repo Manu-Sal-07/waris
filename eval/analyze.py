@@ -218,10 +218,12 @@ def main(argv=None) -> int:
         for v in ORDER:
             if v in jd:
                 md += f"| {LABEL[v]} | {jd[v]['letters']} | {jd[v]['reference_mean_of_5']:.2f} | {jd[v]['judge_mean_of_5']:.2f} |\n"
-        md += ("\nThe reference checker is the primary measure; the judge was validated against it on 33 letters (91 % agreement, "
-               "Cohen's kappa 0.61, `results/judge/validation.json`). The judge is stricter than the checker (it over-flags the "
-               "\"no invented facts\" criterion), but both rank the variants the same way: letters built on a wrong rule or a missing "
-               "name proof score lower.\n")
+        jv = out.parent / "judge" / "validation.json"
+        val = json.loads(jv.read_text(encoding="utf-8")) if jv.exists() else {}
+        md += (f"\nThe reference checker is the primary measure; the judge was validated against it on {val.get('letters', '?')} letters "
+               f"({val.get('agreement', 0) * 100:.0f} % agreement, Cohen's kappa {val.get('kappa_overall', 0):.2f}: moderate, see "
+               "`results/judge/validation.json`). The judge is stricter than the checker, but both rank the variants the same way: letters "
+               "built on a wrong rule or a missing name proof score lower.\n")
     (out / "summary.md").write_text(md, encoding="utf-8")
     (out / "failures.md").write_text(failures_md(rows, out), encoding="utf-8")
     print(md)

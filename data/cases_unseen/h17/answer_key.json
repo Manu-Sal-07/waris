@@ -1,11 +1,19 @@
 {
   "case_id": "h17",
   "difficulty": "hard",
+  "proof_folder": "seshadri_ramachandran_hard",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "joint_holder",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "bank_deposit",
-      "record_id": "B004",
+      "record_id": "B5701",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -23,17 +31,18 @@
     }
   ],
   "namesake_record_ids": [
-    "B002"
+    "B5705"
   ],
   "lookalike_record_ids": [
-    "B003"
+    "B5704",
+    "R5701"
   ],
   "expected_questions": [],
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",
@@ -41,6 +50,7 @@
     "docs_missing",
     "joint_account",
     "name_spelling",
-    "namesake"
+    "namesake",
+    "scan_clean"
   ]
 }

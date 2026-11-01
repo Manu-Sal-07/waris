@@ -1,10 +1,10 @@
 {
   "case_id": "m16",
   "deceased": {
-    "name": "Seshadri Venkataraman",
+    "name": "Ranganathan Pillai",
     "aliases": [],
     "dob": null,
-    "dod": "2017-03-20",
+    "dod": "2017-10-22",
     "city": "Mysuru",
     "addresses": [
       "Mysuru"
@@ -17,8 +17,17 @@
     "has_nomination": true,
     "documents_available": [
       "DOC_DEATH_CERT",
-      "DOC_NOMINEE_KYC"
+      "DOC_NOMINEE_KYC",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "ranganathan_pillai_medium",
+  "form": {
+    "claim_for": [
+      "registry"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  }
 }

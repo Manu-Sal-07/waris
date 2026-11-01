@@ -16,10 +16,9 @@
     "claimant_type": "legal_heir",
     "has_nomination": false,
     "documents_available": [
+      "DOC_DEATH_CERT",
       "DOC_CLAIMANT_KYC"
     ]
   },
-  "scans": [
-    "scans/death_certificate.png"
-  ]
+  "scans": []
 }

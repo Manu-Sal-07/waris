@@ -1,25 +1,34 @@
 {
   "case_id": "h09",
   "deceased": {
-    "name": "Sundaram Subramanian",
+    "name": "Anantharaman Krishnamurthy",
     "aliases": [],
-    "dob": "1941-08-25",
-    "dod": "2024-03-21",
-    "city": "Nagpur",
+    "dob": "1947-12-13",
+    "dod": "2020-11-01",
+    "city": "Madurai",
     "addresses": [
-      "Nagpur"
+      "Madurai"
     ]
   },
   "claimant": {
     "name": "Rishi Bava",
-    "relationship": "granddaughter",
+    "relationship": "grandson",
     "claimant_type": "legal_heir",
     "has_nomination": false,
     "documents_available": [
-      "DOC_CLAIMANT_KYC"
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": [
-    "scans/death_certificate.png"
-  ]
+  "scans": [],
+  "proof_folder": "anantharaman_krishnamurthy_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "registry"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

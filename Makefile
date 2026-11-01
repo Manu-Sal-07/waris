@@ -7,8 +7,10 @@ data:
 	$(PY) -m data.seed_portals
 generate:
 	$(PY) -m data.generate_cases
+	$(PY) -m data.generate_cases --seed 424242 --out data/cases_unseen
+	$(PY) -m data.generate_cases --seed 31337 --out data/cases_stress --set stress
 eval:
-	$(PY) -m eval.run_eval --split all --repeats 3 --out results/main
+	bash scripts/run_all_evals.sh
 analyze:
 	$(PY) -m eval.analyze results/main
 judge:

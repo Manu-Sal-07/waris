@@ -18,8 +18,17 @@
     "documents_available": [
       "DOC_CLAIMANT_KYC",
       "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF",
       "DOC_SUCCESSION_CERT"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "parthasarathy_chandrasekhar_medium",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

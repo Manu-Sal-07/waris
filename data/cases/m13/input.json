@@ -1,26 +1,35 @@
 {
   "case_id": "m13",
   "deceased": {
-    "name": "Meenakshi Subramanian",
+    "name": "Janaki Srinivasan",
     "aliases": [
-      "Meenakshi Hegde"
+      "Janaki Shetty"
     ],
-    "dob": "1949-05-16",
-    "dod": "2020-06-21",
-    "city": "Vijayawada",
+    "dob": "1953-06-21",
+    "dod": "2020-11-16",
+    "city": "Madurai",
     "addresses": [
-      "Vijayawada"
+      "Madurai"
     ]
   },
   "claimant": {
     "name": "Sai Bajwa",
-    "relationship": "son",
+    "relationship": "spouse",
     "claimant_type": "nominee",
     "has_nomination": true,
     "documents_available": [
       "DOC_DEATH_CERT",
-      "DOC_NOMINEE_KYC"
+      "DOC_NOMINEE_KYC",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "janaki_srinivasan_medium",
+  "form": {
+    "claim_for": [
+      "insurer"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  }
 }

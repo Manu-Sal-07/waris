@@ -1,11 +1,20 @@
 {
   "case_id": "h02",
   "difficulty": "hard",
+  "proof_folder": "ramaswamy_chandrasekhar_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "insurer"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "bank_deposit",
-      "record_id": "B001",
+      "record_id": "B4201",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -23,7 +32,7 @@
     },
     {
       "asset_type": "life_insurance",
-      "record_id": "I001",
+      "record_id": "I4201",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -40,15 +49,15 @@
     }
   ],
   "namesake_record_ids": [
-    "B003"
+    "B4203"
   ],
   "lookalike_record_ids": [],
   "expected_questions": [],
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",
@@ -56,6 +65,7 @@
     "clean",
     "docs_missing",
     "name_spelling",
-    "namesake"
+    "namesake",
+    "scan_clean"
   ]
 }

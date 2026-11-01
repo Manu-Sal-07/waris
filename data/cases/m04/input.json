@@ -1,24 +1,33 @@
 {
   "case_id": "m04",
   "deceased": {
-    "name": "Ramaswamy Raghavan",
+    "name": "Gopalakrishnan Subramanian",
     "aliases": [],
-    "dob": "1944-11-20",
-    "dod": "2015-07-28",
-    "city": "Madurai",
+    "dob": "1955-02-10",
+    "dod": "2020-01-10",
+    "city": "Mangaluru",
     "addresses": [
-      "Madurai"
+      "Mangaluru"
     ]
   },
   "claimant": {
     "name": "Idika Ranganathan",
-    "relationship": "grandson",
+    "relationship": "granddaughter",
     "claimant_type": "legal_heir",
     "has_nomination": false,
     "documents_available": [
       "DOC_CLAIMANT_KYC",
-      "DOC_DEATH_CERT"
+      "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "gopalakrishnan_subramanian_medium",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

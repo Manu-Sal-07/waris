@@ -20,8 +20,17 @@
       "DOC_DEATH_CERT",
       "DOC_LEGAL_HEIR_CERT",
       "DOC_NAME_VARIATION_AFFIDAVIT",
+      "DOC_RELATIONSHIP_PROOF",
       "DOC_TRANSMISSION_FORM"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "thyagarajan_balasubramanian_medium",
+  "form": {
+    "claim_for": [
+      "registry"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

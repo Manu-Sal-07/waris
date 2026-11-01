@@ -1,11 +1,15 @@
-"""OCR tool: reads one scanned document (PNG/JPG) and returns the document type, key fields and a confidence.
+"""OCR tool: reads one scanned document (PNG/JPG) and returns its type, the fields on it and a confidence.
 
-Engine: RapidOCR (ONNX, runs offline on CPU). Results are cached by file hash so a batch run reads each scan once.
+Engine: RapidOCR (ONNX, offline, CPU). Results are cached by file hash so a batch run reads each file once.
 
-Everything read from a scan is *data, never instructions*: callers only use the whitelisted fields below,
-and the raw text is scanned for instruction-like content by the prompt-injection guard.
-A scan counts as `readable` only when its document type is recognised AND the fields needed from that
-document type were read with confidence >= MIN_CONF. Unreadable scans are never guessed at.
+Document types it recognises (by the header printed on the document, tolerant of single-letter OCR slips):
+  death certificate, claimant ID proof, relationship proof, legal heir certificate, and the forms a claim needs
+  (bank / insurer / registry claim form, share transmission form, indemnity bond, name-difference affidavit,
+  succession certificate, no-objection certificate, policy bond).
+
+Everything read from a scan is *data, never instructions*: callers use only the whitelisted entities below, and the raw
+text is checked by the prompt-injection guard. A scan is `readable` only when its type is recognised AND every field
+required for that type was read with confidence >= MIN_CONF. Unreadable scans are never guessed at.
 """
 import hashlib
 import json
@@ -18,11 +22,40 @@ from rapidfuzz import fuzz
 from .. import config
 
 MIN_CONF = 0.60
-_HEADERS = {                       # header text (letters only, upper case) -> document code
+# header text (letters only, upper case) -> document code. Titles are chosen to be distinct from one another.
+HEADERS = {
     "DEATHCERTIFICATE": "DOC_DEATH_CERT",
-    "LEGALHEIRCERTIFICATE": "DOC_LEGAL_HEIR_CERT",
     "IDENTITYPROOF": "DOC_CLAIMANT_KYC",
+    "RELATIONSHIPPROOF": "DOC_RELATIONSHIP_PROOF",
+    "LEGALHEIRCERTIFICATE": "DOC_LEGAL_HEIR_CERT",
+    "BANKCLAIMFORM": "DOC_CLAIM_FORM_BANK",
+    "INSURERCLAIMFORM": "DOC_CLAIM_FORM_INSURER",
+    "REGISTRYCLAIMFORM": "DOC_CLAIM_FORM_REGISTRY",
+    "SHARETRANSMISSIONFORM": "DOC_TRANSMISSION_FORM",
+    "INDEMNITYBOND": "DOC_INDEMNITY_BOND",
+    "NAMEDIFFERENCEAFFIDAVIT": "DOC_NAME_VARIATION_AFFIDAVIT",
+    "SUCCESSIONCERTIFICATE": "DOC_SUCCESSION_CERT",
+    "NOOBJECTIONCERTIFICATE": "DOC_NOC_OTHER_HEIRS",
+    "POLICYBOND": "DOC_POLICY_BOND",
     "FIXEDDEPOSITRECEIPT": "DOC_FD_RECEIPT",
+}
+TITLES = {
+    "DOC_DEATH_CERT": "DEATH CERTIFICATE", "DOC_CLAIMANT_KYC": "IDENTITY PROOF", "DOC_RELATIONSHIP_PROOF": "RELATIONSHIP PROOF",
+    "DOC_LEGAL_HEIR_CERT": "LEGAL HEIR CERTIFICATE", "DOC_CLAIM_FORM_BANK": "BANK CLAIM FORM",
+    "DOC_CLAIM_FORM_INSURER": "INSURER CLAIM FORM", "DOC_CLAIM_FORM_REGISTRY": "REGISTRY CLAIM FORM",
+    "DOC_TRANSMISSION_FORM": "SHARE TRANSMISSION FORM", "DOC_INDEMNITY_BOND": "INDEMNITY BOND",
+    "DOC_NAME_VARIATION_AFFIDAVIT": "NAME DIFFERENCE AFFIDAVIT", "DOC_SUCCESSION_CERT": "SUCCESSION CERTIFICATE",
+    "DOC_NOC_OTHER_HEIRS": "NO OBJECTION CERTIFICATE", "DOC_POLICY_BOND": "POLICY BOND", "DOC_FD_RECEIPT": "FIXED DEPOSIT RECEIPT",
+}
+# per document type: required fields and optional fields, as {key: label printed on the document}
+_GENERIC = ({"deceased": "Deceased", "claimant": "Claimant"}, {})
+SPEC: dict[str, tuple[dict[str, str], dict[str, str]]] = {
+    "DOC_DEATH_CERT": ({"name": "Name", "dod": "Date of Death"}, {"dob": "Date of Birth", "city": "Place", "aka": "Also known as"}),
+    "DOC_CLAIMANT_KYC": ({"name": "Name", "id": "ID"}, {"city": "City"}),
+    "DOC_RELATIONSHIP_PROOF": ({"deceased": "Name of deceased", "claimant": "Claimant", "relationship": "Relationship"},
+                               {"dob": "Deceased born"}),
+    "DOC_LEGAL_HEIR_CERT": ({"deceased": "Name of deceased", "claimant": "Heir"}, {"relationship": "Relationship"}),
+    "DOC_FD_RECEIPT": ({"name": "Account holder", "acct": "Account"}, {}),
 }
 _DATE = re.compile(r"(\d{4})\s*-\s*(\d{2})\s*-\s*(\d{2})")
 _engine = None
@@ -66,32 +99,46 @@ def _field(lines: list[tuple[str, float]], label: str) -> tuple[Optional[str], f
     return None, 0.0
 
 
+def _entities(code: str, f: dict) -> dict:
+    """Map the fields of one document to the facts the case builder needs (None when absent)."""
+    e = {"deceased_name": None, "deceased_dob": None, "deceased_dod": None, "deceased_city": None, "aka": None,
+         "claimant_name": None, "claimant_city": None, "relationship": None}
+    if code == "DOC_DEATH_CERT":
+        e.update(deceased_name=f.get("name"), deceased_dob=f.get("dob"), deceased_dod=f.get("dod"),
+                 deceased_city=f.get("city"), aka=f.get("aka"))
+    elif code == "DOC_CLAIMANT_KYC":
+        e.update(claimant_name=f.get("name"), claimant_city=f.get("city"))
+    elif code == "DOC_RELATIONSHIP_PROOF":
+        e.update(deceased_name=f.get("deceased"), deceased_dob=f.get("dob"), claimant_name=f.get("claimant"),
+                 relationship=f.get("relationship"))
+    elif code == "DOC_LEGAL_HEIR_CERT":
+        e.update(deceased_name=f.get("deceased"), claimant_name=f.get("claimant"), relationship=f.get("relationship"))
+    elif "deceased" in f or "claimant" in f:
+        e.update(deceased_name=f.get("deceased"), claimant_name=f.get("claimant"))
+    return e
+
+
 def read_scan(path: str | Path) -> dict:
-    """-> {file, doc_code, readable, confidence, fields{name,dob,dod,...}, injection, reason, text}"""
+    """-> {file, doc_code, readable, confidence, fields, entities, injection, reason, text}"""
     path = Path(path)
     lines = _raw_read(path)
     text = "\n".join(t for t, _ in lines)
-    out = {"file": path.name, "doc_code": None, "readable": False, "confidence": 0.0, "fields": {},
-           "injection": False, "reason": "", "text": text}
+    out = {"file": path.name, "doc_code": None, "readable": False, "confidence": 0.0, "fields": {}, "entities": {},
+           "reason": "", "text": text}
     if not lines:
         out["reason"] = "no text detected"
         return out
     header = _squash("".join(t for t, _ in lines[:2])).upper()
-    best = max(((fuzz.partial_ratio(key, header), code) for key, code in _HEADERS.items()), key=lambda t: t[0])
+    best = max(((fuzz.partial_ratio(key, header), len(key), code) for key, code in HEADERS.items()))
     if best[0] >= 85:                               # tolerant of single-letter OCR slips (CERTIFICATE -> CERTIEICATE)
-        out["doc_code"] = best[1]
+        out["doc_code"] = best[2]
     if not out["doc_code"]:
         out["reason"] = "document type not recognised"
         return out
 
-    need: dict[str, dict[str, str]] = {       # doc code -> {field key: label printed on the document}
-        "DOC_DEATH_CERT": {"name": "Name", "dob": "Date of Birth", "dod": "Date of Death"},
-        "DOC_LEGAL_HEIR_CERT": {"name": "Name of deceased", "heir": "Heir"},
-        "DOC_CLAIMANT_KYC": {"name": "Name", "id": "ID"},
-        "DOC_FD_RECEIPT": {"name": "Account holder", "acct": "Account"},
-    }[out["doc_code"]]
+    required, optional = SPEC.get(out["doc_code"], _GENERIC)
     confs = []
-    for key, label in need.items():
+    for key, label in {**required, **optional}.items():
         val, conf = _field(lines, label)
         if val:
             out["fields"][key] = val
@@ -101,17 +148,18 @@ def read_scan(path: str | Path) -> dict:
             m = _DATE.search(out["fields"][key])
             if m:
                 out["fields"][key] = f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
-            else:
+            else:                                   # e.g. "not recorded": the field is simply absent
                 del out["fields"][key]
                 confs.pop()
     out["confidence"] = round(sum(confs) / len(confs), 2) if confs else 0.0
-    missing = [k for k in need if k not in out["fields"]]
+    missing = [k for k in required if k not in out["fields"]]
     if missing:
         out["reason"] = f"could not read: {', '.join(missing)}"
     elif out["confidence"] < MIN_CONF:
         out["reason"] = f"low confidence ({out['confidence']})"
     else:
         out["readable"] = True
+    out["entities"] = _entities(out["doc_code"], out["fields"])
     return out
 
 

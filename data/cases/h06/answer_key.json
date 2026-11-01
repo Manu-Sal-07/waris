@@ -1,11 +1,20 @@
 {
   "case_id": "h06",
   "difficulty": "hard",
+  "proof_folder": "ramaswamy_krishnamurthy_hard",
+  "form": {
+    "claim_for": [
+      "insurer",
+      "registry"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "shares",
-      "record_id": "R002",
+      "record_id": "R4602",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -22,7 +31,7 @@
     },
     {
       "asset_type": "life_insurance",
-      "record_id": "I002",
+      "record_id": "I4602",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -41,25 +50,26 @@
     }
   ],
   "namesake_record_ids": [
-    "R005"
+    "R4605"
   ],
   "lookalike_record_ids": [
-    "B002"
+    "B4602"
   ],
   "expected_questions": [
-    "R005"
+    "R4605"
   ],
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",
     "claimant_legal_heir",
     "clean",
     "docs_missing",
-    "namesake_ambiguous"
+    "namesake_ambiguous",
+    "scan_clean"
   ]
 }

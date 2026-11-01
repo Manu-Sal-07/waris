@@ -17,8 +17,17 @@
     "has_nomination": true,
     "documents_available": [
       "DOC_DEATH_CERT",
-      "DOC_NOMINEE_KYC"
+      "DOC_NOMINEE_KYC",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "ranganathan_balasubramanian_easy",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  }
 }

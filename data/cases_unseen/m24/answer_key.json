@@ -1,11 +1,19 @@
 {
   "case_id": "m24",
   "difficulty": "medium",
+  "proof_folder": "parthasarathy_krishnamurthy_medium",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "bank_deposit",
-      "record_id": "B001",
+      "record_id": "B3901",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -18,7 +26,7 @@
       ],
       "missing": [
         "DOC_CLAIM_FORM_BANK",
-        "DOC_INDEMNITY_BOND",
+        "DOC_SUCCESSION_CERT",
         "DOC_NOC_OTHER_HEIRS"
       ],
       "rule_id": "BANK-LH-LARGE-01"
@@ -30,14 +38,15 @@
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_large",
     "claimant_legal_heir",
     "clean",
     "clean_case",
-    "docs_missing"
+    "docs_missing",
+    "scan_clean"
   ]
 }

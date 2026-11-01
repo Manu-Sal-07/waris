@@ -1,13 +1,13 @@
 {
   "case_id": "h16",
   "deceased": {
-    "name": "Ramaswamy Raghavan",
+    "name": "Parthasarathy Hegde",
     "aliases": [],
-    "dob": "1956-12-18",
-    "dod": "2018-03-12",
-    "city": "Nagpur",
+    "dob": "1944-03-12",
+    "dod": "2021-08-16",
+    "city": "Madurai",
     "addresses": [
-      "Nagpur"
+      "Madurai"
     ]
   },
   "claimant": {
@@ -17,8 +17,18 @@
     "has_nomination": false,
     "documents_available": [
       "DOC_CLAIMANT_KYC",
-      "DOC_DEATH_CERT"
+      "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "parthasarathy_hegde_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "registry"
+    ],
+    "claiming_as": "joint_holder",
+    "other_names": ""
+  }
 }

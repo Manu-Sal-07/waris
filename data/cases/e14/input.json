@@ -16,10 +16,19 @@
     "claimant_type": "nominee",
     "has_nomination": true,
     "documents_available": [
-      "DOC_NOMINEE_KYC"
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": [
-    "scans/death_certificate.png"
-  ]
+  "scans": [],
+  "proof_folder": "thyagarajan_subramanian_easy",
+  "form": {
+    "claim_for": [
+      "bank",
+      "insurer"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  }
 }

@@ -1,11 +1,19 @@
 {
   "case_id": "e05",
   "difficulty": "easy",
+  "proof_folder": "ranganathan_raghavan_easy",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "bank_deposit",
-      "record_id": "B003",
+      "record_id": "B0503",
       "needs_human_confirmation": false,
       "status": "READY",
       "required_docs": [
@@ -19,21 +27,22 @@
   ],
   "namesake_record_ids": [],
   "lookalike_record_ids": [
-    "B005",
-    "R001"
+    "B0505",
+    "R0501"
   ],
   "expected_questions": [],
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",
     "claimant_nominee",
     "clean",
     "clean_case",
-    "ready"
+    "ready",
+    "scan_clean"
   ]
 }

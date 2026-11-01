@@ -1,11 +1,20 @@
 {
   "case_id": "h10",
   "difficulty": "hard",
+  "proof_folder": "venkatesh_venkataraman_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "insurer"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "life_insurance",
-      "record_id": "I003",
+      "record_id": "I5001",
       "needs_human_confirmation": false,
       "status": "NEEDS_HUMAN_REVIEW",
       "required_docs": [],
@@ -15,7 +24,7 @@
     },
     {
       "asset_type": "bank_deposit",
-      "record_id": "B002",
+      "record_id": "B5001",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -39,16 +48,16 @@
   ],
   "namesake_record_ids": [],
   "lookalike_record_ids": [
-    "R003"
+    "B5005"
   ],
   "expected_questions": [],
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [
-    "scans/death_certificate.png"
+  "unreadable_files": [
+    "01_death_certificate.png"
   ],
-  "injection_scans": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",
@@ -57,6 +66,7 @@
     "docs_missing",
     "name_initials",
     "no_rule",
+    "scan_clean",
     "scan_faded"
   ]
 }

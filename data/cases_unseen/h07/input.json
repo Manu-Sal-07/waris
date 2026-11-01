@@ -1,10 +1,10 @@
 {
   "case_id": "h07",
   "deceased": {
-    "name": "Sundaram Venkataraman",
+    "name": "Thyagarajan Hegde",
     "aliases": [],
-    "dob": "1962-12-07",
-    "dod": "2019-11-03",
+    "dob": "1942-11-09",
+    "dod": "2016-05-21",
     "city": "Salem",
     "addresses": [
       "Salem"
@@ -12,13 +12,21 @@
   },
   "claimant": {
     "name": "Aarna Dasgupta",
-    "relationship": "son",
+    "relationship": "granddaughter",
     "claimant_type": "legal_heir",
     "has_nomination": false,
-    "documents_available": []
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF"
+    ]
   },
-  "scans": [
-    "scans/death_certificate.png",
-    "scans/identity_proof.png"
-  ]
+  "scans": [],
+  "proof_folder": "thyagarajan_hegde_hard",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

@@ -1,4 +1,6 @@
-"""UI smoke test with Streamlit's AppTest (no browser): the app loads, runs a generated case and shows its parts."""
+"""UI smoke tests with Streamlit's AppTest (no browser): the app loads and the developer path runs a benchmark case.
+The document-upload flow itself (file uploader, OCR panel, confirm screen) is exercised in a real browser by
+scripts/ui_check.py, because AppTest cannot drive file uploads."""
 from pathlib import Path
 
 import pytest
@@ -22,34 +24,27 @@ def _app() -> AppTest:
     return at
 
 
-def _start(at: AppTest, case: str) -> AppTest:
-    at.sidebar.selectbox[0].set_value(case)
-    at.sidebar.checkbox[0].set_value(False)            # LLM off: deterministic and fast
-    at.sidebar.button[0].click()
-    at.run()
-    assert not at.exception, [e.value for e in at.exception]
-    return at
-
-
-def test_app_loads_with_four_tabs():
+def test_app_loads_with_four_tabs_and_no_case_dropdown_on_the_main_page():
     at = _app()
-    assert [t.label for t in at.tabs][:4] == ["Run a case", "Rules & RAG explorer", "Evaluation (60 cases)", "Graph & trace"]
-    cases = at.sidebar.selectbox[0].options
-    assert len(cases) >= 61 and any(c.startswith("h07") for c in cases)
+    assert [t.label for t in at.tabs][:4] == ["File a claim", "Rules & RAG explorer", "Evaluation (60 cases)", "Graph & trace"]
+    assert not at.sidebar.selectbox or all("Benchmark case" == s.label for s in at.sidebar.selectbox)   # only inside the developer expander
+    assert "Upload the proofs you have" in " ".join(m.value for m in at.markdown)
+    assert any("Upload the documents to begin" in i.value for i in at.info)
 
 
-def test_case_with_scans_conflict_runs_to_the_release_gate_and_finishes():
-    at = _start(_app(), "h07")
-    assert "Final approval" in " ".join(w.value for w in at.warning)          # waits at the release gate
-    next(b for b in at.button if "Approve release" in b.label).click()
+def test_developer_path_runs_the_classic_case_to_the_family_question():
+    at = _app()
+    at.sidebar.checkbox[0].set_value(False)                       # LLM off: deterministic and fast
+    at.sidebar.selectbox[0].set_value("meena")
+    next(b for b in at.sidebar.button if "Run this case" in b.label).click()
     at.run()
     assert not at.exception, [e.value for e in at.exception]
-    assert "disagree" in " ".join(e.value for e in at.error)                  # the document conflict is shown, not hidden
-    assert "NEEDS HUMAN REVIEW" in " ".join(m.value for m in at.markdown)
-
-
-def test_family_question_case_shows_buttons():
-    at = _start(_app(), "m15")
     assert "Waris needs the family" in " ".join(w.value for w in at.warning)
     labels = [b.label for b in at.button]
     assert any("Yes, that is him" in l for l in labels) and any("No, different person" in l for l in labels)
+    next(b for b in at.button if "Yes, that is him" in b.label).click()
+    at.run()
+    next(b for b in at.button if "Approve release" in b.label).click()
+    at.run()
+    assert not at.exception, [e.value for e in at.exception]
+    assert "NEEDS HUMAN REVIEW" in " ".join(m.value for m in at.markdown)               # the insurance policy: "I don't know"

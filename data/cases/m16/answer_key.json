@@ -1,11 +1,19 @@
 {
   "case_id": "m16",
   "difficulty": "medium",
+  "proof_folder": "ranganathan_pillai_medium",
+  "form": {
+    "claim_for": [
+      "registry"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "shares",
-      "record_id": "R004",
+      "record_id": "R3104",
       "needs_human_confirmation": true,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -22,19 +30,20 @@
   "namesake_record_ids": [],
   "lookalike_record_ids": [],
   "expected_questions": [
-    "R004"
+    "R3104"
   ],
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",
     "claimant_nominee",
     "clean",
     "clean_case",
-    "partial_info"
+    "partial_info",
+    "scan_clean"
   ]
 }

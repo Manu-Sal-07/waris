@@ -46,6 +46,7 @@ class CaseState(TypedDict, total=False):
     deceased: dict
     claimant: dict
     scans: list[str]
+    claim_for: list[str]                   # institutions the family wants checked (bank / insurer / registry)
     plan: list[dict]                       # one task per asset type
     tools_done: list[str]
     candidate_assets: list[dict]           # accepted/ask candidates with match evidence

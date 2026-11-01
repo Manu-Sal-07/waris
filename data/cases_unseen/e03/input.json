@@ -16,8 +16,17 @@
     "claimant_type": "legal_heir",
     "has_nomination": false,
     "documents_available": [
-      "DOC_CLAIMANT_KYC"
+      "DOC_CLAIMANT_KYC",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "krishnan_rao_easy",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

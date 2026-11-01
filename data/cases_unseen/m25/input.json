@@ -1,13 +1,13 @@
 {
   "case_id": "m25",
   "deceased": {
-    "name": "Krishnan Venkataraman",
+    "name": "Narasimhan Krishnamurthy",
     "aliases": [],
-    "dob": "1935-09-23",
-    "dod": "2017-08-02",
-    "city": "Mysuru",
+    "dob": "1961-01-05",
+    "dod": "2024-06-19",
+    "city": "Bhopal",
     "addresses": [
-      "Mysuru"
+      "Bhopal"
     ]
   },
   "claimant": {
@@ -17,8 +17,17 @@
     "has_nomination": false,
     "documents_available": [
       "DOC_CLAIMANT_KYC",
-      "DOC_DEATH_CERT"
+      "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "narasimhan_krishnamurthy_medium",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "joint_holder",
+    "other_names": ""
+  }
 }

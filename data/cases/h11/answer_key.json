@@ -1,11 +1,20 @@
 {
   "case_id": "h11",
   "difficulty": "hard",
+  "proof_folder": "sundaram_shetty_hard",
+  "form": {
+    "claim_for": [
+      "insurer",
+      "registry"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "life_insurance",
-      "record_id": "I003",
+      "record_id": "I5103",
       "needs_human_confirmation": false,
       "status": "NEEDS_HUMAN_REVIEW",
       "required_docs": [],
@@ -15,7 +24,7 @@
     },
     {
       "asset_type": "shares",
-      "record_id": "R001",
+      "record_id": "R5101",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -37,10 +46,10 @@
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [
-    "scans/legal_heir_certificate.png"
+  "unreadable_files": [
+    "04_legal_heir_certificate.png"
   ],
-  "injection_scans": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",

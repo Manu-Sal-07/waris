@@ -18,8 +18,17 @@
     "documents_available": [
       "DOC_CLAIM_FORM_INSURER",
       "DOC_DEATH_CERT",
-      "DOC_NOMINEE_KYC"
+      "DOC_NOMINEE_KYC",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "venkatesh_srinivasan_easy",
+  "form": {
+    "claim_for": [
+      "insurer"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  }
 }

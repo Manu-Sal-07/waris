@@ -1,13 +1,13 @@
 {
   "case_id": "h16",
   "deceased": {
-    "name": "Parthasarathy Chandrasekhar",
+    "name": "Seshadri Rao",
     "aliases": [],
-    "dob": "1955-05-14",
-    "dod": "2024-05-06",
-    "city": "Mumbai",
+    "dob": "1956-10-09",
+    "dod": "2017-12-08",
+    "city": "Nagpur",
     "addresses": [
-      "Mumbai"
+      "Nagpur"
     ]
   },
   "claimant": {
@@ -17,8 +17,18 @@
     "has_nomination": false,
     "documents_available": [
       "DOC_CLAIMANT_KYC",
-      "DOC_DEATH_CERT"
+      "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "seshadri_rao_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "registry"
+    ],
+    "claiming_as": "joint_holder",
+    "other_names": ""
+  }
 }

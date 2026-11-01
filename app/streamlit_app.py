@@ -1,14 +1,20 @@
 """Waris demo UI.   streamlit run app/streamlit_app.py
 
-Tabs: Run a case (live agent timeline, scans + OCR, family questions as buttons, claim packs, letters, scorecard)
+The family uploads the PROOFS they hold (death certificate, their own ID, proof of relationship, any forms) and fills three
+fields (which institutions, in what capacity, other names). Waris reads the documents with OCR, shows what it read, builds the
+case, and runs the agents. No case is picked from a list.
+
+Tabs: File a claim (upload, what Waris read, live agent timeline, family questions as buttons, claim packs, letters, scorecard)
       Rules & RAG explorer (the rule corpus, retrieval, and fit grading made visible)
-      Evaluation (60-case results: baseline vs Waris vs ablations, judge validation, failures)
+      Evaluation (60 cases: baseline vs Waris vs ablations, judge validation, failures)
       Graph & trace (architecture, graph, full trace table)
 """
 import atexit
+import hashlib
 import html
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -20,23 +26,25 @@ import streamlit as st
 from langgraph.types import Command
 
 from eval.metrics import score_case
-from waris import config, llm, memory
+from waris import config, intake, llm, memory
 from waris.doc_codes import DOC_CODES
 from waris.graph import build_graph, clear_thread, open_checkpointer
 from waris.run import start_portals
-from waris.tools import ocr as ocr_tool
-from waris.tools import portals as portal_tools
 from waris.tools import retrieval
 from waris.tracing import TRACE
 
 st.set_page_config(page_title="Waris", page_icon="W", layout="wide")
-NODES = ["intake_validate", "supervisor_plan", "doc_intake", "tracer", "identity_gate", "human_confirm", "rules_expert",
-         "builder", "verifier", "finalize", "draft_letters", "final_approval"]
+NODES = ["read_documents", "intake_validate", "supervisor_plan", "doc_intake", "tracer", "identity_gate", "human_confirm",
+         "rules_expert", "builder", "verifier", "finalize", "draft_letters", "final_approval"]
 AGENT_COLOR = {"supervisor": "#8e5ea2", "tracer": "#0e8a9a", "rules_expert": "#c98a00", "builder": "#2e8b57",
                "verifier": "#c0392b", "human": "#1f4e9c", "guard": "#a93226", "system": "#777", "memory": "#7d3c98",
                "llm": "#555"}
 STATUS_STYLE = {"READY": ("#2e8b57", "READY"), "MISSING_ITEMS": ("#c98a00", "MISSING ITEMS"),
                 "NEEDS_HUMAN_REVIEW": ("#c0392b", "NEEDS HUMAN REVIEW")}
+INST_LABEL = {"bank": "Bank deposits", "insurer": "Life insurance", "registry": "Shares"}
+CAPACITY = {"Legal heir": "legal_heir", "Nominee": "nominee", "Joint holder": "joint_holder"}
+DOC_NAME = {**DOC_CODES, "DOC_NOMINEE_KYC": "Claimant's ID (as nominee)"}
+UPLOAD_DIR = ROOT / "data" / "uploads"
 
 st.markdown("""<style>
 .chip{display:inline-block;color:#fff;border-radius:10px;padding:1px 8px;font-size:12px;margin-right:6px}
@@ -47,6 +55,7 @@ st.markdown("""<style>
 .ev .k{font-weight:700;margin-right:6px;font-size:12px;color:#444}
 .warnmsg{color:#a93226}
 .badge{color:#fff;border-radius:6px;padding:3px 10px;font-weight:700;font-size:13px}
+.ok{color:#2e8b57;font-weight:700}.no{color:#a93226;font-weight:700}
 </style>""", unsafe_allow_html=True)
 
 
@@ -69,6 +78,8 @@ _portals()
 EMBED = _index()
 ss = st.session_state
 ss.setdefault("run", None)
+ss.setdefault("up_gen", 0)          # bump to clear the upload widgets
+ss.setdefault("more_gen", 0)
 
 
 def langfuse_up() -> bool:
@@ -79,21 +90,41 @@ def langfuse_up() -> bool:
         return False
 
 
-# ---------------------------------------------------------------- rendering helpers
+# ---------------------------------------------------------------- helpers
+def save_uploads(files) -> list[str]:
+    """Store uploaded files under data/uploads/<hash of the set>/ and return their absolute paths (names are kept)."""
+    if not files:
+        return []
+    h = hashlib.sha1()
+    for f in sorted(files, key=lambda f: f.name):
+        h.update(f.name.encode())
+        h.update(f.getvalue())
+    d = UPLOAD_DIR / h.hexdigest()[:12]
+    d.mkdir(parents=True, exist_ok=True)
+    out = []
+    for f in sorted(files, key=lambda f: f.name):
+        p = d / Path(f.name).name
+        if not p.exists():
+            p.write_bytes(f.getvalue())
+        out.append(str(p))
+    return out
+
+
 def render_events(ph) -> None:
     rows = []
-    for e in reversed(TRACE.events):                      # newest first, so the live view always shows the latest step
+    events = TRACE.events if ss.get("run") else []         # a fresh page shows nothing (the tracer is process-wide, not per visitor)
+    for e in reversed(events):                            # newest first, so the live view always shows the latest step
         if e["kind"] == "NODE":
             continue
         col = AGENT_COLOR.get(e["agent"], "#555")
         warn = e["level"] == "warn" or any(w in e["message"] for w in ("UNFIT", "FAIL", "REJECTED", "ABSTAIN"))
         rows.append(f"<div class='ev'><span class='chip' style='background:{col}'>{e['agent']}</span>"
                     f"<span class='k'>{e['kind']}</span><span class='{'warnmsg' if warn else ''}'>{html.escape(e['message'])}</span></div>")
-    ph.markdown("".join(rows) or "<i>No events yet. Press <b>Start case</b>.</i>", unsafe_allow_html=True)
+    ph.markdown("".join(rows) or "<i>No events yet. Upload the documents and press <b>Start</b>.</i>", unsafe_allow_html=True)
 
 
 def render_stepper(ph, run) -> None:
-    visited = set(run["visited"]) if run else set()
+    visited = set(run["visited"]) | {"read_documents"} if run else set()
     nxt = set(run["next"]) if run else set()
     chips = "".join(f"<span class='node {'now' if n in nxt else 'done' if n in visited else ''}'>{n}</span>" +
                     ("&rarr;" if i < len(NODES) - 1 else "") for i, n in enumerate(NODES))
@@ -119,39 +150,19 @@ def drive(inp, ph_events, ph_steps) -> None:
     TRACE.finish()
 
 
-UPLOAD_DIR = ROOT / "data" / "uploads"
-
-
-def save_uploads(case_name: str, files) -> list[str]:
-    """Store the family's uploaded scans under data/uploads/<case>/ and return their absolute paths."""
-    d = UPLOAD_DIR / case_name
-    d.mkdir(parents=True, exist_ok=True)
-    out = []
-    for f in files or []:
-        p = d / Path(f.name).name
-        p.write_bytes(f.getvalue())
-        out.append(str(p))
-    return out
-
-
-def start_case(case_name: str, use_llm: bool, fresh_memory: bool, session2: bool = False, uploads: list[str] | None = None) -> dict:
-    case = json.loads((config.CASES_DIR / case_name / "input.json").read_text(encoding="utf-8"))
-    if uploads:
-        case = {**case, "scans": case.get("scans", []) + uploads}
-    if session2:
-        case = {**case, "scans": case.get("scans", []) + case.get("session2_scans", [])}
-    portal_tools.set_case(case["case_id"] if (config.CASES_DIR / case_name / "portals.db").exists() else None)
+def start_case(case: dict, use_llm: bool, fresh_memory: bool, key_dir: str | None = None, later: bool = False) -> dict:
+    """case = {case_id, deceased, claimant, scans (absolute paths), claim_for}. A later session keeps the family's earlier answers."""
     saver = open_checkpointer()
     graph = build_graph(saver)
     clear_thread(saver, case["case_id"])
-    if fresh_memory and not session2:
+    if fresh_memory and not later:
         memory.forget(case["case_id"])
     llm.set_enabled(use_llm)
     if use_llm and not llm.warm_up():
         st.toast("Ollama model unavailable: using deterministic fallbacks", icon="⚠️")
     TRACE.configure(case["case_id"], echo=False, append=False)
-    return {"graph": graph, "cfg": {"configurable": {"thread_id": case["case_id"]}}, "case": case, "case_name": case_name,
-            "pending": None, "finished": False, "state": None, "visited": [], "next": [], "restarted": False}
+    return {"graph": graph, "cfg": {"configurable": {"thread_id": case["case_id"]}}, "case": case, "key_dir": key_dir,
+            "pending": None, "finished": False, "state": None, "visited": [], "next": [], "restarted": False, "later": later}
 
 
 def simulate_restart() -> None:
@@ -166,46 +177,106 @@ def simulate_restart() -> None:
     run["pending"] = snap.tasks[0].interrupts[0].value if snap.tasks and snap.tasks[0].interrupts else None
 
 
+def graph_input(case: dict) -> dict:
+    return {"case_id": case["case_id"], "deceased": case["deceased"], "claimant": case["claimant"], "scans": case.get("scans", []),
+            "claim_for": case.get("claim_for", intake.CLAIM_FOR)}
+
+
 # ---------------------------------------------------------------- sidebar
 with st.sidebar:
     st.markdown("## Waris")
     st.caption("Agentic AI for unclaimed inheritance recovery. **Advisory only**: never files a claim, never decides heirship. All data is synthetic.")
-    cases = sorted(p.name for p in config.CASES_DIR.iterdir() if (p / "input.json").exists())
-    _idx = {c["case_id"]: c for c in json.loads((config.CASES_DIR / "index.json").read_text(encoding="utf-8"))} \
-        if (config.CASES_DIR / "index.json").exists() else {}
-    case_name = st.selectbox("Case", cases, index=cases.index("meena") if "meena" in cases else 0, format_func=lambda c: f"{c}  ·  {_idx[c]['difficulty']}" if c in _idx else f"{c}  ·  hand-built demo")
-    if case_name in _idx:
-        st.caption("Tests: " + ", ".join(_idx[case_name]["tags"]))
     use_llm = st.checkbox(f"Use local LLM ({config.OLLAMA_MODEL})", value=True,
-                          help="The LLM only chooses which portal to search next. Off = fixed fallback order (still a full run).")
+                          help="The LLM only chooses which portal to search next and helps word the letters. Off = fixed fallback order (still a full run).")
     fresh_mem = st.checkbox("Forget the family's earlier answers", value=True,
-                            help="Untick and run twice to see long-term memory skip the identity question.")
-    uploaded = st.file_uploader("Upload scanned documents (PNG / JPG)", type=["png", "jpg", "jpeg"], accept_multiple_files=True,
-                                help="Death certificate, legal heir certificate or ID proof. They are read by the OCR step and added to the case.")
-    if uploaded:
-        with st.expander(f"OCR preview of {len(uploaded)} uploaded file(s)", expanded=True):
-            for pth in save_uploads(case_name, uploaded):
-                r = ocr_tool.read_scan(pth)
-                st.image(pth, width="stretch")
-                st.caption(f"**{Path(pth).name}**: " + (f"{r['doc_code']} read, confidence {r['confidence']}, fields {r['fields']}" if r["readable"]
-                                                       else f"unreadable ({r['reason']}); it would not be counted"))
-    start = st.button("▶  Start case", type="primary", width="stretch")
+                            help="Untick and run the same family twice to see long-term memory skip the identity question.")
     st.divider()
     st.markdown(f"**Embeddings:** `{EMBED}`  \n**Langfuse:** {'on, [open](http://localhost:3001)' if langfuse_up() else 'off (local trace only)'}")
     st.markdown("**Limits:** rounds ≤ 6 · re-queries ≤ 2 · LLM calls ≤ 40 · timeout 10 s")
+    with st.expander("For developers: run a benchmark case from its structured input"):
+        _idx = {c["case_id"]: c for c in json.loads((config.CASES_DIR / "index.json").read_text(encoding="utf-8"))} \
+            if (config.CASES_DIR / "index.json").exists() else {}
+        dev_case = st.selectbox("Benchmark case", ["meena"] + list(_idx), format_func=lambda c: f"{c} · {_idx[c]['difficulty']}" if c in _idx else "meena · demo")
+        dev_start = st.button("Run this case (skips the documents)", width="stretch")
 
-tab_run, tab_rag, tab_eval, tab_graph = st.tabs(["Run a case", "Rules & RAG explorer", "Evaluation (60 cases)", "Graph & trace"])
+tab_run, tab_rag, tab_eval, tab_graph = st.tabs(["File a claim", "Rules & RAG explorer", "Evaluation (60 cases)", "Graph & trace"])
 
-# ================================================================ TAB 1: run
+# ================================================================ TAB 1: file a claim
 with tab_run:
     run = ss.run
-    st.markdown("##### Pipeline")
-    steps_ph = st.empty()
     left, right = st.columns([1, 1], gap="large")
-    with right:
-        st.markdown("##### Agent timeline (live, newest first)")
-        ev_ph = st.container(height=620).empty()
+
+    # ---------------- step 1 + 2: documents and the three fields
     with left:
+        st.markdown("### 1 · Upload the proofs you have")
+        st.caption("The deceased's **death certificate**, **your own ID** (KYC), a **proof of your relationship**, and any forms or "
+                   "certificates you already hold. Photos or scans (PNG / JPG). Select several files at once.")
+        files = st.file_uploader("Documents", type=["png", "jpg", "jpeg"], accept_multiple_files=True, key=f"up{ss.up_gen}",
+                                 label_visibility="collapsed")
+        st.markdown("### 2 · About the claim")
+        claim_for = st.multiselect("Which assets should Waris look for?", list(INST_LABEL), default=list(INST_LABEL),
+                                   format_func=INST_LABEL.get, key=f"cf{ss.up_gen}")
+        capacity = st.selectbox("I am claiming as", list(CAPACITY), key=f"ca{ss.up_gen}")
+        others = st.text_input("Other names the deceased was known by (maiden name, spelling...)", placeholder="optional, comma separated",
+                               key=f"on{ss.up_gen}")
+        form = {"claim_for": claim_for or list(INST_LABEL), "claiming_as": CAPACITY[capacity], "other_names": others}
+
+        paths = save_uploads(files)
+        read = intake.read_uploads(paths) if paths else []
+        built = intake.build_case(paths, form, reads=read) if paths else None
+
+        if built:
+            st.markdown("### 3 · What Waris read")
+            ess = built["essentials"]
+            st.markdown("  ".join(f"<span class='{'ok' if ess[k] else 'no'}'>{'✔' if ess[k] else '✘'} {lab}</span>" for k, lab in
+                                  (("death_certificate", "death certificate"), ("claimant_id", "your ID"),
+                                   ("relationship_proof", "proof of relationship"))), unsafe_allow_html=True)
+            st.dataframe(pd.DataFrame([{"file": r["file"], "recognised as": DOC_NAME.get(r["doc_code"], "not recognised"),
+                                        "readable": "✔" if r["readable"] else "✘ " + r["reason"],
+                                        "confidence": r["confidence"] if r["readable"] else None} for r in built["reads"]]),
+                         hide_index=True, width="stretch")
+            for issue in built["issues"]:
+                st.warning(issue)
+            c0 = built["case"]
+            d0 = c0["deceased"] if c0 else {}
+            k = hashlib.sha1("".join(paths).encode()).hexdigest()[:8]               # new files -> new widgets, prefilled again
+            st.caption("Check what was read and correct anything wrong. What you type here is what Waris will use.")
+            a1, a2 = st.columns(2)
+            ov = {"deceased_name": a1.text_input("Deceased: full name", d0.get("name") or "", key=f"dn{k}"),
+                  "deceased_dob": a2.text_input("Date of birth (YYYY-MM-DD, blank if unknown)", d0.get("dob") or "", key=f"db{k}"),
+                  "deceased_dod": a1.text_input("Date of death (YYYY-MM-DD)", d0.get("dod") or "", key=f"dd{k}"),
+                  "deceased_city": a2.text_input("City", d0.get("city") or "", key=f"dc{k}"),
+                  "claimant_name": a1.text_input("Claimant: full name", c0["claimant"]["name"] if c0 else "", key=f"cn{k}"),
+                  "relationship": a2.text_input("Relationship to the deceased", c0["claimant"]["relationship"] if c0 else "", key=f"cr{k}")}
+            pre = {"deceased_name": d0.get("name") or "", "deceased_dob": d0.get("dob") or "", "deceased_dod": d0.get("dod") or "",
+                   "deceased_city": d0.get("city") or "", "claimant_name": c0["claimant"]["name"] if c0 else "",
+                   "relationship": c0["claimant"]["relationship"] if c0 else ""}
+            typed = {a: b.strip() for a, b in ov.items() if b.strip() and b.strip() != pre[a]}          # only what the family changed
+            final = intake.build_case(paths, form, override=typed, reads=read)
+            for need in final["needs"]:
+                st.error("Needed: " + need)
+            srcs = final["sources"]
+            if srcs:
+                st.caption("Where each fact came from: " + "; ".join(f"{a.replace('_', ' ')} ← {b}" for a, b in srcs.items()))
+            go = st.button("▶  Start", type="primary", width="stretch", disabled=final["case"] is None)
+        else:
+            final, go = None, False
+            st.info("Upload the documents to begin. (For the demo: open a folder under `demo_proofs/`, select all its images, and read its README.txt for the three fields.)")
+
+        # a second session: more documents arrive
+        more_files, more_go = [], False
+        if run and run["finished"] and final and final["case"]:
+            st.markdown("### Add more documents")
+            more_files = st.file_uploader("More documents", type=["png", "jpg", "jpeg"], accept_multiple_files=True,
+                                          key=f"more{ss.more_gen}", label_visibility="collapsed")
+            more_go = st.button("↻  Re-check with these documents", disabled=not more_files, width="stretch")
+
+    # ---------------- right: pipeline + timeline
+    with right:
+        st.markdown("##### Pipeline")
+        steps_ph = st.empty()
+        st.markdown("##### Agent timeline (live, newest first)")
+        ev_ph = st.container(height=520).empty()
         q_box = st.container()
 
     # ---- family question (buttons rendered BEFORE actions so a click is seen on the next rerun)
@@ -234,13 +305,24 @@ with tab_run:
                 st.rerun()
 
     # ---- actions
-    if start or ss.pop("go_session2", False):
-        is_s2 = not start
-        ss.run = run = start_case(case_name if start else ss.run["case_name"], use_llm, fresh_mem, session2=is_s2,
-                                  uploads=save_uploads(case_name, uploaded) if (start and uploaded) else None)
+    if go and final and final["case"]:
+        ss.run = run = start_case(final["case"], use_llm, fresh_mem)
         with st.spinner("Running agents..."):
-            drive({"case_id": run["case"]["case_id"], "deceased": run["case"]["deceased"],
-                   "claimant": run["case"]["claimant"], "scans": run["case"].get("scans", [])}, ev_ph, steps_ph)
+            drive(graph_input(run["case"]), ev_ph, steps_ph)
+        st.rerun()
+    elif more_go and more_files and final and final["case"]:
+        case2 = {**final["case"], "scans": final["case"]["scans"] + save_uploads(more_files)}
+        ss.run = run = start_case(case2, use_llm, fresh_mem, later=True)
+        ss.more_gen += 1
+        with st.spinner("Running agents with the new documents..."):
+            drive(graph_input(run["case"]), ev_ph, steps_ph)
+        st.rerun()
+    elif dev_start:
+        d = config.CASES_DIR / dev_case
+        case = {**json.loads((d / "input.json").read_text(encoding="utf-8")), "claim_for": intake.CLAIM_FOR}
+        ss.run = run = start_case(case, use_llm, fresh_mem, key_dir=str(d))
+        with st.spinner("Running agents..."):
+            drive(graph_input(run["case"]), ev_ph, steps_ph)
         st.rerun()
     elif answer and run:
         with st.spinner("Resuming..."):
@@ -254,28 +336,24 @@ with tab_run:
         if run and run.get("restarted") and not run["finished"]:
             st.info("Process restarted: all in-memory objects were discarded and the graph was rebuilt from the SQLite checkpoint. "
                     f"It resumes at **{', '.join(run['next'])}**.")
-        if not run:
-            st.info("Pick a case in the sidebar and press **Start case**. Watch for the three moments: "
-                    "name variant & namesakes → rule graded unfit → family confirmation.")
         if run and run["finished"]:
             state = run["state"]
             st.success(f"Done in {state.get('round', 0)} Verifier round(s), {state.get('llm_calls', 0)}/{config.MAX_LLM_CALLS} LLM calls. "
                        f"Released to family: **{'yes' if state.get('released') else 'no'}**")
             if state.get("scan_results"):
-                st.markdown("##### Scanned documents (OCR)")
+                st.markdown("##### Documents read by OCR")
                 cols = st.columns(min(3, len(state["scan_results"])))
                 for i, sr in enumerate(state["scan_results"]):
-                    img = Path(sr.get("path") or config.CASES_DIR / run["case_name"] / "scans" / sr["file"])
                     with cols[i % len(cols)]:
-                        if img.exists():
-                            st.image(str(img), width="stretch")
-                        st.caption(f"{sr['file']}: " + (f"read as {sr['doc_code']} (conf {sr['confidence']})" if sr["readable"]
-                                                       else f"unreadable ({sr['reason']}), not counted"))
+                        if sr.get("path") and Path(sr["path"]).exists():
+                            st.image(sr["path"], width="stretch")
+                        st.caption(f"{sr['file']}: " + (f"read as {DOC_NAME.get(sr['doc_code'], sr['doc_code'])} (conf {sr['confidence']})"
+                                                       if sr["readable"] else f"unreadable ({sr['reason']}), not counted"))
             for c in state.get("doc_conflicts", []):
-                st.error(f"Documents disagree: {c['scan']} shows {c['field']} {c['scan_value']} but the family said {c['family_value']}. "
+                st.error(f"Documents disagree: {c['scan']} shows {c['field']} '{c['scan_value']}' but the case says '{c['family_value']}'. "
                          "Waris does not pick one: a human decides.")
             if not state["claim_packs"]:
-                st.info("**Nothing found.** No asset of this person was found in any searched source. Waris does not invent assets.")
+                st.info("**Nothing found.** No asset of this person was found in the sources you asked about. Waris does not invent assets.")
             for e in state.get("tool_errors", []):
                 st.warning(f"{e['tool']} was unavailable ({e['error'][:60]}). Retry later or ask the institution directly.")
             st.markdown("##### Claim packs")
@@ -283,7 +361,8 @@ with tab_run:
                 color, label = STATUS_STYLE[pack["status"]]
                 st.markdown(f"**{aid}** &nbsp; <span class='badge' style='background:{color}'>{label}</span>", unsafe_allow_html=True)
                 if pack["requirements"]:
-                    st.dataframe(pd.DataFrame([{"document": r["doc_code"], "cited rule": r["rule_id"], "family has it": "✔" if r["have_it"] else "✘ missing"}
+                    st.dataframe(pd.DataFrame([{"document": DOC_NAME.get(r["doc_code"], r["doc_code"]), "code": r["doc_code"],
+                                                "cited rule": r["rule_id"], "family has it": "✔" if r["have_it"] else "✘ missing"}
                                                for r in pack["requirements"]]), hide_index=True, width="stretch")
                 for n in pack["notes"]:
                     if n.startswith(("abstained", "escalated", "stopped")):
@@ -293,21 +372,23 @@ with tab_run:
                 for aid, text in state["letters"].items():
                     with st.expander(f"Letter for {aid}"):
                         st.code(text, language=None)
-            if (config.CASES_DIR / run["case_name"] / "input.json").exists() and \
-                    json.loads((config.CASES_DIR / run["case_name"] / "input.json").read_text(encoding="utf-8")).get("session2_scans") \
-                    and not run.get("session2"):
-                st.info("This case continues in a later session: the family sends more documents. Memory keeps their earlier answers.")
-                if st.button("▶ Run session 2 (new documents arrive)", key="s2"):
-                    ss.go_session2 = True
-                    st.rerun()
             if state.get("rejected_candidates"):
                 with st.expander(f"Not claimed ({len(state['rejected_candidates'])} records rejected)"):
                     for r in state["rejected_candidates"]:
                         st.write(f"`{r['asset_id']}` {r['holder_name']}: {r['reason']} (score {r['score']})")
-            key = config.CASES_DIR / run["case_name"] / "answer_key.json"
-            if key.exists():
-                s = score_case(state["claim_packs"], json.loads(key.read_text(encoding="utf-8")), retrieval.rule_exists)
-                st.markdown("##### Scorecard vs answer key")
+            key_dir = Path(run["key_dir"]) if run.get("key_dir") else None
+            if key_dir is None:                                 # a benchmark family's proofs: find its answer key by the deceased's name
+                slug = re.sub(r"[^a-z0-9]+", "_", run["case"]["deceased"]["name"].lower()).strip("_")
+                idx_file = config.CASES_DIR / "index.json"
+                if slug == "ramaswamy_subramanian":
+                    key_dir = config.CASES_DIR / "meena"
+                elif idx_file.exists():
+                    hit = next((c["case_id"] for c in json.loads(idx_file.read_text(encoding="utf-8"))
+                                if c["folder"].rsplit("_", 1)[0] == slug), None)
+                    key_dir = config.CASES_DIR / hit if hit else None
+            if key_dir and (key_dir / "answer_key.json").exists():
+                s = score_case(state["claim_packs"], json.loads((key_dir / "answer_key.json").read_text(encoding="utf-8")), retrieval.rule_exists)
+                st.markdown("##### Scorecard vs answer key (only for the benchmark cases)")
                 m = st.columns(3)
                 m[0].metric("Asset recall", f"{s['asset_recall']:.0%}")
                 m[1].metric("Wrong-person matches", s["wrong_person_matches"], help="target 0")
@@ -316,7 +397,6 @@ with tab_run:
                 m[0].metric("Checklist P / R", f"{s['checklist_precision']:.0%} / {s['checklist_recall']:.0%}")
                 m[1].metric("Citation coverage", f"{s['citation_coverage']:.0%}")
                 m[2].metric("Abstention correct", "yes" if s["abstention_correct"] else "no")
-                st.caption("One case: it shows the harness works. The 60-case evidence is in the Evaluation tab.")
 
 # ================================================================ TAB 2: RAG
 with tab_rag:

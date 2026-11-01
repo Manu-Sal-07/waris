@@ -6,6 +6,7 @@ Runs a case through the LangGraph graph, prints the agent trace live, handles hu
 import argparse
 import json
 import os
+from pathlib import Path
 import subprocess
 import sys
 import time
@@ -13,9 +14,8 @@ import time
 import httpx
 from langgraph.types import Command
 
-from . import config, llm, memory
+from . import config, intake, llm, memory
 from .graph import build_graph, clear_thread, open_checkpointer
-from .tools import portals as portal_tools
 from .tools import retrieval
 from .tracing import TRACE
 
@@ -97,14 +97,16 @@ def main(argv=None) -> int:
         sys.stdout.reconfigure(encoding="utf-8")
     os.system("")                                  # enable ANSI colours in older Windows consoles
     ap = argparse.ArgumentParser(description="Waris: unclaimed-inheritance claim-readiness agent (synthetic data)")
-    ap.add_argument("--case", default="meena")
+    ap.add_argument("--case", default="meena", help="a benchmark case read from its structured input.json (developer path)")
+    ap.add_argument("--proofs", default="", help="a folder of proof documents, e.g. demo_proofs/anantharaman_nair_hard: the case is built "
+                    "from the documents by OCR, exactly as the UI does")
+    ap.add_argument("--later", action="store_true", help="with --proofs: also upload the files in the folder's later/ sub-folder (session 2)")
     ap.add_argument("--fresh", action="store_true", help="discard the checkpoint for this case and start over")
     ap.add_argument("--forget", action="store_true", help="also erase the long-term case file (family answers)")
     ap.add_argument("--answers", default="", help="scripted human answers, e.g. 'y,y' (otherwise asks in the terminal)")
     ap.add_argument("--exit-at-pause", action="store_true", help="demo durable resume: stop the process at the first pause")
     ap.add_argument("--no-llm", action="store_true", help="deterministic fallbacks only")
-    ap.add_argument("--session2", action="store_true",
-                    help="a later session: the family sends the documents listed under session2_scans; earlier answers are remembered")
+    ap.add_argument("--session2", action="store_true", help="start a second session for the same case (earlier answers are remembered)")
     ap.add_argument("--list-cases", action="store_true", help="list the available cases and exit")
     ap.add_argument("--show-graph", action="store_true", help="print the graph as Mermaid and exit")
     args = ap.parse_args(argv)
@@ -124,10 +126,33 @@ def main(argv=None) -> int:
         for c in (_j.loads(idx.read_text(encoding="utf-8")) if idx.exists() else []):
             print(f"{c['case_id']:<6} {c['difficulty']:<7} {', '.join(c['tags'])}")
         return 0
-    case_dir = config.CASES_DIR / args.case
-    case = json.loads((case_dir / "input.json").read_text(encoding="utf-8"))
+    key_dir = config.CASES_DIR / args.case
+    if args.proofs:
+        folder = Path(args.proofs)
+        form = json.loads((folder / "fields.json").read_text(encoding="utf-8")) if (folder / "fields.json").exists() else {}
+        paths = intake.list_proofs(folder)
+        if args.later:
+            paths += intake.list_proofs(folder / "later")
+        built = intake.build_case(paths, form)
+        print(f"{BOLD}WHAT WARIS READ{RESET} from {len(paths)} uploaded file(s):")
+        for r in built["reads"]:
+            print(f"  {r['file']:<32} {r['doc_code'] or 'not recognised':<26} " + (f"read, confidence {r['confidence']}" if r["readable"] else f"UNREADABLE ({r['reason']})"))
+        for i in built["issues"]:
+            print(f"  note: {i}")
+        if built["case"] is None:
+            print("Cannot build the case: " + "; ".join(built["needs"]))
+            return 2
+        case = built["case"]
+        d = case["deceased"]
+        print(f"  deceased: {d['name']} (born {d['dob'] or 'unknown'}, died {d['dod']}, {d['city']}); claimant: {case['claimant']['name']}, "
+              f"{case['claimant']['relationship']}, claiming as {case['claimant']['claimant_type']}; checking {', '.join(case['claim_for'])}\n")
+        idx = config.CASES_DIR / "index.json"
+        match = next((c["case_id"] for c in (json.loads(idx.read_text(encoding="utf-8")) if idx.exists() else []) if c["folder"] == folder.name), None)
+        key_dir = config.CASES_DIR / (match or ("meena" if folder.name.endswith("_demo") else "_none"))
+    else:
+        case = json.loads((key_dir / "input.json").read_text(encoding="utf-8"))
+    case_dir = key_dir
     cfg = {"configurable": {"thread_id": case["case_id"]}}
-    portal_tools.set_case(case["case_id"] if (case_dir / "portals.db").exists() else None)
     if args.fresh or args.forget or args.session2:
         clear_thread(saver, case["case_id"])
     if args.forget:
@@ -153,9 +178,8 @@ def main(argv=None) -> int:
             print(f"Case '{case['case_id']}' already finished. Use --fresh to run it again.")
             state = snap.values
         else:
-            scans = case.get("scans", []) + (case.get("session2_scans", []) if args.session2 else [])
-            state = drive(graph, cfg, {"case_id": case["case_id"], "deceased": case["deceased"],
-                                       "claimant": case["claimant"], "scans": scans},
+            state = drive(graph, cfg, {"case_id": case["case_id"], "deceased": case["deceased"], "claimant": case["claimant"],
+                                       "scans": case.get("scans", []), "claim_for": case.get("claim_for", ["bank", "insurer", "registry"])},
                           scripted, args.exit_at_pause)
         print(f"\n{BOLD}FINAL CLAIM PACKS{RESET}  (rounds used: {state.get('round', 0)}, "
               f"LLM calls: {state.get('llm_calls', 0)}/{config.MAX_LLM_CALLS})")

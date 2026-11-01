@@ -15,10 +15,19 @@
     "relationship": "spouse",
     "claimant_type": "legal_heir",
     "has_nomination": false,
-    "documents_available": []
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF"
+    ]
   },
-  "scans": [
-    "scans/death_certificate.png",
-    "scans/identity_proof.png"
-  ]
+  "scans": [],
+  "proof_folder": "muthuswamy_subramanian_easy",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

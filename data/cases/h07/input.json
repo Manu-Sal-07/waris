@@ -15,10 +15,18 @@
     "relationship": "son",
     "claimant_type": "legal_heir",
     "has_nomination": false,
-    "documents_available": []
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF"
+    ]
   },
-  "scans": [
-    "scans/death_certificate.png",
-    "scans/identity_proof.png"
-  ]
+  "scans": [],
+  "proof_folder": "sundaram_pillai_hard",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

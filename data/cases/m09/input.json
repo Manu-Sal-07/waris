@@ -18,8 +18,17 @@
     "documents_available": [
       "DOC_CLAIMANT_KYC",
       "DOC_DEATH_CERT",
-      "DOC_INDEMNITY_BOND"
+      "DOC_INDEMNITY_BOND",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "mohammed_rafiq_sheikh_medium",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

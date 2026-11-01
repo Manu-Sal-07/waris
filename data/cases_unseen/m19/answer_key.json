@@ -1,6 +1,16 @@
 {
   "case_id": "m19",
   "difficulty": "medium",
+  "proof_folder": "parthasarathy_subramanian_medium",
+  "form": {
+    "claim_for": [
+      "bank",
+      "insurer",
+      "registry"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [],
   "namesake_record_ids": [],
@@ -9,11 +19,12 @@
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": true,
   "tags": [
     "claimant_nominee",
-    "no_assets"
+    "no_assets",
+    "scan_clean"
   ]
 }

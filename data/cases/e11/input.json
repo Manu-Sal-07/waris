@@ -17,11 +17,20 @@
     "has_nomination": true,
     "documents_available": [
       "DOC_CLAIM_FORM_BANK",
+      "DOC_DEATH_CERT",
       "DOC_NOMINEE_KYC",
+      "DOC_RELATIONSHIP_PROOF",
       "DOC_TRANSMISSION_FORM"
     ]
   },
-  "scans": [
-    "scans/death_certificate.png"
-  ]
+  "scans": [],
+  "proof_folder": "krishnan_raghavan_easy",
+  "form": {
+    "claim_for": [
+      "bank",
+      "registry"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  }
 }

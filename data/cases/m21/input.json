@@ -1,13 +1,13 @@
 {
   "case_id": "m21",
   "deceased": {
-    "name": "Krishnan Krishnamurthy",
+    "name": "Venkatesh Shetty",
     "aliases": [],
-    "dob": "1936-07-18",
-    "dod": "2017-03-22",
-    "city": "Jaipur",
+    "dob": "1936-09-02",
+    "dod": "2016-07-07",
+    "city": "Mumbai",
     "addresses": [
-      "Jaipur"
+      "Mumbai"
     ]
   },
   "claimant": {
@@ -17,8 +17,17 @@
     "has_nomination": false,
     "documents_available": [
       "DOC_CLAIMANT_KYC",
-      "DOC_DEATH_CERT"
+      "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "venkatesh_shetty_medium",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

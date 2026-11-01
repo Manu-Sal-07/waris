@@ -1,24 +1,33 @@
 {
   "case_id": "h12",
   "deceased": {
-    "name": "Seshadri Ramachandran",
+    "name": "Gopalakrishnan Gowda",
     "aliases": [],
-    "dob": "1946-09-06",
-    "dod": "2024-10-04",
-    "city": "Mumbai",
+    "dob": "1958-06-17",
+    "dod": "2022-11-23",
+    "city": "Lucknow",
     "addresses": [
-      "Mumbai"
+      "Lucknow"
     ]
   },
   "claimant": {
     "name": "Gaurika Lala",
-    "relationship": "daughter",
+    "relationship": "grandson",
     "claimant_type": "legal_heir",
     "has_nomination": false,
     "documents_available": [
       "DOC_CLAIMANT_KYC",
-      "DOC_DEATH_CERT"
+      "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "gopalakrishnan_gowda_hard",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

@@ -1,11 +1,20 @@
 {
   "case_id": "h09",
   "difficulty": "hard",
+  "proof_folder": "sundaram_raghavan_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "registry"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "shares",
-      "record_id": "R003",
+      "record_id": "R4903",
       "needs_human_confirmation": false,
       "status": "NEEDS_HUMAN_REVIEW",
       "required_docs": [
@@ -23,7 +32,7 @@
     },
     {
       "asset_type": "bank_deposit",
-      "record_id": "B004",
+      "record_id": "B4904",
       "needs_human_confirmation": false,
       "status": "NEEDS_HUMAN_REVIEW",
       "required_docs": [
@@ -47,15 +56,15 @@
   ],
   "namesake_record_ids": [],
   "lookalike_record_ids": [
-    "B002",
-    "R001"
+    "B4902",
+    "R4901"
   ],
   "expected_questions": [],
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": true,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",
@@ -64,6 +73,7 @@
     "doc_conflict",
     "docs_missing",
     "name_spelling",
+    "scan_clean",
     "scan_rotated"
   ]
 }

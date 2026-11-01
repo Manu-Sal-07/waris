@@ -1,24 +1,33 @@
 {
   "case_id": "h05",
   "deceased": {
-    "name": "Anantharaman Srinivasan",
+    "name": "Gopalakrishnan Chandrasekhar",
     "aliases": [],
     "dob": null,
-    "dod": "2024-04-18",
-    "city": "Kochi",
+    "dod": "2021-07-12",
+    "city": "Hyderabad",
     "addresses": [
-      "Kochi"
+      "Hyderabad"
     ]
   },
   "claimant": {
     "name": "Ikbal Bora",
-    "relationship": "granddaughter",
+    "relationship": "son",
     "claimant_type": "legal_heir",
     "has_nomination": false,
     "documents_available": [
       "DOC_CLAIMANT_KYC",
-      "DOC_DEATH_CERT"
+      "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "gopalakrishnan_chandrasekhar_hard",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

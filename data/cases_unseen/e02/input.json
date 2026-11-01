@@ -18,8 +18,17 @@
     "documents_available": [
       "DOC_CLAIMANT_KYC",
       "DOC_CLAIM_FORM_BANK",
-      "DOC_DEATH_CERT"
+      "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "seshadri_reddy_easy",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

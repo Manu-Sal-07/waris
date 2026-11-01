@@ -36,6 +36,8 @@ def run_baseline(case: dict) -> dict:
     dec, have = case["deceased"], set(case["claimant"].get("documents_available", [])) | set(state["docs_from_scans"])
     cands, packs, tools_done, errors = [], {}, [], []
     for inst, (atype, tool) in _ASSET.items():
+        if inst not in case.get("claim_for", list(_ASSET)):
+            continue
         res = portals.TOOLS[tool](name=dec["name"])
         tools_done.append(tool)
         if not res["ok"]:

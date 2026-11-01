@@ -1,11 +1,19 @@
 {
   "case_id": "m03",
   "difficulty": "medium",
+  "proof_folder": "seshadri_krishnamurthy_medium",
+  "form": {
+    "claim_for": [
+      "registry"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "shares",
-      "record_id": "R003",
+      "record_id": "R1803",
       "needs_human_confirmation": false,
       "status": "READY",
       "required_docs": [
@@ -26,13 +34,14 @@
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",
     "claimant_legal_heir",
     "name_initials",
-    "ready"
+    "ready",
+    "scan_clean"
   ]
 }

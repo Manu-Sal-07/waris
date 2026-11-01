@@ -1,25 +1,35 @@
 {
   "case_id": "h01",
   "deceased": {
-    "name": "Sundaram Chandrasekhar",
+    "name": "Ramaswamy Raghavan",
     "aliases": [],
-    "dob": "1931-08-01",
-    "dod": "2021-10-04",
-    "city": "Mangaluru",
+    "dob": "1936-06-22",
+    "dod": "2016-04-02",
+    "city": "Chennai",
     "addresses": [
-      "Mangaluru"
+      "Chennai"
     ]
   },
   "claimant": {
     "name": "Mekhala Batra",
-    "relationship": "daughter",
+    "relationship": "son",
     "claimant_type": "legal_heir",
     "has_nomination": false,
     "documents_available": [
       "DOC_CLAIMANT_KYC",
       "DOC_DEATH_CERT",
-      "DOC_INDEMNITY_BOND"
+      "DOC_INDEMNITY_BOND",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "ramaswamy_raghavan_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "registry"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

@@ -1,25 +1,34 @@
 {
   "case_id": "m02",
   "deceased": {
-    "name": "Narasimhan Ramachandran",
+    "name": "Anantharaman Chandrasekhar",
     "aliases": [],
-    "dob": "1958-02-21",
-    "dod": "2024-04-20",
-    "city": "Mumbai",
+    "dob": "1944-06-09",
+    "dod": "2018-10-07",
+    "city": "Coimbatore",
     "addresses": [
-      "Mumbai"
+      "Coimbatore"
     ]
   },
   "claimant": {
     "name": "Inaya Seshadri",
-    "relationship": "spouse",
+    "relationship": "son",
     "claimant_type": "nominee",
     "has_nomination": true,
     "documents_available": [
-      "DOC_CLAIM_FORM_INSURER",
       "DOC_DEATH_CERT",
-      "DOC_NOMINEE_KYC"
+      "DOC_NOMINEE_KYC",
+      "DOC_POLICY_BOND",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "anantharaman_chandrasekhar_medium",
+  "form": {
+    "claim_for": [
+      "insurer"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  }
 }

@@ -50,7 +50,7 @@ def fig_architecture():
     for y, lab in ((6.1, "INTERFACE &\nGUARDS"), (4.0, "ORCHESTRATION\n(LangGraph)"), (2.3, "TOOLS"), (0.8, "DATA")):
         ax.text(0.2, y, lab, fontsize=8.5, color=GREY, fontweight="bold", va="center")
     box(ax, 4.2, 6.1, 2.9, 0.8, "HUMAN GATES\nidentity confirm · final release\n(LangGraph interrupt)", fc="#E4ECF7", ec=BLUE, fs=8.2)
-    box(ax, 7.6, 6.1, 3.0, 0.8, "Family / claimant\nCLI now · Streamlit in Review 3", fc="white", ec=GREY, fs=8.8)
+    box(ax, 7.6, 6.1, 3.0, 0.8, "Family uploads proofs\nOCR reads them → case\nStreamlit UI · CLI", fc="white", ec=GREY, fs=8.8)
     box(ax, 11.0, 6.1, 2.9, 0.8, "GUARDRAILS\nPII mask · input check ·\ninjection flag · hard limits", fc="#F9E3E0", ec=RED, fs=8.2)
     arrow(ax, (7.6, 5.7), (7.6, 5.55), color=GREY)
     arrow(ax, (5.65, 5.95), (6.2, 5.55), color=BLUE, ls="--", lw=1)
@@ -73,7 +73,7 @@ def fig_architecture():
              ("match_name +\nidentity_score\n(RapidFuzz + variant rules)", 5.3, False),
              ("retrieve_rules +\ngrade_rule\n(2-stage grading)", 7.6, False),
              ("compute_status\n(fixed code,\nno LLM)", 9.9, False),
-             ("OCR · letters\n(Review 3)", 12.1, True)]
+             ("ocr_document ·\ndraft_letters\n(RapidOCR, validated)", 12.1, False)]
     for t, x, dashed in tools:
         box(ax, x, 2.15, 1.9 if dashed else 2.1, 0.95, t, fc="white", ec=TEAL, fs=7.8, ls="--" if dashed else "-")
     ax.text(11.6, 1.3, "LLM (Ollama, temperature 0): only chooses the\nnext tool and grades borderline rules",
@@ -106,7 +106,7 @@ def fig_graph():
            "verifier": (AMBER_L, AMBER), "doc_intake": ("#E8F5E9", GREEN), "draft_letters": ("#E8F5E9", GREEN)}
     for n, (x, y) in nodes.items():
         fc, ec = sty.get(n, (TEAL_L, TEAL))
-        box(ax, x, y, 0.9 if n in ("START", "END") else 1.7, 0.62, n, fc=fc, ec=ec, fs=8.4, bold=True)
+        box(ax, x, y, 0.9 if n in ("START", "END") else 1.7, 0.62, "upload+OCR" if n == "START" else n, fc=fc, ec=ec, fs=8.0 if n == "START" else 8.4, bold=True)
     for xa, xb in ((1.15, 1.65), (3.35, 3.7), (5.4, 5.6), (7.3, 7.45), (9.15, 9.35)):
         arrow(ax, (xa, A), (xb, A))
     arrow(ax, (11.05, A + 0.1), (11.85, A + 0.1), color=BLUE)

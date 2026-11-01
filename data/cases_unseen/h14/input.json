@@ -16,11 +16,18 @@
     "claimant_type": "nominee",
     "has_nomination": true,
     "documents_available": [
-      "DOC_NOMINEE_KYC"
+      "DOC_NOMINEE_KYC",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": [
-    "scans/identity_proof.png",
-    "scans/death_certificate.png"
-  ]
+  "scans": [],
+  "proof_folder": "ranganathan_ramachandran_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "insurer"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  }
 }

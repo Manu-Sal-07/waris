@@ -1,24 +1,33 @@
 {
   "case_id": "h13",
   "deceased": {
-    "name": "Venkatesh Srinivasan",
+    "name": "Gopalakrishnan Venkataraman",
     "aliases": [],
-    "dob": "1960-08-08",
-    "dod": "2019-04-03",
-    "city": "Nagpur",
+    "dob": "1935-11-18",
+    "dod": "2018-12-12",
+    "city": "Thrissur",
     "addresses": [
-      "Nagpur"
+      "Thrissur"
     ]
   },
   "claimant": {
     "name": "Harinakshi Mangal",
-    "relationship": "son",
+    "relationship": "grandson",
     "claimant_type": "legal_heir",
     "has_nomination": false,
-    "documents_available": []
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_RELATIONSHIP_PROOF"
+    ]
   },
-  "scans": [
-    "scans/identity_proof.png",
-    "scans/death_certificate.png"
-  ]
+  "scans": [],
+  "proof_folder": "gopalakrishnan_venkataraman_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "registry"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

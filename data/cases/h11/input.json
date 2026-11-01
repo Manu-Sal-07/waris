@@ -16,11 +16,19 @@
     "claimant_type": "legal_heir",
     "has_nomination": false,
     "documents_available": [
-      "DOC_CLAIMANT_KYC"
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": [
-    "scans/death_certificate.png",
-    "scans/legal_heir_certificate.png"
-  ]
+  "scans": [],
+  "proof_folder": "sundaram_shetty_hard",
+  "form": {
+    "claim_for": [
+      "insurer",
+      "registry"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

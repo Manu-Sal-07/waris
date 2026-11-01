@@ -18,8 +18,17 @@
     "documents_available": [
       "DOC_CLAIMANT_KYC",
       "DOC_DEATH_CERT",
-      "DOC_NAME_VARIATION_AFFIDAVIT"
+      "DOC_NAME_VARIATION_AFFIDAVIT",
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "anantharaman_balasubramanian_medium",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  }
 }

@@ -1,11 +1,20 @@
 {
   "case_id": "e11",
   "difficulty": "easy",
+  "proof_folder": "krishnan_raghavan_easy",
+  "form": {
+    "claim_for": [
+      "bank",
+      "registry"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "bank_deposit",
-      "record_id": "B003",
+      "record_id": "B1103",
       "needs_human_confirmation": false,
       "status": "READY",
       "required_docs": [
@@ -18,7 +27,7 @@
     },
     {
       "asset_type": "shares",
-      "record_id": "R003",
+      "record_id": "R1103",
       "needs_human_confirmation": false,
       "status": "READY",
       "required_docs": [
@@ -36,8 +45,8 @@
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",

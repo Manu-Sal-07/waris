@@ -1,11 +1,21 @@
 {
   "case_id": "h20",
   "difficulty": "hard",
+  "proof_folder": "krishnan_naidu_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "insurer",
+      "registry"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "bank_deposit",
-      "record_id": "B001",
+      "record_id": "B6001",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -20,7 +30,7 @@
     },
     {
       "asset_type": "life_insurance",
-      "record_id": "I003",
+      "record_id": "I6003",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -37,11 +47,11 @@
     }
   ],
   "namesake_record_ids": [
-    "I001"
+    "I6001"
   ],
   "lookalike_record_ids": [
-    "B005",
-    "R003"
+    "B6005",
+    "R6003"
   ],
   "expected_questions": [],
   "expect_tool_error": true,
@@ -49,8 +59,8 @@
     "shares"
   ],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",
@@ -58,6 +68,7 @@
     "clean",
     "docs_missing",
     "namesake",
+    "scan_clean",
     "tool_fault"
   ]
 }

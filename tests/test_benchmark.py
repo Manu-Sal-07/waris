@@ -1,11 +1,13 @@
-"""Benchmark tests: the 60-case generator, the OCR/intake path, letters, baseline, ablations, judge and metrics.
+"""Benchmark tests: the 60-case generator, proof documents and OCR intake, the documents-first pipeline, letters, baseline,
+ablations, judge and metrics.
 
-Scenario tests run the real graph on generated cases with the LLM switched off (fixed fallbacks), so they are fast and
-deterministic; set WARIS_TEST_ALL=1 to run every one of the 60 cases.
+Scenario tests rebuild each case FROM ITS PROOF FILES by OCR (exactly what a family upload does) and run the real graph with the
+LLM switched off (fixed fallbacks), so they are deterministic; set WARIS_TEST_ALL=1 to run all 60 cases.
 """
 import json
 import os
 from collections import Counter
+from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
@@ -13,17 +15,23 @@ from fastapi.testclient import TestClient
 from data import generate_cases as gen
 from eval import judge, run_eval
 from eval.metrics import score_case
-from waris import baseline, config, llm
+from waris import baseline, config, intake, llm
 from waris.agents import letters
 from waris.guardrails import validate_case_input
 from waris.tools import ocr, portals, retrieval
 
 IDX = json.loads((config.CASES_DIR / "index.json").read_text(encoding="utf-8"))
 SPLIT = json.loads((config.CASES_DIR / "split.json").read_text(encoding="utf-8"))
+FOLDER = {c["case_id"]: config.ROOT / "demo_proofs" / c["folder"] for c in IDX}
 CATALOGUE = ["clean", "name_initials", "name_spelling", "name_translit", "name_order", "name_maiden", "namesake",
              "namesake_ambiguous", "partial_info", "no_assets", "multi_account", "claimant_nominee", "claimant_legal_heir",
              "amount_small", "amount_large", "joint_account", "docs_missing", "doc_conflict", "no_rule", "later_session",
              "scan_clean", "scan_rotated", "scan_blurry", "scan_faded", "scan_inject", "tool_fault"]
+
+
+def truth(cid):
+    d = config.CASES_DIR / cid
+    return (json.loads((d / "input.json").read_text(encoding="utf-8")), json.loads((d / "answer_key.json").read_text(encoding="utf-8")))
 
 
 @pytest.fixture(scope="module", autouse=True)
@@ -37,7 +45,6 @@ def _env(tmp_path_factory):
     retrieval.index_rules()
     yield tmp
     portals.set_client(None)
-    portals.set_case(None)
     llm.set_enabled(True)
     config.ABLATE.clear()
     mp.undo()
@@ -45,7 +52,8 @@ def _env(tmp_path_factory):
 
 # ---------------------------------------------------------------- data generator
 def test_generator_is_deterministic():
-    a, b = gen.build_case(next(r for r in gen.recipes() if r.id == "h01")), gen.build_case(next(r for r in gen.recipes() if r.id == "h01"))
+    r = next(r for r in gen.recipes() if r.id == "h01")
+    a, b = gen.build_case(r), gen.build_case(r)
     assert a["input"] == b["input"] and a["key"] == b["key"]
     assert [x["holder_name"] for x in a["rows"]["bank"]] == [x["holder_name"] for x in b["rows"]["bank"]]
 
@@ -62,11 +70,29 @@ def test_every_catalogue_scenario_appears_at_least_three_times():
     assert [t for t in CATALOGUE if counts[t] < 3] == []
 
 
+def test_proof_folders_are_named_after_the_deceased_and_difficulty():
+    for c in IDX:
+        d, _ = truth(c["case_id"])
+        assert c["folder"] == gen._slug(d["deceased"]["name"]) + "_" + c["difficulty"]
+        assert FOLDER[c["case_id"]].is_dir() and (FOLDER[c["case_id"]] / "README.txt").exists()
+    assert (config.ROOT / "demo_proofs" / "ramaswamy_subramanian_demo" / "01_death_certificate.png").exists()
+    assert len({c["folder"] for c in IDX}) == 60
+
+
+def test_one_shared_portal_database_holds_every_family():
+    import sqlite3
+    con = sqlite3.connect(config.PORTAL_DB)
+    ids = [r[0] for t in ("bank", "insurer", "registry") for r in con.execute(f"select record_id from {t}")]
+    assert len(ids) == len(set(ids)) and len(ids) > 300
+    for cid in ("e01", "h07", "m22"):                    # each case's true record is in the shared database under its global id
+        _, key = truth(cid)
+        for a in key["assets"]:
+            assert a["record_id"] in ids
+
+
 def test_inputs_validate_and_keys_are_consistent():
     for c in IDX:
-        d = config.CASES_DIR / c["case_id"]
-        case = json.loads((d / "input.json").read_text(encoding="utf-8"))
-        key = json.loads((d / "answer_key.json").read_text(encoding="utf-8"))
+        case, key = truth(c["case_id"])
         validate_case_input({k: case[k] for k in ("case_id", "deceased", "claimant", "scans")})
         for a in key["assets"]:
             assert set(a["missing"]) <= set(a["required_docs"])
@@ -74,25 +100,64 @@ def test_inputs_validate_and_keys_are_consistent():
                 assert not a["missing"]
             if a["status"] == "MISSING_ITEMS":
                 assert a["missing"]
-        for s in case["scans"]:
-            assert (d / s).exists()
+        for rel in key.get("later_files", []):
+            assert (FOLDER[c["case_id"]] / rel).exists()
 
 
-def test_generator_self_check_agrees_with_the_identity_policy_and_ocr():
+def test_generator_rows_follow_the_identity_policy():
     r = next(r for r in gen.recipes() if r.id == "h05")
-    assert gen.validate(gen.build_case(r), ocr=False) == []
+    assert gen.validate_rows(gen.build_case(r), []) == []
 
 
 # ---------------------------------------------------------------- OCR and intake
-def test_ocr_reads_clean_and_rotated_scans_and_refuses_blurry_ones():
-    ok = ocr.read_scan(config.CASES_DIR / "e11" / "scans" / "death_certificate.png")
-    assert ok["readable"] and ok["doc_code"] == "DOC_DEATH_CERT" and ok["fields"]["dob"]
-    assert ocr.read_scan(config.CASES_DIR / "e14" / "scans" / "death_certificate.png")["readable"]       # rotated
-    bad = ocr.read_scan(config.CASES_DIR / "h13" / "scans" / "death_certificate.png")                    # blurry
-    assert not bad["readable"]
+def test_ocr_reads_clean_and_rotated_proofs_and_refuses_blurry_ones():
+    ok = ocr.read_scan(FOLDER["e11"] / "01_death_certificate.png")
+    assert ok["readable"] and ok["doc_code"] == "DOC_DEATH_CERT" and ok["entities"]["deceased_dod"]
+    assert ocr.read_scan(FOLDER["e14"] / "01_death_certificate.png")["readable"]                       # rotated
+    assert not ocr.read_scan(FOLDER["h13"] / "01_death_certificate.png")["readable"]                   # blurry
+    assert ocr.read_scan(FOLDER["e01"] / "03_relationship_proof.png")["doc_code"] == "DOC_RELATIONSHIP_PROOF"
 
 
-# ---------------------------------------------------------------- scenarios, end to end
+def test_case_is_built_from_the_uploaded_documents():
+    truth_input, key = truth("e01")
+    b = intake.build_case(intake.list_proofs(FOLDER["e01"]), key["form"])
+    c = b["case"]
+    assert b["needs"] == [] and all(b["essentials"].values())
+    assert c["deceased"]["name"] == truth_input["deceased"]["name"] and c["deceased"]["dob"] == truth_input["deceased"]["dob"]
+    assert c["deceased"]["dod"] == truth_input["deceased"]["dod"] and c["deceased"]["city"] == truth_input["deceased"]["city"]
+    assert c["claimant"]["name"] == truth_input["claimant"]["name"] and c["claimant"]["relationship"] == truth_input["claimant"]["relationship"]
+    assert c["claimant"]["claimant_type"] == "legal_heir" and c["claim_for"] == ["bank"]
+    assert b["sources"]["deceased_name"].startswith("read from the death certificate")
+    assert intake.case_id_for(c["deceased"]["name"], c["deceased"]["dob"], c["deceased"]["dod"]) == c["case_id"]
+
+
+def test_maiden_name_comes_from_the_death_certificate_and_form_fields_are_respected():
+    _, key = truth("m12")
+    b = intake.build_case(intake.list_proofs(FOLDER["m12"]), {**key["form"], "claiming_as": "nominee", "other_names": "Savitri Rao, Savi"})
+    assert b["case"]["deceased"]["aliases"][0] in truth("m12")[0]["deceased"]["aliases"]          # 'Also known as' line on the certificate
+    assert {"Savitri Rao", "Savi"} <= set(b["case"]["deceased"]["aliases"])                         # typed in the form
+    assert b["case"]["claimant"]["claimant_type"] == "nominee" and b["case"]["claimant"]["has_nomination"]
+
+
+def test_unreadable_death_certificate_falls_back_to_what_the_family_types():
+    d, key = truth("h13")                                                       # the death certificate is blurry
+    paths = intake.list_proofs(FOLDER["h13"])
+    no_help = intake.build_case(paths, key["form"])
+    assert no_help["essentials"]["death_certificate"] is False
+    assert no_help["case"] is not None and no_help["case"]["deceased"]["name"] == d["deceased"]["name"]    # the relationship proof names the deceased
+    assert no_help["case"]["deceased"]["dod"] is None                                                        # but only the certificate has the date of death
+    typed = intake.build_case(paths, key["form"], fallback={"deceased_dod": d["deceased"]["dod"]})
+    assert typed["case"]["deceased"]["dod"] == d["deceased"]["dod"] and typed["sources"]["deceased_dod"].startswith("typed")
+
+
+def test_missing_essentials_are_listed_and_a_typed_value_wins():
+    b = intake.build_case([], {})
+    assert b["case"] is None and any("deceased" in n for n in b["needs"]) and any("claimant" in n for n in b["needs"])
+    c = intake.build_case(intake.list_proofs(FOLDER["e01"]), {}, override={"deceased_name": "Typed Name", "relationship": "nephew"})
+    assert c["case"]["deceased"]["name"] == "Typed Name" and c["case"]["claimant"]["relationship"] == "nephew"
+
+
+# ---------------------------------------------------------------- scenarios, end to end (documents first)
 REPRESENTATIVE = ["e01", "e04", "e11", "m01", "m03", "m07", "m10", "m12", "m15", "m18", "m22", "m23", "m25", "h01", "h04", "h05",
                   "h07", "h10", "h12", "h13", "h14", "h16", "h18", "h19", "h20"]
 CASES = [c["case_id"] for c in IDX] if os.getenv("WARIS_TEST_ALL") else REPRESENTATIVE
@@ -101,6 +166,7 @@ CASES = [c["case_id"] for c in IDX] if os.getenv("WARIS_TEST_ALL") else REPRESEN
 @pytest.mark.parametrize("cid", CASES)
 def test_scenario_matches_answer_key(cid, tmp_path):
     row = run_eval.run_one(cid, "full_nollm", 0, tmp_path, save_letters=False)
+    assert row["ex_ok"] == row["ex_n"], row["ex_failed"]                    # OCR rebuilt exactly the case the generator started from
     assert row["status_accuracy"] == 1.0, row["detail"]
     assert row["wrong_person_matches"] == 0
     assert row["abstention_correct"] and row["conflict_ok"] and row["tool_error_ok"]
@@ -110,7 +176,7 @@ def test_scenario_matches_answer_key(cid, tmp_path):
     assert row["reasked_in_session2"] == 0
 
 
-def test_injection_in_a_scan_is_flagged_and_does_not_change_the_result(tmp_path):
+def test_injection_in_a_proof_is_flagged_and_does_not_change_the_result(tmp_path):
     row = run_eval.run_one("h13", "full_nollm", 0, tmp_path, save_letters=False)
     assert row["injection_flagged"] and row["status_accuracy"] == 1.0
 
@@ -123,6 +189,14 @@ def test_namesake_and_ambiguous_record_are_never_claimed(tmp_path):
 def test_no_assets_case_claims_nothing(tmp_path):
     row = run_eval.run_one("m18", "full_nollm", 0, tmp_path, save_letters=False)
     assert row["statuses"] == {} and row["n_truth"] == 0 and row["wrong_person_matches"] == 0
+
+
+def test_only_the_selected_institutions_are_searched(tmp_path):
+    d, key = truth("e01")
+    b = intake.build_case(intake.list_proofs(FOLDER["e01"]), {**key["form"], "claim_for": ["insurer"]})
+    assert b["case"]["claim_for"] == ["insurer"]
+    row = run_eval.run_one("e01", "full_nollm", 0, tmp_path, save_letters=False)
+    assert row["tool_calls"] == 1                                            # e01 asks about banks only
 
 
 # ---------------------------------------------------------------- letters
@@ -152,8 +226,8 @@ def test_llm_paragraph_is_validated():
 
 
 def test_letters_are_written_for_claimable_assets_only(tmp_path):
+    config.LETTER_LLM = False
     for cid, n in (("e04", 1), ("h10", 1)):                       # h10: one asset abstained -> no letter for it
-        config.LETTER_LLM = False
         row = run_eval.run_one(cid, "full_nollm", 0, tmp_path, save_letters=False)
         assert row["letters"] == n
 
@@ -161,9 +235,9 @@ def test_letters_are_written_for_claimable_assets_only(tmp_path):
 # ---------------------------------------------------------------- baseline, ablations, judge, metrics
 def test_baseline_trusts_the_top_rule_without_grading():
     llm.disable()
-    portals.set_case("e04")
-    case = json.loads((config.CASES_DIR / "e04" / "input.json").read_text(encoding="utf-8"))
-    state = baseline.run_baseline(case)
+    _, key = truth("e04")
+    b = intake.build_case(intake.list_proofs(FOLDER["e04"]), key["form"])
+    state = baseline.run_baseline(b["case"])
     pack = next(iter(state["claim_packs"].values()))
     assert pack["notes"][0].startswith("baseline") and state["verifier_feedback"] == [] and state["human_answers"] == []
 

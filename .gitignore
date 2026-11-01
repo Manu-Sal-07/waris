@@ -17,3 +17,5 @@ traces/
 ~$*
 *.docx#
 data/uploads/
+results/ui_check/
+data/uploads/

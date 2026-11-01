@@ -1,13 +1,13 @@
 {
   "case_id": "e07",
   "deceased": {
-    "name": "Sundaram Ramachandran",
+    "name": "Narasimhan Raghavan",
     "aliases": [],
-    "dob": "1946-07-05",
-    "dod": "2018-06-03",
-    "city": "Hubballi",
+    "dob": "1938-04-28",
+    "dod": "2020-02-20",
+    "city": "Nagpur",
     "addresses": [
-      "Hubballi"
+      "Nagpur"
     ]
   },
   "claimant": {
@@ -16,10 +16,19 @@
     "claimant_type": "nominee",
     "has_nomination": true,
     "documents_available": [
+      "DOC_CLAIM_FORM_INSURER",
       "DOC_DEATH_CERT",
       "DOC_NOMINEE_KYC",
-      "DOC_POLICY_BOND"
+      "DOC_RELATIONSHIP_PROOF"
     ]
   },
-  "scans": []
+  "scans": [],
+  "proof_folder": "narasimhan_raghavan_easy",
+  "form": {
+    "claim_for": [
+      "insurer"
+    ],
+    "claiming_as": "nominee",
+    "other_names": ""
+  }
 }

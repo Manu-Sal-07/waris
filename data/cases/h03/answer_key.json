@@ -1,11 +1,20 @@
 {
   "case_id": "h03",
   "difficulty": "hard",
+  "proof_folder": "ramaswamy_venkataraman_hard",
+  "form": {
+    "claim_for": [
+      "bank",
+      "registry"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "bank_deposit",
-      "record_id": "B005",
+      "record_id": "B4302",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -27,7 +36,7 @@
     },
     {
       "asset_type": "shares",
-      "record_id": "R005",
+      "record_id": "R4301",
       "needs_human_confirmation": false,
       "status": "MISSING_ITEMS",
       "required_docs": [
@@ -44,16 +53,18 @@
     }
   ],
   "namesake_record_ids": [
-    "B004",
-    "R002"
+    "B4301",
+    "R4304"
   ],
-  "lookalike_record_ids": [],
+  "lookalike_record_ids": [
+    "R4302"
+  ],
   "expected_questions": [],
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": false,
-  "unreadable_scans": [],
-  "injection_scans": [],
+  "unreadable_files": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",
@@ -61,6 +72,7 @@
     "clean",
     "docs_missing",
     "name_order",
-    "namesake"
+    "namesake",
+    "scan_clean"
   ]
 }

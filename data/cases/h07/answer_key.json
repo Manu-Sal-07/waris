@@ -1,11 +1,19 @@
 {
   "case_id": "h07",
   "difficulty": "hard",
+  "proof_folder": "sundaram_pillai_hard",
+  "form": {
+    "claim_for": [
+      "bank"
+    ],
+    "claiming_as": "legal_heir",
+    "other_names": ""
+  },
   "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
   "assets": [
     {
       "asset_type": "bank_deposit",
-      "record_id": "B002",
+      "record_id": "B4702",
       "needs_human_confirmation": false,
       "status": "NEEDS_HUMAN_REVIEW",
       "required_docs": [
@@ -34,10 +42,10 @@
   "expect_tool_error": false,
   "unreachable_assets": [],
   "doc_conflict": true,
-  "unreadable_scans": [
-    "scans/identity_proof.png"
+  "unreadable_files": [
+    "02_claimant_id.png"
   ],
-  "injection_scans": [],
+  "injection_files": [],
   "no_assets": false,
   "tags": [
     "amount_small",
