@@ -1,0 +1,23 @@
+{
+  "case_id": "e03",
+  "deceased": {
+    "name": "Venkatesh Krishnamurthy",
+    "aliases": [],
+    "dob": "1937-03-27",
+    "dod": "2018-04-21",
+    "city": "Hubballi",
+    "addresses": [
+      "Hubballi"
+    ]
+  },
+  "claimant": {
+    "name": "Barkha Dass",
+    "relationship": "granddaughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC"
+    ]
+  },
+  "scans": []
+}

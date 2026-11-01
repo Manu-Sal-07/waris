@@ -61,7 +61,7 @@ class Tracer:
     def _init_langfuse(self) -> None:
         try:
             import httpx
-            host = os.getenv("LANGFUSE_HOST", "http://localhost:3000")
+            host = os.getenv("LANGFUSE_HOST", "http://localhost:3001")
             httpx.get(host + "/api/public/health", timeout=1.5).raise_for_status()
             from langfuse import Langfuse
             self._lf = Langfuse(host=host)

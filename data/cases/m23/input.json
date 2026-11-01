@@ -1,0 +1,24 @@
+{
+  "case_id": "m23",
+  "deceased": {
+    "name": "Seshadri Balasubramanian",
+    "aliases": [],
+    "dob": "1939-09-19",
+    "dod": "2015-02-20",
+    "city": "Pune",
+    "addresses": [
+      "Pune"
+    ]
+  },
+  "claimant": {
+    "name": "Chakradhar Shere",
+    "relationship": "daughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

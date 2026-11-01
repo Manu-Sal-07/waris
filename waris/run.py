@@ -15,6 +15,7 @@ from langgraph.types import Command
 
 from . import config, llm, memory
 from .graph import build_graph, clear_thread, open_checkpointer
+from .tools import portals as portal_tools
 from .tools import retrieval
 from .tracing import TRACE
 
@@ -102,6 +103,9 @@ def main(argv=None) -> int:
     ap.add_argument("--answers", default="", help="scripted human answers, e.g. 'y,y' (otherwise asks in the terminal)")
     ap.add_argument("--exit-at-pause", action="store_true", help="demo durable resume: stop the process at the first pause")
     ap.add_argument("--no-llm", action="store_true", help="deterministic fallbacks only")
+    ap.add_argument("--session2", action="store_true",
+                    help="a later session: the family sends the documents listed under session2_scans; earlier answers are remembered")
+    ap.add_argument("--list-cases", action="store_true", help="list the available cases and exit")
     ap.add_argument("--show-graph", action="store_true", help="print the graph as Mermaid and exit")
     args = ap.parse_args(argv)
 
@@ -113,10 +117,18 @@ def main(argv=None) -> int:
         print(graph.get_graph().draw_mermaid())
         return 0
 
+    if args.list_cases:
+        import json as _j
+        idx = config.CASES_DIR / "index.json"
+        print("meena (hand-built demo case)")
+        for c in (_j.loads(idx.read_text(encoding="utf-8")) if idx.exists() else []):
+            print(f"{c['case_id']:<6} {c['difficulty']:<7} {', '.join(c['tags'])}")
+        return 0
     case_dir = config.CASES_DIR / args.case
     case = json.loads((case_dir / "input.json").read_text(encoding="utf-8"))
     cfg = {"configurable": {"thread_id": case["case_id"]}}
-    if args.fresh or args.forget:
+    portal_tools.set_case(case["case_id"] if (case_dir / "portals.db").exists() else None)
+    if args.fresh or args.forget or args.session2:
         clear_thread(saver, case["case_id"])
     if args.forget:
         memory.forget(case["case_id"])
@@ -141,14 +153,21 @@ def main(argv=None) -> int:
             print(f"Case '{case['case_id']}' already finished. Use --fresh to run it again.")
             state = snap.values
         else:
+            scans = case.get("scans", []) + (case.get("session2_scans", []) if args.session2 else [])
             state = drive(graph, cfg, {"case_id": case["case_id"], "deceased": case["deceased"],
-                                       "claimant": case["claimant"], "scans": case.get("scans", [])},
+                                       "claimant": case["claimant"], "scans": scans},
                           scripted, args.exit_at_pause)
         print(f"\n{BOLD}FINAL CLAIM PACKS{RESET}  (rounds used: {state.get('round', 0)}, "
               f"LLM calls: {state.get('llm_calls', 0)}/{config.MAX_LLM_CALLS})")
         for aid, p in state["claim_packs"].items():
             print(f"  {aid:<22} {p['status']:<20} missing: {', '.join(p['missing']) or '-'}")
         print_scorecard(state, case_dir)
+        if state.get("letters"):
+            ld = config.TRACE_DIR / f"{case['case_id']}_letters"
+            ld.mkdir(parents=True, exist_ok=True)
+            for aid, text in state["letters"].items():
+                (ld / (aid.replace(":", "_") + ".txt")).write_text(text, encoding="utf-8")
+            print(f"\n{len(state['letters'])} claim letter(s) drafted for the family to review -> {ld}")
         out = TRACE.finish()
         print(f"\ntrace: {out['html']}" + ("   (also sent to Langfuse)" if out["langfuse"] else ""))
         return 0

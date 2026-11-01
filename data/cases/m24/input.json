@@ -1,0 +1,25 @@
+{
+  "case_id": "m24",
+  "deceased": {
+    "name": "Parthasarathy Chandrasekhar",
+    "aliases": [],
+    "dob": "1942-03-25",
+    "dod": "2015-02-17",
+    "city": "Chennai",
+    "addresses": [
+      "Chennai"
+    ]
+  },
+  "claimant": {
+    "name": "Ansh Guha",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT",
+      "DOC_SUCCESSION_CERT"
+    ]
+  },
+  "scans": []
+}

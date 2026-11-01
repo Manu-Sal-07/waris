@@ -33,6 +33,13 @@ OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2")
 OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://127.0.0.1:11434")
 USE_LLM = os.getenv("WARIS_USE_LLM", "1") == "1"
 LLM_TIMEOUT = float(os.getenv("WARIS_LLM_TIMEOUT", "60"))
+LLM_TEMPERATURE = float(os.getenv("WARIS_LLM_TEMPERATURE", "0"))
+LLM_SEED = int(os.getenv("WARIS_LLM_SEED", "0"))
+LETTER_LLM = os.getenv("WARIS_LETTER_LLM", "1") == "1"          # let the LLM write the letter's opening paragraph (validated)
+JUDGE_MODEL = os.getenv("WARIS_JUDGE_MODEL", "llama3.2")          # a different model from the one that writes: no self-marking
+
+# --- ablations (experiments): comma-separated switches, e.g. WARIS_ABLATE=no_verifier,no_grading ---
+ABLATE: set[str] = {x.strip() for x in os.getenv("WARIS_ABLATE", "").split(",") if x.strip()}
 
 # --- portals ---
 PORTAL_URL = os.getenv("PORTAL_URL", "http://127.0.0.1:8001")
@@ -44,6 +51,8 @@ MAX_TRACER_STEPS = int(os.getenv("WARIS_MAX_TRACER_STEPS", "8"))
 MAX_LLM_CALLS = int(os.getenv("WARIS_MAX_LLM_CALLS", "40"))     # per case
 TOOL_TIMEOUT = float(os.getenv("WARIS_TOOL_TIMEOUT", "10"))
 TOOL_RETRIES = 2
+
+SMALL_AMOUNT_INR = 500_000     # illustrative 'small claim' ceiling used to pick between rule variants
 
 # --- identity-match policy (tuned on dev set only; see docs) ---
 W_NAME, W_DOB, W_CITY = 0.5, 0.3, 0.2

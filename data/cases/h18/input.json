@@ -1,0 +1,28 @@
+{
+  "case_id": "h18",
+  "deceased": {
+    "name": "Ranganathan Ramachandran",
+    "aliases": [],
+    "dob": null,
+    "dod": "2021-04-05",
+    "city": "Hyderabad",
+    "addresses": [
+      "Hyderabad"
+    ]
+  },
+  "claimant": {
+    "name": "Kashvi Warrior",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": [],
+  "session2_scans": [
+    "scans/legal_heir_certificate.png",
+    "scans/identity_proof.png"
+  ]
+}

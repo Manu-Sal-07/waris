@@ -18,7 +18,7 @@ from ..tracing import TRACE
 from .rules_expert import accepted_assets
 
 _NAME_PROOF = "DOC_NAME_VARIATION_AFFIDAVIT"
-_VARIANTS = {"initials", "spelling", "order"}
+_VARIANTS = {"initials", "spelling", "order", "alias"}
 _PRIORITY = ["identity_gate", "rules_expert", "builder"]
 
 
@@ -53,6 +53,9 @@ def check_asset(asset: dict, pack: dict | None) -> list[dict]:
 @TRACE.node("verifier")
 def verifier(state: dict) -> dict:
     rnd = state.get("round", 0) + 1
+    if "no_verifier" in config.ABLATE:                    # experiment: the critic is switched off
+        TRACE.event("verifier", "VERIFY", f"round {rnd}: Verifier disabled (ablation); work passes unchecked", level="warn")
+        return {"verdict": "pass", "round": rnd}
     counts = dict(state.get("failure_counts", {}))
     escalated = dict(state.get("escalated", {}))
     need = {k: list(v) for k, v in state.get("need_rules", {}).items()}

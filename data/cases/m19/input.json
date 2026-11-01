@@ -1,0 +1,24 @@
+{
+  "case_id": "m19",
+  "deceased": {
+    "name": "Venkatesh Menon",
+    "aliases": [],
+    "dob": "1946-07-22",
+    "dod": "2017-06-21",
+    "city": "Mangaluru",
+    "addresses": [
+      "Mangaluru"
+    ]
+  },
+  "claimant": {
+    "name": "Janya Kumar",
+    "relationship": "son",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

@@ -1,0 +1,25 @@
+{
+  "case_id": "e14",
+  "deceased": {
+    "name": "Thyagarajan Subramanian",
+    "aliases": [],
+    "dob": "1931-11-27",
+    "dod": "2023-10-24",
+    "city": "Bengaluru",
+    "addresses": [
+      "Bengaluru"
+    ]
+  },
+  "claimant": {
+    "name": "Chatura Bala",
+    "relationship": "spouse",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png"
+  ]
+}

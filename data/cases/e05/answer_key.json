@@ -1,0 +1,39 @@
+{
+  "case_id": "e05",
+  "difficulty": "easy",
+  "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
+  "assets": [
+    {
+      "asset_type": "bank_deposit",
+      "record_id": "B003",
+      "needs_human_confirmation": false,
+      "status": "READY",
+      "required_docs": [
+        "DOC_CLAIM_FORM_BANK",
+        "DOC_DEATH_CERT",
+        "DOC_NOMINEE_KYC"
+      ],
+      "missing": [],
+      "rule_id": "BANK-NOM-01"
+    }
+  ],
+  "namesake_record_ids": [],
+  "lookalike_record_ids": [
+    "B005",
+    "R001"
+  ],
+  "expected_questions": [],
+  "expect_tool_error": false,
+  "unreachable_assets": [],
+  "doc_conflict": false,
+  "unreadable_scans": [],
+  "injection_scans": [],
+  "no_assets": false,
+  "tags": [
+    "amount_small",
+    "claimant_nominee",
+    "clean",
+    "clean_case",
+    "ready"
+  ]
+}

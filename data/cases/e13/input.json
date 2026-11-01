@@ -1,0 +1,25 @@
+{
+  "case_id": "e13",
+  "deceased": {
+    "name": "Sundaram Gowda",
+    "aliases": [],
+    "dob": "1930-09-14",
+    "dod": "2022-05-20",
+    "city": "Chennai",
+    "addresses": [
+      "Chennai"
+    ]
+  },
+  "claimant": {
+    "name": "Riya Handa",
+    "relationship": "daughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png"
+  ]
+}

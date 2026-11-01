@@ -1,0 +1,26 @@
+{
+  "case_id": "h11",
+  "deceased": {
+    "name": "Sundaram Shetty",
+    "aliases": [],
+    "dob": "1962-06-20",
+    "dod": "2018-05-22",
+    "city": "Salem",
+    "addresses": [
+      "Salem"
+    ]
+  },
+  "claimant": {
+    "name": "Shravya Tripathi",
+    "relationship": "spouse",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png",
+    "scans/legal_heir_certificate.png"
+  ]
+}

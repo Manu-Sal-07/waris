@@ -1,0 +1,26 @@
+{
+  "case_id": "m20",
+  "deceased": {
+    "name": "Saraswathi Srinivasan",
+    "aliases": [
+      "Saraswathi Shetty"
+    ],
+    "dob": "1951-01-22",
+    "dod": "2023-03-02",
+    "city": "Kochi",
+    "addresses": [
+      "Kochi"
+    ]
+  },
+  "claimant": {
+    "name": "Upadhriti Nanda",
+    "relationship": "grandson",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

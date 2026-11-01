@@ -46,7 +46,7 @@ The mock portals start automatically. Answer the two prompts with `y`.
 | `python -m waris.run --show-graph` | the graph as Mermaid |
 | `python -m pytest -q` | 18 tests |
 
-Open `traces/meena.html` for the trace of any run. Optional Langfuse: `docker compose up -d`, then http://localhost:3000
+Open `traces/meena.html` for the trace of any run. Optional Langfuse: `docker compose up -d`, then http://localhost:3001
 (login `waris@example.com` / `waris-demo-pass`; keys are pre-seeded in `.env.example`).
 
 ## Layout

@@ -1,0 +1,29 @@
+{
+  "case_id": "e12",
+  "deceased": {
+    "name": "Anantharaman Raghavan",
+    "aliases": [],
+    "dob": "1962-02-06",
+    "dod": "2024-11-25",
+    "city": "Mangaluru",
+    "addresses": [
+      "Mangaluru"
+    ]
+  },
+  "claimant": {
+    "name": "Harish Loke",
+    "relationship": "grandson",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_CLAIM_FORM_BANK",
+      "DOC_INDEMNITY_BOND",
+      "DOC_LEGAL_HEIR_CERT",
+      "DOC_TRANSMISSION_FORM"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png"
+  ]
+}

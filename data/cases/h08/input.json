@@ -1,0 +1,25 @@
+{
+  "case_id": "h08",
+  "deceased": {
+    "name": "Krishnan Chandrasekhar",
+    "aliases": [],
+    "dob": "1949-12-22",
+    "dod": "2016-04-24",
+    "city": "Kochi",
+    "addresses": [
+      "Kochi"
+    ]
+  },
+  "claimant": {
+    "name": "Ladli Batra",
+    "relationship": "spouse",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png"
+  ]
+}

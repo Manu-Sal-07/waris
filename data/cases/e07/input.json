@@ -1,0 +1,25 @@
+{
+  "case_id": "e07",
+  "deceased": {
+    "name": "Sundaram Ramachandran",
+    "aliases": [],
+    "dob": "1946-07-05",
+    "dod": "2018-06-03",
+    "city": "Hubballi",
+    "addresses": [
+      "Hubballi"
+    ]
+  },
+  "claimant": {
+    "name": "Jyoti Kumar",
+    "relationship": "spouse",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC",
+      "DOC_POLICY_BOND"
+    ]
+  },
+  "scans": []
+}

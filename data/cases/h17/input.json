@@ -1,0 +1,24 @@
+{
+  "case_id": "h17",
+  "deceased": {
+    "name": "Krishnan Ramachandran",
+    "aliases": [],
+    "dob": "1941-09-24",
+    "dod": "2015-05-15",
+    "city": "Jaipur",
+    "addresses": [
+      "Jaipur"
+    ]
+  },
+  "claimant": {
+    "name": "Ethan Nair",
+    "relationship": "spouse",
+    "claimant_type": "joint_holder",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

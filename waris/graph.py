@@ -1,8 +1,8 @@
 """LangGraph wiring.
 
-START -> intake_validate -> supervisor_plan -> tracer -> identity_gate --(medium match)--> human_confirm [interrupt]
+START -> intake_validate -> supervisor_plan -> doc_intake (OCR) -> tracer -> identity_gate --(medium match)--> human_confirm [interrupt]
                                                     \\--(settled)--> rules_expert -> builder -> verifier
-verifier --pass--> finalize -> final_approval [interrupt] -> END
+verifier --pass--> finalize -> draft_letters -> final_approval [interrupt] -> END
 verifier --send_back--> rules_expert | builder | identity_gate   (round += 1, <= MAX_ROUNDS; limit -> finalize)
 
 Checkpointed after every node (SqliteSaver, thread_id = case_id), so a killed process resumes where it stopped.
@@ -14,6 +14,8 @@ from langgraph.graph import END, START, StateGraph
 
 from . import config
 from .agents.builder import builder
+from .agents.doc_intake import doc_intake
+from .agents.letters import draft_letters
 from .agents.finalize import finalize
 from .agents.human import final_approval, human_confirm, identity_gate
 from .agents.rules_expert import rules_expert
@@ -25,14 +27,16 @@ from .state import CaseState
 
 def build_graph(checkpointer=None):
     g = StateGraph(CaseState)
-    for name, fn in [("intake_validate", intake_validate), ("supervisor_plan", supervisor_plan), ("tracer", tracer),
+    for name, fn in [("intake_validate", intake_validate), ("supervisor_plan", supervisor_plan), ("doc_intake", doc_intake),
+                     ("tracer", tracer), ("draft_letters", draft_letters),
                      ("identity_gate", identity_gate), ("human_confirm", human_confirm),
                      ("rules_expert", rules_expert), ("builder", builder), ("verifier", verifier),
                      ("finalize", finalize), ("final_approval", final_approval)]:
         g.add_node(name, fn)
     g.add_edge(START, "intake_validate")
     g.add_edge("intake_validate", "supervisor_plan")
-    g.add_edge("supervisor_plan", "tracer")
+    g.add_edge("supervisor_plan", "doc_intake")
+    g.add_edge("doc_intake", "tracer")
     g.add_edge("tracer", "identity_gate")
     g.add_conditional_edges("identity_gate", route_identity,
                             {"human_confirm": "human_confirm", "rules_expert": "rules_expert"})
@@ -42,7 +46,8 @@ def build_graph(checkpointer=None):
     g.add_conditional_edges("verifier", route_after_verifier,
                             {"rules_expert": "rules_expert", "builder": "builder",
                              "identity_gate": "identity_gate", "finalize": "finalize"})
-    g.add_edge("finalize", "final_approval")
+    g.add_edge("finalize", "draft_letters")
+    g.add_edge("draft_letters", "final_approval")
     g.add_edge("final_approval", END)
     return g.compile(checkpointer=checkpointer)
 

@@ -7,3 +7,12 @@ data/state/
 data/portals/*.db
 traces/*.jsonl
 .pytest_cache/
+results/*/traces/
+results/*/.chroma/
+results/*/case_files.db
+results/pilot*/
+results/smoke*/
+results/*_log.txt
+traces/
+~$*
+*.docx#

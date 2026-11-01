@@ -10,6 +10,12 @@ import httpx
 from .. import config
 
 _client: Optional[httpx.Client] = None
+_case_id: Optional[str] = None          # which case sandbox the portals should search (None = default demo DB)
+
+
+def set_case(case_id: Optional[str]) -> None:
+    global _case_id
+    _case_id = case_id
 
 
 def set_client(client: Optional[httpx.Client]) -> None:
@@ -26,10 +32,12 @@ def _http() -> httpx.Client:
 
 def _search(path: str, params: dict) -> dict:
     params = {k: v for k, v in params.items() if v}
+    if _case_id:
+        params["case"] = _case_id
     last = ""
     for attempt in range(config.TOOL_RETRIES + 1):
         try:
-            r = _http().get(path, params=params, timeout=config.TOOL_TIMEOUT)
+            r = _http().get(path, params={**params, "attempt": attempt}, timeout=config.TOOL_TIMEOUT)
             r.raise_for_status()
             return {"ok": True, "records": r.json()["records"], "error": None, "attempts": attempt + 1}
         except Exception as e:

@@ -26,7 +26,8 @@ def intake_validate(state: dict) -> dict:
             "memory_answers": prior, "round": state.get("round", 0), "llm_calls": state.get("llm_calls", 0),
             "tools_done": [], "candidate_assets": [], "rejected_candidates": [], "applicable_rules": {},
             "need_rules": {}, "abstained": {}, "requery_count": {}, "claim_packs": {}, "verifier_feedback": [],
-            "failure_counts": {}, "escalated": {}, "human_answers": [], "done": False}
+            "failure_counts": {}, "escalated": {}, "human_answers": [], "done": False,
+            "scan_results": [], "docs_from_scans": [], "doc_conflicts": [], "scan_notes": [], "letters": {}}
 
 
 @TRACE.node("supervisor_plan")

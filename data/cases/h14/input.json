@@ -1,0 +1,26 @@
+{
+  "case_id": "h14",
+  "deceased": {
+    "name": "Venkatesh Krishnamurthy",
+    "aliases": [],
+    "dob": "1943-10-11",
+    "dod": "2020-03-06",
+    "city": "Salem",
+    "addresses": [
+      "Salem"
+    ]
+  },
+  "claimant": {
+    "name": "Ekapad Din",
+    "relationship": "spouse",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": [
+    "scans/identity_proof.png",
+    "scans/death_certificate.png"
+  ]
+}

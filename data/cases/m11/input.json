@@ -1,0 +1,24 @@
+{
+  "case_id": "m11",
+  "deceased": {
+    "name": "Ranganathan Reddy",
+    "aliases": [],
+    "dob": "1936-12-04",
+    "dod": "2021-10-17",
+    "city": "Hubballi",
+    "addresses": [
+      "Hubballi"
+    ]
+  },
+  "claimant": {
+    "name": "Naveen Chaudhry",
+    "relationship": "son",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

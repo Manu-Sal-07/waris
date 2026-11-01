@@ -1,0 +1,24 @@
+{
+  "case_id": "h02",
+  "deceased": {
+    "name": "Ramaswamy Chandrasekhar",
+    "aliases": [],
+    "dob": "1954-11-12",
+    "dod": "2019-03-09",
+    "city": "Lucknow",
+    "addresses": [
+      "Lucknow"
+    ]
+  },
+  "claimant": {
+    "name": "Warinder Raj",
+    "relationship": "son",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

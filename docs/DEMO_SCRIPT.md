@@ -1,6 +1,6 @@
 # Review 2 demo script (about 4 minutes)
 
-**Before your turn** (5 min): open VS Code on the `waris` folder, a terminal in it, the PPT, `traces/meena.html` in a browser, Langfuse (http://localhost:3000, login `waris@example.com` / `waris-demo-pass`) if Docker is running.
+**Before your turn** (5 min): open VS Code on the `waris` folder, a terminal in it, the PPT, `traces/meena.html` in a browser, Langfuse (http://localhost:3001, login `waris@example.com` / `waris-demo-pass`) if Docker is running.
 Warm the model: `ollama run llama3.1:8b "hi"`. Check: `.venv\Scripts\python -m pytest -q` shows 18 passed.
 **Safety net:** if the LLM is slow, add `--no-llm` (same run, fixed tool order). If everything fails, slide 12 is a screenshot of a real run.
 

@@ -1,0 +1,24 @@
+{
+  "case_id": "e04",
+  "deceased": {
+    "name": "Ranganathan Balasubramanian",
+    "aliases": [],
+    "dob": "1944-08-12",
+    "dod": "2020-03-14",
+    "city": "Mumbai",
+    "addresses": [
+      "Mumbai"
+    ]
+  },
+  "claimant": {
+    "name": "Yuvraj Tandon",
+    "relationship": "spouse",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

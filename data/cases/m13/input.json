@@ -1,0 +1,26 @@
+{
+  "case_id": "m13",
+  "deceased": {
+    "name": "Meenakshi Subramanian",
+    "aliases": [
+      "Meenakshi Hegde"
+    ],
+    "dob": "1949-05-16",
+    "dod": "2020-06-21",
+    "city": "Vijayawada",
+    "addresses": [
+      "Vijayawada"
+    ]
+  },
+  "claimant": {
+    "name": "Sai Bajwa",
+    "relationship": "son",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

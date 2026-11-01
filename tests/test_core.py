@@ -76,11 +76,40 @@ def test_llm_grader_is_stage_two_only():
     assert retrieval.grade_rule(wrong_inst, lh, llm_fn=lambda f, r: True)["stage"] == "metadata"   # never overrides stage 1
 
 
-def test_retrieval_excludes_rejected_and_abstains_when_corpus_has_no_rule():
+def test_retrieval_excludes_rejected_and_grading_leaves_nothing_for_the_corpus_gap():
     first = retrieval.retrieve_rules("insurance policy claim of a deceased policyholder", "insurer", "claim_procedure")
     assert first[0]["rule_id"] == "INS-NOM-01"
     again = retrieval.retrieve_rules("insurance policy claim", "insurer", "claim_procedure", exclude_ids=["INS-NOM-01"])
-    assert again == []                       # the deliberate corpus gap: nothing left -> caller must abstain
+    assert [r["rule_id"] for r in again] == ["INS-LH-01"]
+    # Meena's policy has a nominee who died: the nominee rule does not apply to a legal heir, and the no-nominee
+    # legal-heir rule does not cover records that name a nominee -> the deliberate gap, so Waris must abstain.
+    facts = {"institution_type": "insurer", "topic": "claim_procedure", "claimant_type": "legal_heir",
+             "nominee_alive": False, "nominee_status": "deceased", "amount_band": "small"}
+    assert not retrieval.grade_rule(facts, first[0])["fits"]
+    assert not retrieval.grade_rule(facts, again[0])["fits"]
+    # the same legal heir on a policy with no nominee at all is covered
+    assert retrieval.grade_rule({**facts, "nominee_alive": None, "nominee_status": None}, again[0])["fits"]
+
+
+def test_amount_band_picks_the_right_bank_rule():
+    small = retrieval.rules_by_id()["BANK-LH-01"]
+    large = retrieval.rules_by_id()["BANK-LH-LARGE-01"]
+    facts = {"institution_type": "bank", "topic": "claim_procedure", "claimant_type": "legal_heir",
+             "nominee_alive": None, "amount_band": "large"}
+    assert not retrieval.grade_rule(facts, small)["fits"] and retrieval.grade_rule(facts, large)["fits"]
+    assert retrieval.grade_rule({**facts, "amount_band": "small"}, small)["fits"]
+
+
+def test_joint_holder_and_name_variants():
+    joint = retrieval.rules_by_id()["BANK-JOINT-01"]
+    f = {"institution_type": "bank", "topic": "claim_procedure", "claimant_type": "joint_holder", "nominee_alive": None}
+    assert retrieval.grade_rule(f, joint)["fits"]
+    assert not retrieval.grade_rule({**f, "claimant_type": "legal_heir"}, joint)["fits"]
+    from waris.tools.name_match import identity_score, match_name
+    assert match_name("Mohd Ismail Khan", "Mohammed Ismail Khan")["variant_type"] == "spelling"
+    d = {"name": "Lakshmi Krishnan", "aliases": ["Lakshmi Iyer"], "dob": "1950-01-01", "city": "Pune"}
+    m = identity_score(d, {"holder_name": "Lakshmi Iyer", "dob": "1950-01-01", "city": "Pune"})
+    assert m["band"] == "accept" and m["variant"] == "alias"
 
 
 # ---------- 4: verifier ----------

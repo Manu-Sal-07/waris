@@ -1,0 +1,24 @@
+{
+  "case_id": "e08",
+  "deceased": {
+    "name": "Thyagarajan Chandrasekhar",
+    "aliases": [],
+    "dob": "1935-08-11",
+    "dod": "2019-09-10",
+    "city": "Bengaluru",
+    "addresses": [
+      "Bengaluru"
+    ]
+  },
+  "claimant": {
+    "name": "Chakrika Kaul",
+    "relationship": "daughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

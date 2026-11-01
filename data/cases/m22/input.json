@@ -1,0 +1,24 @@
+{
+  "case_id": "m22",
+  "deceased": {
+    "name": "Ranganathan Srinivasan",
+    "aliases": [],
+    "dob": "1932-02-17",
+    "dod": "2015-08-27",
+    "city": "Pune",
+    "addresses": [
+      "Pune"
+    ]
+  },
+  "claimant": {
+    "name": "Chakrika Barad",
+    "relationship": "brother",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

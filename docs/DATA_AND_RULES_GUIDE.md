@@ -13,10 +13,10 @@ All data is **synthetic**. Nothing here is a real person, account, policy or sha
 | **The answer key** (ground truth) | `data/cases/meena/answer_key.json` | JSON | by hand from the design (never an LLM) | `eval/metrics.py` only | no |
 | **Short-term memory** (graph checkpoints) | `data/state/checkpoints.db` | SQLite (`checkpoints`, `writes`) | LangGraph, after every node | LangGraph on resume | yes (`--fresh` clears one case) |
 | **Long-term memory** (case file) | `data/state/case_files.db` | SQLite (`answers`, `results`) | `waris/memory.py` | `waris/memory.py` | yes (`--forget` clears one case) |
-| **Traces** | `traces/meena.jsonl`, `traces/meena.html` (+ Langfuse at localhost:3000) | JSONL / HTML | `waris/tracing.py` | you | yes |
+| **Traces** | `traces/meena.jsonl`, `traces/meena.html` (+ Langfuse at localhost:3001) | JSONL / HTML | `waris/tracing.py` | you | yes |
 | **Document-code vocabulary** | `waris/doc_codes.py` | Python dict, 20 codes | by hand | rules, Builder, answer keys | no |
 
-**Honest status of the "synthetic data generator":** for Review 2 the data is **hand-written** in `data/seed_portals.py` (one case, 6 portal rows). The seeded Faker-based generator for 60 cases, with scans, is planned for Review 3/4 and is not built yet.
+**Status of the synthetic data generator:** built. `python -m data.generate_cases` writes 60 seeded cases (`data/cases/e01..e15, m01..m25, h01..h20`), each with its own portal sandbox (`portals.db`), scans, input and answer key; section 9 describes them. The hand-built `meena` case remains the demo case and uses the default portal database.
 
 ## 2. The mock portal database (`data/portals/portals.db`)
 
@@ -54,6 +54,8 @@ The portals (`portals/app.py`) expose `GET /bank/search`, `/insurer/search`, `/r
 Namesakes that must never be claimed: B002, B003, R002.
 
 ## 4. The rule corpus (`data/rules/`), the RAG documents
+
+> The six files below are the original Meena rules. The final corpus has **11 rules** (adds large-amount, joint-account, insurer legal-heir, insurer name-variation and registry nominee rules); see section 9.
 
 Each file = YAML front matter (metadata used for **grading**) + a short procedure text (used for **retrieval**). All are marked `verified: illustrative`: they follow the *types* of public RBI / IRDAI / IEPF procedures but are **not verified legal text**. Check them against official circulars before Review 4. Waris gives no legal advice.
 
@@ -126,3 +128,35 @@ Waris only ever sees steps 2 and 3, plus what the family tells it.
 
 ### What Waris does NOT know
 It does not know which records are really the person. It must decide from the evidence, and it may say "unsure" (ask the family) or "I don't know" (no rule), but it never invents a fact.
+
+
+## 9. The 60-case benchmark and the final rule corpus (final system)
+
+**Generator** (`data/generate_cases.py`, seed 20261031): truth first, mess second.
+1. builds the hidden truth (person, assets, family, the documents the claimant holds);
+2. writes each institution's messy record of it (initials, spelling, transliteration, name order, maiden name, current vs old city),
+   then adds namesakes (same name, different date of birth), ambiguous namesakes (same name, no date of birth, other city),
+   look-alikes (same surname, different given name) and unrelated customers;
+3. writes the family's partial knowledge (`input.json`), and draws scanned documents with Pillow (clean, rotated, blurry, faded);
+4. writes the answer key with plain-Python rules. Labels never come from an LLM and never from the agent's own retrieval code.
+
+It then checks itself: the identity policy must classify every record as designed, and the real OCR must read every scan as designed.
+Mix: 15 easy, 25 medium, 20 hard; stratified split 40 dev / 20 held-out test (`data/cases/split.json`). Every scenario of the
+catalogue appears at least three times (`data/cases/index.json` lists tags per case).
+
+| Case folder file | What it is |
+|---|---|
+| `input.json` | what the family submits (deceased facts, claimant, documents held, scan file names, `session2_scans` if a document arrives later) |
+| `portals.db` | that case's bank / insurer / registry sandbox (+ a `meta` table that can make a portal fail the first N calls) |
+| `scans/*.png` | synthetic death certificates, legal-heir certificates and ID proofs, some degraded |
+| `answer_key.json` | truth: per asset the status, required documents, missing documents, the rule that should apply; expected family questions; whether a document conflict / tool error is expected |
+
+**Final rule corpus (11 rules, all `verified: illustrative`):** BANK-NOM-01, BANK-LH-01 (small, up to Rs 5 lakh), BANK-LH-LARGE-01 (large),
+BANK-JOINT-01, BANK-NAME-01, INS-NOM-01, INS-LH-01 (policy with no nominee), INS-NAME-01, REG-NOM-01, REG-LH-01, REG-NAME-01.
+Deliberate gaps (Waris must say "I don't know"): an insurance policy whose named nominee has died, and joint holders of shares.
+A legal heir where a living nominee exists is also not covered (the nominee comes first).
+
+**New agent behaviours:** OCR intake (`doc_intake`): readable scans count as held documents, unreadable ones never do, a death certificate that
+disagrees with what the family said is flagged (not resolved), injection text inside a scan is dropped; the Tracer also searches under the
+maiden / other names the family gives; claim letters (`draft_letters`); a document arriving in a second session (`--session2`) with the
+family's earlier answers remembered.

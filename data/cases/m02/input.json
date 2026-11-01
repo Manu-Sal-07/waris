@@ -1,0 +1,25 @@
+{
+  "case_id": "m02",
+  "deceased": {
+    "name": "Gopalakrishnan Menon",
+    "aliases": [],
+    "dob": "1954-02-04",
+    "dod": "2021-04-19",
+    "city": "Mysuru",
+    "addresses": [
+      "Mysuru"
+    ]
+  },
+  "claimant": {
+    "name": "Gaurangi Puri",
+    "relationship": "son",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NAME_VARIATION_AFFIDAVIT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

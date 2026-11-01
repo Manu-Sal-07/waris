@@ -1,0 +1,40 @@
+{
+  "case_id": "m16",
+  "difficulty": "medium",
+  "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
+  "assets": [
+    {
+      "asset_type": "shares",
+      "record_id": "R004",
+      "needs_human_confirmation": true,
+      "status": "MISSING_ITEMS",
+      "required_docs": [
+        "DOC_TRANSMISSION_FORM",
+        "DOC_DEATH_CERT",
+        "DOC_NOMINEE_KYC"
+      ],
+      "missing": [
+        "DOC_TRANSMISSION_FORM"
+      ],
+      "rule_id": "REG-NOM-01"
+    }
+  ],
+  "namesake_record_ids": [],
+  "lookalike_record_ids": [],
+  "expected_questions": [
+    "R004"
+  ],
+  "expect_tool_error": false,
+  "unreachable_assets": [],
+  "doc_conflict": false,
+  "unreadable_scans": [],
+  "injection_scans": [],
+  "no_assets": false,
+  "tags": [
+    "amount_small",
+    "claimant_nominee",
+    "clean",
+    "clean_case",
+    "partial_info"
+  ]
+}

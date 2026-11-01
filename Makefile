@@ -5,6 +5,16 @@ setup:
 	python -m venv .venv && $(PY) -m pip install -r requirements.txt
 data:
 	$(PY) -m data.seed_portals
+generate:
+	$(PY) -m data.generate_cases
+eval:
+	$(PY) -m eval.run_eval --split all --repeats 3 --out results/main
+analyze:
+	$(PY) -m eval.analyze results/main
+judge:
+	$(PY) -m eval.judge validate && $(PY) -m eval.judge score results/main
+ui:
+	$(PY) -m streamlit run app/streamlit_app.py
 index:
 	$(PY) -c "from waris.tools.retrieval import index_rules; index_rules(); print('rules indexed')"
 langfuse:

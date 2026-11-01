@@ -1,0 +1,24 @@
+{
+  "case_id": "h20",
+  "deceased": {
+    "name": "Parthasarathy Menon",
+    "aliases": [],
+    "dob": "1930-05-03",
+    "dod": "2024-05-23",
+    "city": "Thrissur",
+    "addresses": [
+      "Thrissur"
+    ]
+  },
+  "claimant": {
+    "name": "Mitesh Parmer",
+    "relationship": "son",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

@@ -68,12 +68,20 @@ def tracer(state: dict) -> dict:
         llm_calls += used
         TRACE.event("tracer", "THINK", f"{thought} -> {tool}")
 
-        kwargs = {"name": dec["name"]}
-        if tool == "search_bank":
-            kwargs.update(dob=dec.get("dob"), city=dec.get("city"))
-        elif tool == "search_insurer":
-            kwargs.update(dob=dec.get("dob"))
-        res = portals.TOOLS[tool](**kwargs)
+        res = {"ok": True, "records": [], "error": None, "attempts": 0}
+        for qname in [dec["name"], *dec.get("aliases", [])]:          # also search under every other name the family knows
+            kwargs = {"name": qname}
+            if tool == "search_bank":
+                kwargs.update(dob=dec.get("dob"), city=dec.get("city"))
+            elif tool == "search_insurer":
+                kwargs.update(dob=dec.get("dob"))
+            part = portals.TOOLS[tool](**kwargs)
+            res["attempts"] = max(res["attempts"], part["attempts"])
+            if not part["ok"]:
+                res.update(ok=False, error=part["error"])
+                break
+            seen = {r["record_id"] for r in res["records"]}
+            res["records"] += [r for r in part["records"] if r["record_id"] not in seen]
         done.append(tool)
         task = plan[tool]
         if not res["ok"]:
@@ -82,7 +90,9 @@ def tracer(state: dict) -> dict:
                         f"({res['error']}); flagged for the family, not guessed", level="warn")
             observations.append(f"{tool}: unavailable")
             continue
-        TRACE.event("tracer", "TOOL", f"{tool}(name='{dec['name']}') -> {len(res['records'])} record(s)")
+        names_used = 1 + len(dec.get("aliases", []))
+        TRACE.event("tracer", "TOOL", f"{tool}(name='{dec['name']}'" + (f" + {names_used - 1} other name(s)" if names_used > 1 else "")
+                    + f") -> {len(res['records'])} record(s)")
         observations.append(f"{tool}: {len(res['records'])} records")
 
         for rec in res["records"]:

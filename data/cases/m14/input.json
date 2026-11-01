@@ -1,0 +1,26 @@
+{
+  "case_id": "m14",
+  "deceased": {
+    "name": "Kamala Krishnamurthy",
+    "aliases": [
+      "Kamala Hegde"
+    ],
+    "dob": "1945-03-12",
+    "dod": "2021-08-19",
+    "city": "Chennai",
+    "addresses": [
+      "Chennai"
+    ]
+  },
+  "claimant": {
+    "name": "Kamala Sami",
+    "relationship": "daughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

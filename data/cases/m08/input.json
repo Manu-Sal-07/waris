@@ -1,0 +1,24 @@
+{
+  "case_id": "m08",
+  "deceased": {
+    "name": "Mohammed Imran Ansari",
+    "aliases": [],
+    "dob": "1953-02-21",
+    "dod": "2021-04-21",
+    "city": "Mysuru",
+    "addresses": [
+      "Mysuru"
+    ]
+  },
+  "claimant": {
+    "name": "Farhan Ratta",
+    "relationship": "grandson",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

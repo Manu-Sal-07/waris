@@ -1,0 +1,27 @@
+{
+  "case_id": "m12",
+  "deceased": {
+    "name": "Rukmini Naidu",
+    "aliases": [
+      "Rukmini Nair"
+    ],
+    "dob": "1939-01-19",
+    "dod": "2024-04-18",
+    "city": "Nagpur",
+    "addresses": [
+      "Nagpur"
+    ]
+  },
+  "claimant": {
+    "name": "Baghyawati Chowdhury",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png"
+  ]
+}

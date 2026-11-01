@@ -1,0 +1,24 @@
+{
+  "case_id": "m18",
+  "deceased": {
+    "name": "Seshadri Raghavan",
+    "aliases": [],
+    "dob": "1952-08-02",
+    "dod": "2023-08-16",
+    "city": "Mangaluru",
+    "addresses": [
+      "Mangaluru"
+    ]
+  },
+  "claimant": {
+    "name": "Rajeshri Parikh",
+    "relationship": "granddaughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

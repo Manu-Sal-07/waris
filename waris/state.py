@@ -66,6 +66,11 @@ class CaseState(TypedDict, total=False):
     human_answers: list[dict]
     memory_answers: dict                   # asset_id -> bool, loaded from long-term case file
     pending_human_question: Optional[str]
+    scan_results: list[dict]               # OCR result per scan (type, fields, confidence, readable)
+    docs_from_scans: list[str]             # documents evidenced by a readable scan
+    doc_conflicts: list[dict]              # documents that disagree with the family's facts (never resolved by Waris)
+    scan_notes: list[str]
+    letters: dict                          # asset_id -> drafted claim letter
     limit_hit: Optional[str]
     released: Optional[bool]
     done: bool

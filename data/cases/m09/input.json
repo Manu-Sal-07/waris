@@ -1,0 +1,25 @@
+{
+  "case_id": "m09",
+  "deceased": {
+    "name": "Mohammed Rafiq Sheikh",
+    "aliases": [],
+    "dob": "1942-06-18",
+    "dod": "2023-06-10",
+    "city": "Nagpur",
+    "addresses": [
+      "Nagpur"
+    ]
+  },
+  "claimant": {
+    "name": "Reyansh Nayak",
+    "relationship": "granddaughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT",
+      "DOC_INDEMNITY_BOND"
+    ]
+  },
+  "scans": []
+}

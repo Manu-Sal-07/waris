@@ -1,0 +1,27 @@
+{
+  "case_id": "e11",
+  "deceased": {
+    "name": "Krishnan Raghavan",
+    "aliases": [],
+    "dob": "1950-05-25",
+    "dod": "2015-12-12",
+    "city": "Indore",
+    "addresses": [
+      "Indore"
+    ]
+  },
+  "claimant": {
+    "name": "Dakshesh Uppal",
+    "relationship": "spouse",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_CLAIM_FORM_BANK",
+      "DOC_NOMINEE_KYC",
+      "DOC_TRANSMISSION_FORM"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png"
+  ]
+}

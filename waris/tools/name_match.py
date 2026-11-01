@@ -14,9 +14,12 @@ _ALIAS = {"mohd": "mohammed", "muhammad": "mohammed", "md": "mohammed", "mohamma
 _TITLES = {"shri", "smt", "sri", "mr", "mrs", "late", "dr"}
 
 
+def _raw_tokens(s: str) -> list[str]:
+    return [t for t in re.findall(r"[a-z]+", s.lower()) if t not in _TITLES]
+
+
 def _tokens(s: str) -> list[str]:
-    toks = re.findall(r"[a-z]+", s.lower())
-    return [_ALIAS.get(t, t) for t in toks if t not in _TITLES]
+    return [_ALIAS.get(t, t) for t in _raw_tokens(s)]
 
 
 def _initials_match(short: list[str], long: list[str]) -> bool:
@@ -45,6 +48,9 @@ def match_name(a: str, b: str) -> dict:
     if not ta or not tb:
         return {"score": 0.0, "variant_type": "none"}
     if ta == tb:
+        # same words only after folding transliterations (Mohd/Muhammad -> Mohammed): a spelling variant
+        if _raw_tokens(a) != _raw_tokens(b):
+            return {"score": 0.93, "variant_type": "spelling"}
         return {"score": 1.0, "variant_type": "exact"}
     if sorted(ta) == sorted(tb):
         return {"score": 0.92, "variant_type": "order"}
@@ -64,7 +70,10 @@ def identity_score(deceased: dict, record: dict) -> dict:
     >= 0.85 accept | 0.60-0.85 ask the family | < 0.60 reject.  A medium match is NEVER auto-accepted.
     """
     names = [deceased["name"], *deceased.get("aliases", [])]
-    best = max((match_name(n, record["holder_name"]) for n in names), key=lambda m: m["score"])
+    scored = [(match_name(n, record["holder_name"]), i) for i, n in enumerate(names)]
+    best, best_i = max(scored, key=lambda t: (t[0]["score"], -t[1]))
+    if best_i > 0 and best["variant_type"] == "exact":
+        best = {"score": 0.92, "variant_type": "alias"}        # recorded under another name (e.g. maiden name)
     evidence = [f"name: '{record['holder_name']}' ~ '{deceased['name']}' -> {best['variant_type']} ({best['score']})"]
 
     d_dob, r_dob = deceased.get("dob"), record.get("dob")

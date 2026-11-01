@@ -96,39 +96,42 @@ def fig_architecture():
 
 # ------------------------------------------------------------------ Fig 2: LangGraph graph
 def fig_graph():
-    fig, ax = canvas(13, 6.4, "Waris: LangGraph agent graph (real node names)")
-    A, B = 4.9, 2.2
-    nodes = {"START": (0.8, A), "intake_validate": (2.6, A), "supervisor_plan": (4.9, A), "tracer": (7.1, A),
-             "identity_gate": (9.3, A), "human_confirm": (11.7, A), "rules_expert": (9.3, B), "builder": (7.1, B),
-             "verifier": (4.9, B), "finalize": (2.7, B), "final_approval": (0.9, 0.75)}
-    sty = {"START": ("white", GREY), "human_confirm": ("#E4ECF7", BLUE), "final_approval": ("#E4ECF7", BLUE),
-           "verifier": (AMBER_L, AMBER)}
+    fig, ax = canvas(14.6, 6.6, "Waris: LangGraph agent graph (real node names)")
+    A, B, C = 5.0, 2.45, 0.8
+    nodes = {"START": (0.7, A), "intake_validate": (2.5, A), "supervisor_plan": (4.55, A), "doc_intake": (6.45, A),
+             "tracer": (8.3, A), "identity_gate": (10.2, A), "human_confirm": (12.7, A),
+             "rules_expert": (10.2, B), "builder": (8.3, B), "verifier": (6.45, B), "finalize": (4.55, B), "draft_letters": (2.5, B),
+             "final_approval": (2.5, C), "END": (4.55, C)}
+    sty = {"START": ("white", GREY), "END": ("white", GREY), "human_confirm": ("#E4ECF7", BLUE), "final_approval": ("#E4ECF7", BLUE),
+           "verifier": (AMBER_L, AMBER), "doc_intake": ("#E8F5E9", GREEN), "draft_letters": ("#E8F5E9", GREEN)}
     for n, (x, y) in nodes.items():
         fc, ec = sty.get(n, (TEAL_L, TEAL))
-        box(ax, x, y, 1.8 if n != "START" else 0.9, 0.62, n, fc=fc, ec=ec, fs=8.6, bold=True)
-    box(ax, 4.2, 0.75, 1.0, 0.62, "END", fc="white", ec=GREY, fs=9, bold=True)
-    arrow(ax, (1.25, A), (1.7, A)); arrow(ax, (3.5, A), (4.0, A)); arrow(ax, (5.8, A), (6.2, A)); arrow(ax, (8.0, A), (8.4, A))
-    arrow(ax, (10.2, A + 0.1), (10.8, A + 0.1), color=BLUE)
-    arrow(ax, (10.8, A - 0.12), (10.2, A - 0.12), color=BLUE, ls="--")
-    ax.text(10.5, A + 0.4, "medium match", ha="center", fontsize=8, color=BLUE)
-    arrow(ax, (9.3, A - 0.31), (9.3, B + 0.31))
-    ax.text(9.42, 3.55, "identity settled", fontsize=8, color=INK)
-    arrow(ax, (8.4, B), (8.0, B)); arrow(ax, (6.2, B), (5.8, B)); arrow(ax, (4.0, B), (3.6, B), color=GREEN)
-    ax.text(3.8, B + 0.45, "pass", ha="center", fontsize=8, color=GREEN)
-    arrow(ax, (2.5, B - 0.31), (1.1, 1.06), rad=0.1)
-    arrow(ax, (1.8, 0.75), (3.7, 0.75), color=BLUE)
-    ax.text(2.75, 0.9, "approved", ha="center", fontsize=8, color=BLUE)
-    arrow(ax, (4.9, B + 0.31), (7.0, B + 0.31), color=RED, rad=-0.6, ls="--")
-    ax.text(6.0, 3.3, "V1 V2 V5", ha="center", fontsize=8.5, color=RED, fontweight="bold")
-    arrow(ax, (4.6, B + 0.31), (9.1, B + 0.31), color=RED, rad=-0.95, ls="--")
-    ax.text(7.0, 3.62, "V3", ha="center", fontsize=8.5, color=RED, fontweight="bold")
-    ax.text(5.1, 1.35, "Dashed red = Verifier send-back (round += 1, ≤ 6):\n"
-            "   V3 name proof missing → rules_expert    V1/V2/V5 uncited or invalid item → builder\n"
-            "   V4 unconfirmed identity → identity_gate\n"
-            "Blue = human interrupt: state is checkpointed, resumes with Command(resume=…).\n"
-            "Limit guard: round ≥ 6 or LLM calls ≥ 40 → finalize; unresolved → NEEDS_HUMAN_REVIEW. Same failure twice → escalated.\n"
-            "A medium identity match is never auto-accepted. Status is fixed code in finalize, never the LLM.",
-            fontsize=7.6, color=INK, va="top", ha="left", linespacing=1.4)
+        box(ax, x, y, 0.9 if n in ("START", "END") else 1.7, 0.62, n, fc=fc, ec=ec, fs=8.4, bold=True)
+    for xa, xb in ((1.15, 1.65), (3.35, 3.7), (5.4, 5.6), (7.3, 7.45), (9.15, 9.35)):
+        arrow(ax, (xa, A), (xb, A))
+    arrow(ax, (11.05, A + 0.1), (11.85, A + 0.1), color=BLUE)
+    arrow(ax, (11.85, A - 0.12), (11.05, A - 0.12), color=BLUE, ls="--")
+    ax.text(11.45, A + 0.4, "medium match", ha="center", fontsize=8, color=BLUE)
+    arrow(ax, (10.2, A - 0.31), (10.2, B + 0.31))
+    ax.text(10.32, 3.7, "identity settled", fontsize=8, color=INK)
+    for xa, xb in ((9.35, 9.15), (7.45, 7.3), (5.6, 5.4), (3.7, 3.35)):
+        arrow(ax, (xa, B), (xb, B), color=GREEN if xa == 5.6 else INK)
+    ax.text(5.0, B + 0.42, "pass", ha="center", fontsize=8, color=GREEN)
+    arrow(ax, (2.5, B - 0.31), (2.5, C + 0.31), color=BLUE)
+    arrow(ax, (3.35, C), (4.1, C), color=BLUE)
+    ax.text(3.72, C + 0.14, "approved", ha="center", fontsize=8, color=BLUE)
+    arrow(ax, (6.45, B + 0.31), (8.2, B + 0.31), color=RED, rad=-0.6, ls="--")
+    ax.text(7.35, 3.5, "V1 V2 V5", ha="center", fontsize=8.5, color=RED, fontweight="bold")
+    arrow(ax, (6.2, B + 0.31), (10.0, B + 0.31), color=RED, rad=-0.8, ls="--")
+    ax.text(8.1, 3.95, "V3", ha="center", fontsize=8.5, color=RED, fontweight="bold")
+    legend = "\n".join([
+        "Dashed red = Verifier send-back (round += 1, <= 6):   V3 name proof missing -> rules_expert   V1/V2/V5 uncited or invalid item -> builder",
+        "   V4 unconfirmed identity -> identity_gate.   Blue = human interrupt (checkpointed, resumes with Command(resume=...)).",
+        "Green = doc_intake reads scans with OCR (unreadable = not counted, conflicts flagged, injection text dropped);",
+        "   draft_letters writes a validated claim letter for each claimable asset.",
+        "Limits: round >= 6 or LLM calls >= 40 -> finalize; unresolved -> NEEDS_HUMAN_REVIEW. Same failure twice -> escalated.",
+        "A medium identity match is never auto-accepted. Status is fixed code in finalize, never the LLM."])
+    ax.text(6.0, 1.45, legend, fontsize=7.4, color=INK, va="top", ha="left", linespacing=1.4)
     save(fig, "fig2_graph.png")
 
 

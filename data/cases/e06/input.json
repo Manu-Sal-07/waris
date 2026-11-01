@@ -1,0 +1,24 @@
+{
+  "case_id": "e06",
+  "deceased": {
+    "name": "Seshadri Ramachandran",
+    "aliases": [],
+    "dob": "1937-10-22",
+    "dod": "2020-09-25",
+    "city": "Nagpur",
+    "addresses": [
+      "Nagpur"
+    ]
+  },
+  "claimant": {
+    "name": "Yadavi Prakash",
+    "relationship": "daughter",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

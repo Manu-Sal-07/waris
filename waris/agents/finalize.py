@@ -36,14 +36,26 @@ def finalize(state: dict) -> dict:
             notes.append("escalated: " + state["escalated"][aid])
         if aid in unresolved:
             notes.append(f"stopped by {limit} before checks passed")
+        conflicts = state.get("doc_conflicts", [])
+        for c in conflicts:
+            notes.append(f"document conflict: {c['scan']} shows {c['field']} {c['scan_value']}, family said {c['family_value']}")
+        notes += state.get("scan_notes", [])
         status = compute_status(reqs, abstained=aid in state.get("abstained", {}),
-                                escalated=aid in state.get("escalated", {}), limit_hit=aid in unresolved)
+                                escalated=aid in state.get("escalated", {}), limit_hit=aid in unresolved,
+                                conflict=bool(conflicts))
         pack = ClaimPack(asset_id=aid, status=status, requirements=[Requirement(**r) for r in reqs],
                          missing=[r["doc_code"] for r in reqs if not r["have_it"]], notes=sorted(notes))
         packs[aid] = pack.model_dump()
         detail = ", ".join(pack.missing) if status == "MISSING_ITEMS" else (
-            state.get("abstained", {}).get(aid) or state.get("escalated", {}).get(aid) or "")
+            state.get("abstained", {}).get(aid) or state.get("escalated", {}).get(aid)
+            or ("documents conflict; a human must decide" if conflicts else ""))
         TRACE.event("supervisor", "RESULT", f"{aid}: {status}" + (f"  ({detail})" if detail else ""))
+    if not packs and not state.get("tool_errors"):
+        TRACE.event("supervisor", "RESULT", "no assets found for this person in any searched source; nothing is claimed "
+                    "(Waris never invents assets)")
+    for e in state.get("tool_errors", []):
+        TRACE.event("supervisor", "RESULT", f"{e['tool']} was unavailable: the family should retry later or ask the "
+                    "institution directly (not guessed)", level="warn")
     for rj in state.get("rejected_candidates", []):
         TRACE.event("supervisor", "RESULT", f"{rj['asset_id']}: not claimed ({rj['reason']})")
     return {"claim_packs": packs, "limit_hit": limit}

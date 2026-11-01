@@ -1,0 +1,24 @@
+{
+  "case_id": "m05",
+  "deceased": {
+    "name": "Anantharaman Balasubramanian",
+    "aliases": [],
+    "dob": "1954-05-07",
+    "dod": "2017-06-23",
+    "city": "Bengaluru",
+    "addresses": [
+      "Bengaluru"
+    ]
+  },
+  "claimant": {
+    "name": "Udarsh Sood",
+    "relationship": "son",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

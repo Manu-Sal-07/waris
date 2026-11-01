@@ -1,0 +1,26 @@
+{
+  "case_id": "h19",
+  "deceased": {
+    "name": "Meenakshi Rao",
+    "aliases": [
+      "Meenakshi Menon"
+    ],
+    "dob": "1930-11-13",
+    "dod": "2020-03-09",
+    "city": "Chennai",
+    "addresses": [
+      "Chennai"
+    ]
+  },
+  "claimant": {
+    "name": "Aachal Lata",
+    "relationship": "spouse",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

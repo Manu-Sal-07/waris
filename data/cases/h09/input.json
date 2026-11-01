@@ -1,0 +1,25 @@
+{
+  "case_id": "h09",
+  "deceased": {
+    "name": "Sundaram Subramanian",
+    "aliases": [],
+    "dob": "1941-08-25",
+    "dod": "2024-03-21",
+    "city": "Nagpur",
+    "addresses": [
+      "Nagpur"
+    ]
+  },
+  "claimant": {
+    "name": "Rishi Bava",
+    "relationship": "granddaughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png"
+  ]
+}

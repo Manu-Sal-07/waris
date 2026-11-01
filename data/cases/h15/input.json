@@ -1,0 +1,26 @@
+{
+  "case_id": "h15",
+  "deceased": {
+    "name": "Gopalakrishnan Ramachandran",
+    "aliases": [],
+    "dob": "1957-03-09",
+    "dod": "2023-06-06",
+    "city": "Bengaluru",
+    "addresses": [
+      "Bengaluru"
+    ]
+  },
+  "claimant": {
+    "name": "Siya Naik",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": [
+    "scans/identity_proof.png",
+    "scans/legal_heir_certificate.png"
+  ]
+}

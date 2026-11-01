@@ -1,5 +1,5 @@
 # Self-hosted Langfuse v2 (free). Project + API keys are pre-seeded so no manual UI setup is needed.
-# Login: waris@example.com / waris-demo-pass   ->  http://localhost:3000
+# Login: waris@example.com / waris-demo-pass   ->  http://localhost:3001
 # These credentials are local-demo only; all data in this project is synthetic.
 services:
   langfuse-db:
@@ -23,10 +23,10 @@ services:
       langfuse-db:
         condition: service_healthy
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       DATABASE_URL: postgresql://langfuse:langfuse@langfuse-db:5432/langfuse
-      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_URL: http://localhost:3001
       NEXTAUTH_SECRET: waris-local-dev-secret
       SALT: waris-local-dev-salt
       TELEMETRY_ENABLED: "false"

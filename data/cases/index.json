@@ -1,0 +1,735 @@
+[
+ {
+  "case_id": "e01",
+  "difficulty": "easy",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "clean_case",
+   "docs_missing"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "e02",
+  "difficulty": "easy",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "clean_case",
+   "docs_missing"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "e03",
+  "difficulty": "easy",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "clean_case",
+   "docs_missing"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "e04",
+  "difficulty": "easy",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "clean",
+   "clean_case"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "e05",
+  "difficulty": "easy",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "clean",
+   "clean_case",
+   "ready"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "e06",
+  "difficulty": "easy",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "clean",
+   "clean_case",
+   "docs_missing"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "e07",
+  "difficulty": "easy",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "clean",
+   "clean_case"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "e08",
+  "difficulty": "easy",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "clean_case",
+   "docs_missing"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "e09",
+  "difficulty": "easy",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "clean_case",
+   "docs_missing"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "e10",
+  "difficulty": "easy",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "clean",
+   "clean_case"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "e11",
+  "difficulty": "easy",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "clean",
+   "ready",
+   "scan_clean"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "e12",
+  "difficulty": "easy",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "ready",
+   "scan_clean"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "e13",
+  "difficulty": "easy",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "docs_missing",
+   "scan_clean"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "e14",
+  "difficulty": "easy",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "clean",
+   "docs_missing",
+   "scan_rotated"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "e15",
+  "difficulty": "easy",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "docs_missing",
+   "scan_clean",
+   "scan_rotated"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m01",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "docs_missing",
+   "name_initials"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m02",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "docs_missing",
+   "name_initials"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m03",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "name_initials",
+   "ready"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m04",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "docs_missing",
+   "name_spelling"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m05",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "docs_missing",
+   "name_spelling"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m06",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "docs_missing",
+   "name_spelling"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m07",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "docs_missing",
+   "name_translit"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m08",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "docs_missing",
+   "name_translit"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m09",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "docs_missing",
+   "name_translit"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m10",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "docs_missing",
+   "name_order"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m11",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "docs_missing",
+   "name_order"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m12",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "docs_missing",
+   "name_maiden",
+   "scan_rotated"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m13",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "docs_missing",
+   "name_maiden"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m14",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "docs_missing",
+   "name_maiden"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m15",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "clean_case",
+   "docs_missing",
+   "later_session",
+   "partial_info",
+   "scan_clean"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m16",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "clean",
+   "clean_case",
+   "partial_info"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m17",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "clean_case",
+   "docs_missing",
+   "later_session",
+   "partial_info",
+   "scan_clean"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m18",
+  "difficulty": "medium",
+  "tags": [
+   "claimant_legal_heir",
+   "no_assets"
+  ],
+  "assets": 0
+ },
+ {
+  "case_id": "m19",
+  "difficulty": "medium",
+  "tags": [
+   "claimant_nominee",
+   "no_assets"
+  ],
+  "assets": 0
+ },
+ {
+  "case_id": "m20",
+  "difficulty": "medium",
+  "tags": [
+   "claimant_legal_heir",
+   "no_assets"
+  ],
+  "assets": 0
+ },
+ {
+  "case_id": "m21",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "clean_case",
+   "docs_missing",
+   "multi_account"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "m22",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "clean",
+   "clean_case",
+   "multi_account",
+   "tool_fault"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "m23",
+  "difficulty": "medium",
+  "tags": [
+   "amount_large",
+   "claimant_legal_heir",
+   "clean",
+   "clean_case",
+   "docs_missing"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m24",
+  "difficulty": "medium",
+  "tags": [
+   "amount_large",
+   "claimant_legal_heir",
+   "clean",
+   "clean_case",
+   "docs_missing"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "m25",
+  "difficulty": "medium",
+  "tags": [
+   "amount_small",
+   "claimant_joint_holder",
+   "clean",
+   "clean_case",
+   "joint_account"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "h01",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "docs_missing",
+   "multi_account",
+   "name_initials",
+   "namesake"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "h02",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "clean",
+   "docs_missing",
+   "name_spelling",
+   "namesake"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "h03",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "docs_missing",
+   "name_order",
+   "namesake"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "h04",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "docs_missing",
+   "namesake_ambiguous"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "h05",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "docs_missing",
+   "namesake_ambiguous",
+   "partial_info"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "h06",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "docs_missing",
+   "namesake_ambiguous"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "h07",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "doc_conflict",
+   "docs_missing",
+   "name_initials",
+   "scan_clean",
+   "scan_faded"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "h08",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "clean",
+   "doc_conflict",
+   "docs_missing",
+   "namesake",
+   "scan_clean"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "h09",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "doc_conflict",
+   "docs_missing",
+   "name_spelling",
+   "scan_rotated"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "h10",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "docs_missing",
+   "name_initials",
+   "no_rule",
+   "scan_faded"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "h11",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "docs_missing",
+   "no_rule",
+   "scan_blurry",
+   "scan_clean"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "h12",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "namesake",
+   "no_rule"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "h13",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "docs_missing",
+   "scan_blurry",
+   "scan_clean",
+   "scan_inject"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "h14",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "clean",
+   "docs_missing",
+   "scan_clean",
+   "scan_faded",
+   "scan_inject"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "h15",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "docs_missing",
+   "name_initials",
+   "scan_blurry",
+   "scan_clean",
+   "scan_inject"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "h16",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_joint_holder",
+   "clean",
+   "clean_case",
+   "joint_account",
+   "no_rule"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "h17",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_joint_holder",
+   "docs_missing",
+   "joint_account",
+   "name_spelling",
+   "namesake"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "h18",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_legal_heir",
+   "clean",
+   "clean_case",
+   "docs_missing",
+   "later_session",
+   "partial_info",
+   "scan_clean"
+  ],
+  "assets": 2
+ },
+ {
+  "case_id": "h19",
+  "difficulty": "hard",
+  "tags": [
+   "amount_large",
+   "claimant_legal_heir",
+   "docs_missing",
+   "name_maiden",
+   "namesake",
+   "tool_fault"
+  ],
+  "assets": 1
+ },
+ {
+  "case_id": "h20",
+  "difficulty": "hard",
+  "tags": [
+   "amount_small",
+   "claimant_nominee",
+   "clean",
+   "docs_missing",
+   "namesake",
+   "tool_fault"
+  ],
+  "assets": 2
+ }
+]

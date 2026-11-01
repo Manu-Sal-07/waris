@@ -1,0 +1,27 @@
+{
+  "case_id": "m15",
+  "deceased": {
+    "name": "Venkatesh Naidu",
+    "aliases": [],
+    "dob": null,
+    "dod": "2015-07-17",
+    "city": "Nagpur",
+    "addresses": [
+      "Nagpur"
+    ]
+  },
+  "claimant": {
+    "name": "Orinder Mistry",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": [],
+  "session2_scans": [
+    "scans/legal_heir_certificate.png"
+  ]
+}

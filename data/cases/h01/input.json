@@ -1,0 +1,25 @@
+{
+  "case_id": "h01",
+  "deceased": {
+    "name": "Gopalakrishnan Ramachandran",
+    "aliases": [],
+    "dob": "1930-04-21",
+    "dod": "2024-12-05",
+    "city": "Chennai",
+    "addresses": [
+      "Chennai"
+    ]
+  },
+  "claimant": {
+    "name": "Gaurangi Aurora",
+    "relationship": "daughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT",
+      "DOC_NAME_VARIATION_AFFIDAVIT"
+    ]
+  },
+  "scans": []
+}

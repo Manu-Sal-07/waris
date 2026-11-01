@@ -1,0 +1,24 @@
+{
+  "case_id": "h16",
+  "deceased": {
+    "name": "Parthasarathy Chandrasekhar",
+    "aliases": [],
+    "dob": "1955-05-14",
+    "dod": "2024-05-06",
+    "city": "Mumbai",
+    "addresses": [
+      "Mumbai"
+    ]
+  },
+  "claimant": {
+    "name": "Ekapad Sarna",
+    "relationship": "spouse",
+    "claimant_type": "joint_holder",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

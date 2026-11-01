@@ -1,0 +1,23 @@
+{
+  "case_id": "e09",
+  "deceased": {
+    "name": "Narasimhan Chandrasekhar",
+    "aliases": [],
+    "dob": "1961-05-21",
+    "dod": "2017-09-13",
+    "city": "Vijayawada",
+    "addresses": [
+      "Vijayawada"
+    ]
+  },
+  "claimant": {
+    "name": "Samesh Tak",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC"
+    ]
+  },
+  "scans": []
+}

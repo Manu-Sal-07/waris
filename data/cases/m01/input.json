@@ -1,0 +1,25 @@
+{
+  "case_id": "m01",
+  "deceased": {
+    "name": "Gopalakrishnan Ramachandran",
+    "aliases": [],
+    "dob": "1941-10-12",
+    "dod": "2016-08-28",
+    "city": "Nagpur",
+    "addresses": [
+      "Nagpur"
+    ]
+  },
+  "claimant": {
+    "name": "Tara Pingle",
+    "relationship": "granddaughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT",
+      "DOC_INDEMNITY_BOND"
+    ]
+  },
+  "scans": []
+}

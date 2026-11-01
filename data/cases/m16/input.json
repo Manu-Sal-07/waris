@@ -1,0 +1,24 @@
+{
+  "case_id": "m16",
+  "deceased": {
+    "name": "Seshadri Venkataraman",
+    "aliases": [],
+    "dob": null,
+    "dod": "2017-03-20",
+    "city": "Mysuru",
+    "addresses": [
+      "Mysuru"
+    ]
+  },
+  "claimant": {
+    "name": "Ekapad Rattan",
+    "relationship": "brother",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

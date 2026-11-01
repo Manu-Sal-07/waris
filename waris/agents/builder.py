@@ -11,7 +11,7 @@ from .rules_expert import accepted_assets
 
 @TRACE.node("builder")
 def builder(state: dict) -> dict:
-    have = set(state["claimant"].get("documents_available", []))
+    have = set(state["claimant"].get("documents_available", [])) | set(state.get("docs_from_scans", []))
     packs = dict(state.get("claim_packs", {}))
     for asset in accepted_assets(state):
         aid = asset["asset_id"]

@@ -1,0 +1,24 @@
+{
+  "case_id": "m07",
+  "deceased": {
+    "name": "Mohammed Farooq Siddiqui",
+    "aliases": [],
+    "dob": "1948-05-18",
+    "dod": "2015-11-04",
+    "city": "Hyderabad",
+    "addresses": [
+      "Hyderabad"
+    ]
+  },
+  "claimant": {
+    "name": "Aishani Bhat",
+    "relationship": "son",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

@@ -78,6 +78,7 @@ def load_rules() -> list[dict]:
         meta = yaml.safe_load(fm)
         meta["text"] = body.strip()
         meta["file"] = p.name
+        meta.setdefault("nominee_condition", "any")        # any | none (rule covers only records without a nominee)
         rules.append(meta)
     return rules
 
@@ -142,15 +143,22 @@ def retrieve_rules(query: str, institution_type: str, topic: str, exclude_ids: O
 def grade_rule(facts: dict, rule: dict, llm_fn: Optional[Callable[[dict, dict], Optional[bool]]] = None) -> dict:
     """-> {"fits": bool, "reason": str, "stage": "metadata"|"llm"}.
 
-    facts: institution_type, topic, claimant_type, nominee_alive (True/False/None), amount_band.
+    facts: institution_type, topic, claimant_type, nominee_alive (True/False/None), nominee_status
+    (alive/deceased/None), amount_band (small/large/any).
     """
     if rule["institution_type"] != facts["institution_type"]:
         return {"fits": False, "stage": "metadata",
                 "reason": f"rule is for {rule['institution_type']}, case is {facts['institution_type']}"}
     if rule["topic"] != facts["topic"]:
         return {"fits": False, "stage": "metadata", "reason": f"rule topic is {rule['topic']}, need {facts['topic']}"}
-    if rule["amount_band"] not in ("any", facts.get("amount_band", "any")):
-        return {"fits": False, "stage": "metadata", "reason": f"rule is for {rule['amount_band']} amounts"}
+    fb = facts.get("amount_band", "any")
+    if rule["amount_band"] != "any" and fb != "any" and rule["amount_band"] != fb:
+        return {"fits": False, "stage": "metadata",
+                "reason": f"rule is for {rule['amount_band']} amounts; this deposit is {fb}"}
+
+    if rule.get("nominee_condition") == "none" and facts.get("nominee_status"):
+        return {"fits": False, "stage": "metadata",
+                "reason": f"record has a nominee on file ({facts['nominee_status']}); rule covers only records without a nominee"}
 
     applies, ctype = rule["applies_to"], facts.get("claimant_type")
     if applies == "any":

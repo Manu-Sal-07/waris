@@ -1,0 +1,54 @@
+{
+  "case_id": "h11",
+  "difficulty": "hard",
+  "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
+  "assets": [
+    {
+      "asset_type": "life_insurance",
+      "record_id": "I003",
+      "needs_human_confirmation": false,
+      "status": "NEEDS_HUMAN_REVIEW",
+      "required_docs": [],
+      "missing": [],
+      "rule_id": null,
+      "reason": "no rule in the corpus for this nominee/claimant situation (deliberate gap)"
+    },
+    {
+      "asset_type": "shares",
+      "record_id": "R001",
+      "needs_human_confirmation": false,
+      "status": "MISSING_ITEMS",
+      "required_docs": [
+        "DOC_TRANSMISSION_FORM",
+        "DOC_DEATH_CERT",
+        "DOC_LEGAL_HEIR_CERT",
+        "DOC_CLAIMANT_KYC"
+      ],
+      "missing": [
+        "DOC_TRANSMISSION_FORM",
+        "DOC_LEGAL_HEIR_CERT"
+      ],
+      "rule_id": "REG-LH-01"
+    }
+  ],
+  "namesake_record_ids": [],
+  "lookalike_record_ids": [],
+  "expected_questions": [],
+  "expect_tool_error": false,
+  "unreachable_assets": [],
+  "doc_conflict": false,
+  "unreadable_scans": [
+    "scans/legal_heir_certificate.png"
+  ],
+  "injection_scans": [],
+  "no_assets": false,
+  "tags": [
+    "amount_small",
+    "claimant_legal_heir",
+    "clean",
+    "docs_missing",
+    "no_rule",
+    "scan_blurry",
+    "scan_clean"
+  ]
+}

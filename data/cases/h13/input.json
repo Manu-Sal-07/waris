@@ -1,0 +1,24 @@
+{
+  "case_id": "h13",
+  "deceased": {
+    "name": "Narasimhan Rao",
+    "aliases": [],
+    "dob": "1945-03-14",
+    "dod": "2020-01-18",
+    "city": "Madurai",
+    "addresses": [
+      "Madurai"
+    ]
+  },
+  "claimant": {
+    "name": "Charvi Krish",
+    "relationship": "grandson",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": []
+  },
+  "scans": [
+    "scans/identity_proof.png",
+    "scans/death_certificate.png"
+  ]
+}

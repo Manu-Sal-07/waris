@@ -8,6 +8,7 @@ import json
 from typing import Optional
 
 from . import config
+from .tracing import TRACE
 
 _disabled = not config.USE_LLM
 _client = None
@@ -30,7 +31,7 @@ def _get_client():
     return _client
 
 
-def chat_json(system: str, user: str) -> tuple[Optional[dict], int, Optional[str]]:
+def chat_json(system: str, user: str, model: Optional[str] = None, quiet: bool = False) -> tuple[Optional[dict], int, Optional[str]]:
     """-> (parsed_json_or_None, llm_calls_used, error_or_None). One retry on invalid JSON."""
     global _disabled
     if _disabled:
@@ -40,12 +41,18 @@ def chat_json(system: str, user: str) -> tuple[Optional[dict], int, Optional[str
         used += 1
         try:
             r = _get_client().chat(
-                model=config.OLLAMA_MODEL,
+                model=model or config.OLLAMA_MODEL,
                 messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
                 format="json",
-                options={"temperature": 0, "num_predict": 160},
+                options={"temperature": config.LLM_TEMPERATURE, "seed": config.LLM_SEED, "num_predict": 200},
             )
-            return json.loads(r["message"]["content"]), used, None
+            out = json.loads(r["message"]["content"])
+            if not quiet:
+                TRACE.event("llm", "LLM", f"{model or config.OLLAMA_MODEL} answered in {r.get('total_duration', 0) / 1e9:.1f}s "
+                            f"({r.get('eval_count', '?')} tokens): {json.dumps(out)[:160]}",
+                            data={"model": model or config.OLLAMA_MODEL, "prompt_system": system[:300],
+                                  "prompt_user": user[:600], "response": out})
+            return out, used, None
         except json.JSONDecodeError as e:
             err = f"invalid JSON ({e.msg})"
         except Exception as e:                      # connection refused, model missing, timeout

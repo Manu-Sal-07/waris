@@ -1,0 +1,24 @@
+{
+  "case_id": "h06",
+  "deceased": {
+    "name": "Ramaswamy Krishnamurthy",
+    "aliases": [],
+    "dob": "1960-02-02",
+    "dod": "2020-11-05",
+    "city": "Chennai",
+    "addresses": [
+      "Chennai"
+    ]
+  },
+  "claimant": {
+    "name": "Zilmil Dewan",
+    "relationship": "granddaughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

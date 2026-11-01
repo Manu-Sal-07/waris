@@ -1,0 +1,25 @@
+{
+  "case_id": "e05",
+  "deceased": {
+    "name": "Ranganathan Raghavan",
+    "aliases": [],
+    "dob": "1936-08-14",
+    "dod": "2015-11-12",
+    "city": "Kolkata",
+    "addresses": [
+      "Kolkata"
+    ]
+  },
+  "claimant": {
+    "name": "Hitesh Savant",
+    "relationship": "brother",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_CLAIM_FORM_BANK",
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

@@ -21,12 +21,18 @@ def accepted_assets(state: dict) -> list[dict]:
             if a["match"]["band"] == "accept" or a.get("identity_confirmed") is True]
 
 
+def amount_band(amount) -> str:
+    """Illustrative threshold: up to Rs 5 lakh is 'small' (labelled illustrative in the rule corpus)."""
+    return "any" if not amount else ("small" if amount <= config.SMALL_AMOUNT_INR else "large")
+
+
 def _facts(state: dict, asset: dict, topic: str) -> dict:
     nominee_status = asset["record"].get("nominee_status")
     return {"institution_type": asset["institution_type"], "topic": topic,
             "claimant_type": state["claimant"]["claimant_type"],
             "nominee_alive": {"alive": True, "deceased": False}.get(nominee_status),
-            "amount_band": "any"}
+            "nominee_status": nominee_status,
+            "amount_band": amount_band(asset["record"].get("amount_inr"))}
 
 
 def _query(asset: dict, facts: dict, topic: str, attempt: int) -> str:
@@ -37,9 +43,16 @@ def _query(asset: dict, facts: dict, topic: str, attempt: int) -> str:
     base = f"{label} claim procedure: documents required to claim the {noun} of a deceased {holder}"
     if attempt == 0:
         return base
-    who = facts["claimant_type"].replace("_", " ")
-    nominee = "a nominee is registered" if facts["nominee_alive"] else "no living nominee is registered"
-    return f"{base}, for a {who} claimant where {nominee}"
+    # re-query: say WHO is claiming and how much, in the words a rule uses (the situation leads, not the generic wording)
+    ctype = facts["claimant_type"]
+    band = {"small": " small amount up to five lakh rupees", "large": " large amount above five lakh rupees, succession certificate"}.get(
+        facts["amount_band"], "")
+    if ctype == "joint_holder":
+        return f"{label} held jointly: claim by the surviving joint holder after the other holder has died{band}"
+    if ctype == "nominee":
+        return f"{label} claim by the registered nominee named on the {noun}{band}"
+    extra = " (a nominee is on record)" if facts["nominee_alive"] else " where no nominee is registered"
+    return f"{label} claim by the legal heirs{extra}{band}"
 
 
 _GRADER_SYSTEM = ("You grade whether a claim-procedure rule applies to a claimant. Answer JSON only: "
@@ -71,7 +84,10 @@ def _resolve(state: dict, asset: dict, topic: str, rq: dict, grader=None) -> tup
         rule = got[0]
         TRACE.event("rules_expert", "RAG", f"{aid} [{topic}] query #{attempt}: top match {rule['rule_id']} "
                     f"(distance {rule['distance']})", data={"query": query})
-        g = retrieval.grade_rule(facts, rule, llm_fn=grader)
+        if "no_grading" in config.ABLATE:                  # experiment: trust similarity alone (plain top-1 RAG)
+            g = {"fits": True, "reason": "grading disabled (ablation): top similarity is trusted", "stage": "none"}
+        else:
+            g = retrieval.grade_rule(facts, rule, llm_fn=grader)
         if g["fits"]:
             TRACE.event("rules_expert", "GRADE", f"{rule['rule_id']} FITS: {g['reason']}")
             return {"rule_id": rule["rule_id"], "topic": topic, "requires": rule["requires"], "title": rule["title"],
