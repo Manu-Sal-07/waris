@@ -1,0 +1,27 @@
+{
+  "case_id": "m17",
+  "deceased": {
+    "name": "Thyagarajan Raghavan",
+    "aliases": [],
+    "dob": null,
+    "dod": "2019-06-23",
+    "city": "Kochi",
+    "addresses": [
+      "Kochi"
+    ]
+  },
+  "claimant": {
+    "name": "Nikita Iyengar",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": [],
+  "session2_scans": [
+    "scans/legal_heir_certificate.png"
+  ]
+}

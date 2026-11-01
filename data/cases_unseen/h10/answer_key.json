@@ -1,0 +1,62 @@
+{
+  "case_id": "h10",
+  "difficulty": "hard",
+  "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
+  "assets": [
+    {
+      "asset_type": "life_insurance",
+      "record_id": "I003",
+      "needs_human_confirmation": false,
+      "status": "NEEDS_HUMAN_REVIEW",
+      "required_docs": [],
+      "missing": [],
+      "rule_id": null,
+      "reason": "no rule in the corpus for this nominee/claimant situation (deliberate gap)"
+    },
+    {
+      "asset_type": "bank_deposit",
+      "record_id": "B002",
+      "needs_human_confirmation": false,
+      "status": "MISSING_ITEMS",
+      "required_docs": [
+        "DOC_CLAIM_FORM_BANK",
+        "DOC_DEATH_CERT",
+        "DOC_LEGAL_HEIR_CERT",
+        "DOC_INDEMNITY_BOND",
+        "DOC_CLAIMANT_KYC",
+        "DOC_NAME_VARIATION_AFFIDAVIT"
+      ],
+      "missing": [
+        "DOC_CLAIM_FORM_BANK",
+        "DOC_DEATH_CERT",
+        "DOC_LEGAL_HEIR_CERT",
+        "DOC_INDEMNITY_BOND",
+        "DOC_NAME_VARIATION_AFFIDAVIT"
+      ],
+      "rule_id": "BANK-LH-01",
+      "name_variant": "initials"
+    }
+  ],
+  "namesake_record_ids": [],
+  "lookalike_record_ids": [
+    "R003"
+  ],
+  "expected_questions": [],
+  "expect_tool_error": false,
+  "unreachable_assets": [],
+  "doc_conflict": false,
+  "unreadable_scans": [
+    "scans/death_certificate.png"
+  ],
+  "injection_scans": [],
+  "no_assets": false,
+  "tags": [
+    "amount_small",
+    "claimant_legal_heir",
+    "clean",
+    "docs_missing",
+    "name_initials",
+    "no_rule",
+    "scan_faded"
+  ]
+}

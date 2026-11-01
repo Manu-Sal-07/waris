@@ -1,0 +1,24 @@
+{
+  "case_id": "m11",
+  "deceased": {
+    "name": "Seshadri Menon",
+    "aliases": [],
+    "dob": "1938-03-10",
+    "dod": "2019-05-28",
+    "city": "Lucknow",
+    "addresses": [
+      "Lucknow"
+    ]
+  },
+  "claimant": {
+    "name": "Edhitha Deep",
+    "relationship": "spouse",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

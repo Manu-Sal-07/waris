@@ -145,6 +145,8 @@ def test_llm_paragraph_is_validated():
     assert letters.paragraph_ok(good, FACTS)
     assert not letters.paragraph_ok(good + " The bank guarantees payment within 7 days.", FACTS)       # promise
     assert not letters.paragraph_ok(good.replace("Meena Krishnan", "Someone Else"), FACTS)               # wrong name
+    assert not letters.paragraph_ok(good.replace("who passed away on 2019-06-21", "which matured on 2019-06-21"), FACTS)   # invented fact
+    assert not letters.paragraph_ok(good + " I am entitled to the proceeds.", FACTS)
     assert not letters.paragraph_ok(good + " Amount 500000 will be paid " * 3, FACTS)                    # invented number
     assert not letters.paragraph_ok("Too short.", FACTS)
 
@@ -183,7 +185,8 @@ def test_judge_reference_marks_separate_good_and_damaged_letters():
     items = judge.build_validation_set()
     genuine = [i for i in items if i["kind"] == "genuine"]
     assert genuine and all(sum(judge.reference_marks(i["letter"], i["facts"]).values()) == 5 for i in genuine)
-    for kind, crit in (("drop_doc", "documents"), ("wrong_name", "asset_claimant"), ("invent", "no_invented"), ("informal", "formal")):
+    for kind, crit in (("drop_doc", "documents"), ("wrong_name", "asset_claimant"), ("invent", "no_invented"),
+                       ("invent_date", "no_invented"), ("informal", "formal")):
         damaged = [i for i in items if i["kind"] == kind]
         assert damaged and all(judge.reference_marks(i["letter"], i["facts"])[crit] == 0 for i in damaged)
 

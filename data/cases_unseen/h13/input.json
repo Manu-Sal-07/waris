@@ -1,0 +1,24 @@
+{
+  "case_id": "h13",
+  "deceased": {
+    "name": "Venkatesh Srinivasan",
+    "aliases": [],
+    "dob": "1960-08-08",
+    "dod": "2019-04-03",
+    "city": "Nagpur",
+    "addresses": [
+      "Nagpur"
+    ]
+  },
+  "claimant": {
+    "name": "Harinakshi Mangal",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": []
+  },
+  "scans": [
+    "scans/identity_proof.png",
+    "scans/death_certificate.png"
+  ]
+}

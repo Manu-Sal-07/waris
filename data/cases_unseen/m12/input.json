@@ -1,0 +1,27 @@
+{
+  "case_id": "m12",
+  "deceased": {
+    "name": "Savitri Chandrasekhar",
+    "aliases": [
+      "Savitri Iyer"
+    ],
+    "dob": "1931-01-28",
+    "dod": "2018-01-21",
+    "city": "Hubballi",
+    "addresses": [
+      "Hubballi"
+    ]
+  },
+  "claimant": {
+    "name": "Aadi Karpe",
+    "relationship": "granddaughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png"
+  ]
+}

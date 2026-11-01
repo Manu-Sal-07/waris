@@ -1,0 +1,26 @@
+{
+  "case_id": "h14",
+  "deceased": {
+    "name": "Ranganathan Ramachandran",
+    "aliases": [],
+    "dob": "1959-05-01",
+    "dod": "2020-12-18",
+    "city": "Lucknow",
+    "addresses": [
+      "Lucknow"
+    ]
+  },
+  "claimant": {
+    "name": "Triveni Krishna",
+    "relationship": "spouse",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": [
+    "scans/identity_proof.png",
+    "scans/death_certificate.png"
+  ]
+}

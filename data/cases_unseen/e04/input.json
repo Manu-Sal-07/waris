@@ -1,0 +1,24 @@
+{
+  "case_id": "e04",
+  "deceased": {
+    "name": "Sundaram Subramanian",
+    "aliases": [],
+    "dob": "1939-08-16",
+    "dod": "2019-12-05",
+    "city": "Jaipur",
+    "addresses": [
+      "Jaipur"
+    ]
+  },
+  "claimant": {
+    "name": "Vedika Vaidya",
+    "relationship": "brother",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

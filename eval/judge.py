@@ -4,9 +4,10 @@
     python -m eval.judge score results/main         # judge every saved letter of an evaluation run
     python -m eval.judge agree results/judge/human_marks.csv   # agreement with the team's own marks (once filled in)
 
-The judge is a DIFFERENT model (WARIS_JUDGE_MODEL, default llama3.2) from the one that writes the letters
-(llama3.1:8b), so a model is never grading its own writing.  It sees the REFERENCE FACTS (from the answer key) and the
-letter, and marks five yes/no criteria:
+The judge model is WARIS_JUDGE_MODEL (default llama3.1:8b; llama3.2 and gemma4:26b were tried and were worse, see the
+validation notes). Disclosure: this is the same model that writes the letters' opening paragraph, so the judge is never trusted
+on its own: it is validated against a deterministic reference checker and the checker's numbers are reported next to it.
+It sees the REFERENCE FACTS (from the answer key) and the letter, and marks five yes/no criteria:
    asset_claimant  the letter names the right deceased, claimant and kind of asset
    documents       the enclosed / still-to-follow lists match the true checklist (a letter built on the wrong rule fails)
    formal          formal, polite tone (no slang, no exclamation marks)
@@ -28,7 +29,8 @@ from waris.doc_codes import DOC_CODES
 CRITERIA = ["asset_claimant", "documents", "formal", "no_invented", "clear_request"]
 _DESC2CODE = {v: k for k, v in DOC_CODES.items()}
 _KIND = {"bank_deposit": ("deposit", "account", "savings"), "life_insurance": ("policy", "insurance"), "shares": ("share",)}
-_FORBID = re.compile(r"guarantee|assure|promise|compensation|interest|penalt|urgent|immediately|\bRs\.?\s*\d|₹|\d+\s*lakh", re.I)
+_FORBID = re.compile(r"guarantee|assure|promise|compensation|interest|penalt|urgent|immediately|\bRs\.?\s*\d|₹|\d+\s*lakh|"
+                     r"matur|entitled|proceeds|balance|payable|credited", re.I)
 _INFORMAL = re.compile(r"!|\bhey\b|\bguys\b|\bthanks a lot\b|\bASAP\b|\bplease hurry\b", re.I)
 
 
@@ -59,39 +61,49 @@ def reference_marks(letter: str, facts: dict | None) -> dict[str, int]:
     enc = _section(letter, "Documents enclosed with this letter:")
     fol = _section(letter, "Documents I will submit shortly:")
     ok_docs = enc == set(facts["enclosed"]) and fol == set(facts["to_follow"])
-    allowed_nums = set(re.findall(r"\d+", facts["dod"])) | set(re.findall(r"\d+", re.sub(r"[^\d* ]", " ", " ".join(re.findall(r"reference \S+", letter)))))
+    allowed_nums = set(re.findall(r"\d+", facts["dod"])) | set(re.findall(r"\*+(\d+)", letter))     # date of death + the masked reference
     body = re.sub(r"\n  \d+\. ", "\n  ", letter)                              # list numbering is not a fact
-    nums = set(re.findall(r"\d+", re.sub(r"reference \S+", "", body)))
-    ok_noinvent = not _FORBID.search(letter) and nums <= allowed_nums
+    nums = set(re.findall(r"\d+", re.sub(r"\*+\d+", "", body)))
+    dates_ok = all(d == facts["dod"] and re.search(r"passed away|died|death|demise", body[max(0, m.start() - 40):m.start()], re.I)
+                   for m in re.finditer(r"\d{4}-\d{2}-\d{2}", body) for d in [m.group(0)])
+    ok_noinvent = not _FORBID.search(letter) and nums <= allowed_nums and dates_ok
     return {"asset_claimant": int(ok_asset), "documents": int(ok_docs), "formal": int(not _INFORMAL.search(letter) and "Yours faithfully" in letter),
             "no_invented": int(ok_noinvent), "clear_request": int("request" in low or "kindly" in low)}
 
 
 # ------------------------------------------------------------------ the LLM judge
-_SYSTEM = ("You are a strict checker of claim letters written for a family after a relative's death. You get REFERENCE FACTS "
-           "and a LETTER. Mark each criterion 1 (yes) or 0 (no):\n"
-           "asset_claimant: the letter names the deceased, the claimant and the right kind of asset.\n"
-           "documents: the documents listed as enclosed and as to follow are exactly the reference ones (nothing missing, nothing extra).\n"
-           "formal: formal and polite.\n"
-           "no_invented: no amount, date, promise or fact that is not in the reference facts.\n"
-           "clear_request: it asks the institution for something concrete.\n"
-           'Reply with JSON only: {"asset_claimant":0|1,"documents":0|1,"formal":0|1,"no_invented":0|1,"clear_request":0|1}')
+# One narrow yes/no question per criterion (small models are unreliable at five-way holistic grading: kappa 0.24 for
+# llama3.2 holistic vs 0.63 per criterion with llama3.1:8b on the validation set, see results/judge/).
+_Q = {
+    "asset_claimant": "Does the letter name BOTH the deceased '{deceased}' AND the claimant '{claimant}', and is it about a {kind}?",
+    "documents": ("The letter must list as ENCLOSED exactly these documents: {enc}; and as TO FOLLOW exactly these: {fol}. "
+                  "Compare with the two lists in the letter. Do both lists contain exactly those documents, nothing missing and nothing extra?"),
+    "formal": "Is the letter written in a formal, polite style, with no slang and no exclamation marks?",
+    "no_invented": ("Does the letter contain NO money amount, NO number of days, NO guarantee or promise of payment, and NO claim "
+                    "that the asset matured or that the claimant is entitled to the money?"),
+    "clear_request": "Does the letter ask the institution to acknowledge, guide or process something?",
+}
+_SYSTEM = 'You check a letter. Answer ONLY with JSON: {"answer": "yes"} or {"answer": "no"}.'
+_KIND = {"bank_deposit": "bank deposit", "life_insurance": "life insurance policy", "shares": "shareholding"}
 
 
 def judge_letter(letter: str, facts: dict | None) -> dict[str, int] | None:
-    if facts is None:
-        ref = "REFERENCE FACTS: this record is NOT an asset of the deceased, so a claim letter for it is wrong."
-    else:
-        ref = (f"REFERENCE FACTS: deceased = {facts['deceased']}; claimant = {facts['claimant']}; asset kind = {facts['asset_type']}; "
-               f"documents the family already holds (must be listed as enclosed) = {[DOC_CODES[d] for d in facts['enclosed']]}; "
-               f"documents still missing (must be listed as to follow) = {[DOC_CODES[d] for d in facts['to_follow']]}.")
-    raw, _, _ = llm.chat_json(_SYSTEM, f"{ref}\n\nLETTER:\n{letter}", model=config.JUDGE_MODEL, quiet=True)
-    if not isinstance(raw, dict):
-        return None
-    try:
-        return {c: int(bool(int(raw[c]))) for c in CRITERIA}
-    except Exception:
-        return None
+    """Five narrow yes/no questions, each answered by the judge model. A letter about something that is not the family's
+    asset is marked 0 on asset and documents without asking (the reference facts say it is wrong)."""
+    marks = {}
+    for c in CRITERIA:
+        if facts is None and c in ("asset_claimant", "documents"):
+            marks[c] = 0
+            continue
+        q = _Q[c].format(deceased=facts["deceased"] if facts else "", claimant=facts["claimant"] if facts else "",
+                         kind=_KIND.get(facts["asset_type"], "") if facts else "",
+                         enc=[DOC_CODES[d] for d in facts["enclosed"]] if facts else [],
+                         fol=[DOC_CODES[d] for d in facts["to_follow"]] if facts else [])
+        raw, _, _ = llm.chat_json(_SYSTEM, f"{q}\n\nLETTER:\n{letter}", model=config.JUDGE_MODEL, quiet=True)
+        if not isinstance(raw, dict):
+            return None
+        marks[c] = int(str(raw.get("answer", "")).strip().lower().startswith("y"))
+    return marks
 
 
 def kappa(a: list[int], b: list[int]) -> float:
@@ -116,6 +128,8 @@ def _perturb(text: str, kind: str, facts: dict, rng: random.Random) -> str:
         return text.replace(facts["claimant"], "Rohan Mehta")
     if kind == "invent":
         return text.replace("Kindly acknowledge", "The bank has assured a payment of Rs 5,00,000 within 7 days. Kindly acknowledge")
+    if kind == "invent_date":
+        return text.replace("I am writing to start", "The deposit matured on 2017-07-01 and I am entitled to the proceeds. I am writing to start", 1)
     if kind == "informal":
         return text.replace("Dear Sir/Madam,", "Hey guys!!").replace("Yours faithfully", "Thanks a lot!")
     return text
@@ -143,8 +157,8 @@ def build_validation_set(limit_genuine: int = 12) -> list[dict]:
                  "enclosed": facts["enclosed"], "to_follow": facts["to_follow"]}
             out.append({"id": f"{cid}-{a['record_id']}-genuine", "letter": render(f, template_paragraph(f)), "facts": facts, "kind": "genuine"})
     genuine = list(out)
-    for kind in ("drop_doc", "wrong_name", "invent", "informal"):
-        for g in genuine[:5] if kind != "informal" else genuine[:3]:
+    for kind in ("drop_doc", "wrong_name", "invent", "invent_date", "informal"):
+        for g in genuine[:5] if kind not in ("informal", "invent_date") else genuine[:3]:
             out.append({"id": g["id"].replace("genuine", kind), "letter": _perturb(g["letter"], kind, g["facts"], rng),
                         "facts": g["facts"], "kind": kind})
     return out

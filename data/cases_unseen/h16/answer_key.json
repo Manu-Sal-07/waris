@@ -1,0 +1,49 @@
+{
+  "case_id": "h16",
+  "difficulty": "hard",
+  "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
+  "assets": [
+    {
+      "asset_type": "bank_deposit",
+      "record_id": "B002",
+      "needs_human_confirmation": false,
+      "status": "MISSING_ITEMS",
+      "required_docs": [
+        "DOC_CLAIM_FORM_BANK",
+        "DOC_DEATH_CERT",
+        "DOC_CLAIMANT_KYC"
+      ],
+      "missing": [
+        "DOC_CLAIM_FORM_BANK"
+      ],
+      "rule_id": "BANK-JOINT-01"
+    },
+    {
+      "asset_type": "shares",
+      "record_id": "R002",
+      "needs_human_confirmation": false,
+      "status": "NEEDS_HUMAN_REVIEW",
+      "required_docs": [],
+      "missing": [],
+      "rule_id": null,
+      "reason": "joint holders of shares are not covered by the corpus (deliberate gap)"
+    }
+  ],
+  "namesake_record_ids": [],
+  "lookalike_record_ids": [],
+  "expected_questions": [],
+  "expect_tool_error": false,
+  "unreachable_assets": [],
+  "doc_conflict": false,
+  "unreadable_scans": [],
+  "injection_scans": [],
+  "no_assets": false,
+  "tags": [
+    "amount_small",
+    "claimant_joint_holder",
+    "clean",
+    "clean_case",
+    "joint_account",
+    "no_rule"
+  ]
+}

@@ -36,7 +36,7 @@ LLM_TIMEOUT = float(os.getenv("WARIS_LLM_TIMEOUT", "60"))
 LLM_TEMPERATURE = float(os.getenv("WARIS_LLM_TEMPERATURE", "0"))
 LLM_SEED = int(os.getenv("WARIS_LLM_SEED", "0"))
 LETTER_LLM = os.getenv("WARIS_LETTER_LLM", "1") == "1"          # let the LLM write the letter's opening paragraph (validated)
-JUDGE_MODEL = os.getenv("WARIS_JUDGE_MODEL", "llama3.2")          # a different model from the one that writes: no self-marking
+JUDGE_MODEL = os.getenv("WARIS_JUDGE_MODEL", "llama3.1:8b")       # validated against a deterministic checker (see eval/judge.py)
 
 # --- ablations (experiments): comma-separated switches, e.g. WARIS_ABLATE=no_verifier,no_grading ---
 ABLATE: set[str] = {x.strip() for x in os.getenv("WARIS_ABLATE", "").split(",") if x.strip()}

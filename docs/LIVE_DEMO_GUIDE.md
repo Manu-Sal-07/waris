@@ -1,3 +1,5 @@
+> **Note:** written for the Review 2 slice (Meena only). For the finished system use `FINAL_DEMO_SCRIPT.md`. The RAG and LLM-call parts below still apply.
+
 # Live demo guide: RAG, data fetch, LLM calls (what to show, where, what to say)
 
 Open **three windows** before you start: (A) the Streamlit UI, (B) a terminal, (C) `traces/meena.html` or Langfuse.

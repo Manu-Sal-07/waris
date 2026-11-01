@@ -1,0 +1,24 @@
+{
+  "case_id": "h03",
+  "deceased": {
+    "name": "Sundaram Nair",
+    "aliases": [],
+    "dob": "1951-10-19",
+    "dod": "2020-05-23",
+    "city": "Vijayawada",
+    "addresses": [
+      "Vijayawada"
+    ]
+  },
+  "claimant": {
+    "name": "Tamanna Chada",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

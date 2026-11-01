@@ -1,0 +1,24 @@
+{
+  "case_id": "e15",
+  "deceased": {
+    "name": "Narasimhan Chandrasekhar",
+    "aliases": [],
+    "dob": "1952-07-06",
+    "dod": "2022-05-06",
+    "city": "Thrissur",
+    "addresses": [
+      "Thrissur"
+    ]
+  },
+  "claimant": {
+    "name": "Reyansh Pai",
+    "relationship": "daughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": []
+  },
+  "scans": [
+    "scans/death_certificate.png",
+    "scans/identity_proof.png"
+  ]
+}

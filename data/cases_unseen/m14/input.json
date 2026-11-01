@@ -1,0 +1,26 @@
+{
+  "case_id": "m14",
+  "deceased": {
+    "name": "Rukmini Balasubramanian",
+    "aliases": [
+      "Rukmini Pillai"
+    ],
+    "dob": "1955-04-15",
+    "dod": "2017-08-17",
+    "city": "Bengaluru",
+    "addresses": [
+      "Bengaluru"
+    ]
+  },
+  "claimant": {
+    "name": "Janaki Srinivasan",
+    "relationship": "daughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

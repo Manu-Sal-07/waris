@@ -1,0 +1,25 @@
+{
+  "case_id": "m09",
+  "deceased": {
+    "name": "Mohammed Nasir Hussain",
+    "aliases": [],
+    "dob": "1958-11-17",
+    "dod": "2018-01-05",
+    "city": "Mumbai",
+    "addresses": [
+      "Mumbai"
+    ]
+  },
+  "claimant": {
+    "name": "Ranbir Agarwal",
+    "relationship": "granddaughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT",
+      "DOC_NAME_VARIATION_AFFIDAVIT"
+    ]
+  },
+  "scans": []
+}

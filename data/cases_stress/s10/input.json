@@ -1,0 +1,26 @@
+{
+  "case_id": "s10",
+  "deceased": {
+    "name": "Ramaswamy Raghavan",
+    "aliases": [],
+    "dob": "1959-03-16",
+    "dod": "2016-11-21",
+    "city": "Hyderabad",
+    "addresses": [
+      "Hyderabad"
+    ]
+  },
+  "claimant": {
+    "name": "Ishwar Puri",
+    "relationship": "daughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT",
+      "DOC_LEGAL_HEIR_CERT",
+      "DOC_TRANSMISSION_FORM"
+    ]
+  },
+  "scans": []
+}

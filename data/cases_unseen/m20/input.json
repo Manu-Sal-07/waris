@@ -1,0 +1,26 @@
+{
+  "case_id": "m20",
+  "deceased": {
+    "name": "Meenakshi Srinivasan",
+    "aliases": [
+      "Meenakshi Gowda"
+    ],
+    "dob": "1954-08-03",
+    "dod": "2024-07-18",
+    "city": "Hubballi",
+    "addresses": [
+      "Hubballi"
+    ]
+  },
+  "claimant": {
+    "name": "Anmol Handa",
+    "relationship": "grandson",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

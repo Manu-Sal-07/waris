@@ -41,7 +41,7 @@ def agg(rows: list[dict]) -> dict:
         "citation_coverage": div(s("n_cited"), s("n_reqs")),
         "question_precision": div(s("q_hit"), s("q_asked")), "question_recall": div(s("q_hit"), s("q_expected")),
         "case_perfect": sum(1 for r in rows if r["status_accuracy"] == 1 and r["wrong_person_matches"] == 0
-                            and r["abstention_correct"]) / n,
+                            and r["abstention_correct"] and r["checklist_precision"] == 1 and r["checklist_recall"] == 1) / n,
         "llm_calls": s("llm_calls") / n, "tool_calls": s("tool_calls") / n, "rounds": s("rounds") / n,
         "requeries": s("requeries") / n, "wall_s": s("wall_s") / n,
     }
@@ -68,7 +68,7 @@ METRICS = [("status_accuracy", "Status accuracy", "{:.1%}"), ("checklist_f1", "C
            ("checklist_precision", "Checklist precision", "{:.1%}"), ("checklist_recall", "Checklist recall", "{:.1%}"),
            ("asset_recall", "Asset recall", "{:.1%}"), ("wrong_person", "Wrong-person matches", "{:.1f}"),
            ("abstention_correct", "Abstention correct (cases)", "{:.1%}"), ("citation_coverage", "Citation coverage", "{:.1%}"),
-           ("case_perfect", "Cases fully correct", "{:.1%}"), ("question_precision", "Family-question precision", "{:.1%}"),
+           ("case_perfect", "Cases fully correct (status, abstention, exact checklist, no wrong person)", "{:.1%}"), ("question_precision", "Family-question precision", "{:.1%}"),
            ("question_recall", "Family-question recall", "{:.1%}"), ("llm_calls", "LLM calls / case", "{:.1f}"),
            ("tool_calls", "Tool calls / case", "{:.1f}"), ("rounds", "Verifier rounds / case", "{:.2f}"),
            ("wall_s", "Seconds / case", "{:.1f}")]
@@ -86,7 +86,9 @@ def table_md(summary: dict, title: str) -> str:
         body += f"| {name} | " + " | ".join(cells) + " |\n"
     reps = {summary[v]["reps"] for v in vs}
     cases = {int(summary[v]["cases"][0]) for v in vs}
-    return f"### {title}\n\n{len(cases) == 1 and next(iter(cases))} cases per run, repetitions per variant: {sorted(reps)}\n\n{head}{body}\n"
+    n_cases = min(cases) if len(cases) == 1 else "/".join(str(c) for c in sorted(cases))
+    return (f"### {title}\n\n{n_cases} cases per run; repetitions per variant: {sorted(reps)} "
+            f"(mean ± standard deviation over repetitions)\n\n{head}{body}\n")
 
 
 def bar_plot(summary: dict, keys: list[tuple[str, str]], title: str, path: Path, pct=True) -> None:
@@ -204,9 +206,22 @@ def main(argv=None) -> int:
         for v in ("baseline", "no_verifier", "no_grading", "full_nollm"):
             if v in s_all:
                 d = lambda k: s_all["full"][k][0] - s_all[v][k][0]
-                md += (f"| {LABEL[v]} | {-d('status_accuracy') * 100:+.1f} pts | {-d('checklist_f1') * 100:+.1f} pts | "
-                       f"{-d('case_perfect') * 100:+.1f} pts | {-d('wrong_person'):+.1f} | {-d('llm_calls'):+.1f} |\n")
+                z = lambda x: round(x, 1) + 0.0                  # avoid printing "-0.0"
+                md += (f"| {LABEL[v]} | {z(-d('status_accuracy') * 100):+.1f} pts | {z(-d('checklist_f1') * 100):+.1f} pts | "
+                       f"{z(-d('case_perfect') * 100):+.1f} pts | {z(-d('wrong_person')):+.1f} | {z(-d('llm_calls')):+.1f} |\n")
         md += "\n(negative = the variant is worse than full Waris; positive = better.)\n"
+    js = out / "judge_summary.json"
+    if js.exists():
+        jd = json.loads(js.read_text(encoding="utf-8"))
+        md += ("\n### Claim-letter quality (first repetition; five yes/no criteria per letter, score out of 5)\n\n"
+               "| Variant | Letters | Deterministic reference checker | LLM judge (llama3.1:8b) |\n|---|---|---|---|\n")
+        for v in ORDER:
+            if v in jd:
+                md += f"| {LABEL[v]} | {jd[v]['letters']} | {jd[v]['reference_mean_of_5']:.2f} | {jd[v]['judge_mean_of_5']:.2f} |\n"
+        md += ("\nThe reference checker is the primary measure; the judge was validated against it on 33 letters (91 % agreement, "
+               "Cohen's kappa 0.61, `results/judge/validation.json`). The judge is stricter than the checker (it over-flags the "
+               "\"no invented facts\" criterion), but both rank the variants the same way: letters built on a wrong rule or a missing "
+               "name proof score lower.\n")
     (out / "summary.md").write_text(md, encoding="utf-8")
     (out / "failures.md").write_text(failures_md(rows, out), encoding="utf-8")
     print(md)

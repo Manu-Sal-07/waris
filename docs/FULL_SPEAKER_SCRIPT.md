@@ -1,3 +1,5 @@
+> **Note:** this script is for the Review 2 slice. For the finished system (OCR, 60-case evaluation, letters) use `FINAL_DEMO_SCRIPT.md`.
+
 # Waris Review 2: complete speaker script (Meena's case, start to finish)
 
 Total about 15 minutes of talking plus 5 minutes of questions. Split it between the team (suggested speaker per part). Every member must still be able to answer questions on any part.

@@ -1,0 +1,25 @@
+{
+  "case_id": "e07",
+  "deceased": {
+    "name": "Venkatesh Srinivasan",
+    "aliases": [],
+    "dob": "1959-04-01",
+    "dod": "2017-03-08",
+    "city": "Mysuru",
+    "addresses": [
+      "Mysuru"
+    ]
+  },
+  "claimant": {
+    "name": "Yadavi Misra",
+    "relationship": "son",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_CLAIM_FORM_INSURER",
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

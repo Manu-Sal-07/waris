@@ -1,0 +1,24 @@
+{
+  "case_id": "h02",
+  "deceased": {
+    "name": "Seshadri Balasubramanian",
+    "aliases": [],
+    "dob": "1932-08-22",
+    "dod": "2016-02-28",
+    "city": "Salem",
+    "addresses": [
+      "Salem"
+    ]
+  },
+  "claimant": {
+    "name": "Chakradev Seth",
+    "relationship": "brother",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

@@ -129,12 +129,15 @@ def main(argv=None) -> int:
     ap.add_argument("--repeats", type=int, default=3)
     ap.add_argument("--out", default="results/main")
     ap.add_argument("--no-warm", action="store_true")
+    ap.add_argument("--cases-dir", default="", help="evaluate a different set of generated cases, e.g. data/cases_unseen")
     args = ap.parse_args(argv)
     out = Path(args.out)
     if not out.is_absolute():
         out = config.ROOT / out
     out.mkdir(parents=True, exist_ok=True)
     (out / "traces").mkdir(exist_ok=True)
+    if args.cases_dir:
+        config.CASES_DIR = Path(args.cases_dir) if Path(args.cases_dir).is_absolute() else config.ROOT / args.cases_dir
 
     from portals.app import app
     portals.set_client(TestClient(app, base_url="http://waris-portals"))

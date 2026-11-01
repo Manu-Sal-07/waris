@@ -1,0 +1,24 @@
+{
+  "case_id": "m21",
+  "deceased": {
+    "name": "Parthasarathy Srinivasan",
+    "aliases": [],
+    "dob": "1943-01-06",
+    "dod": "2020-01-27",
+    "city": "Nagpur",
+    "addresses": [
+      "Nagpur"
+    ]
+  },
+  "claimant": {
+    "name": "Tanmayi Lata",
+    "relationship": "spouse",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

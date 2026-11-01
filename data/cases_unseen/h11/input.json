@@ -1,0 +1,26 @@
+{
+  "case_id": "h11",
+  "deceased": {
+    "name": "Narasimhan Ramachandran",
+    "aliases": [],
+    "dob": "1961-03-03",
+    "dod": "2017-11-09",
+    "city": "Jaipur",
+    "addresses": [
+      "Jaipur"
+    ]
+  },
+  "claimant": {
+    "name": "Eshana Tara",
+    "relationship": "daughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png",
+    "scans/legal_heir_certificate.png"
+  ]
+}

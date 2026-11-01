@@ -1,0 +1,29 @@
+{
+  "case_id": "s06",
+  "deceased": {
+    "name": "Rukmini Iyer",
+    "aliases": [
+      "Rukmini Shetty"
+    ],
+    "dob": "1944-12-15",
+    "dod": "2022-09-21",
+    "city": "Bhopal",
+    "addresses": [
+      "Bhopal"
+    ]
+  },
+  "claimant": {
+    "name": "Oviya Ahuja",
+    "relationship": "spouse",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_CLAIM_FORM_BANK",
+      "DOC_DEATH_CERT",
+      "DOC_INDEMNITY_BOND",
+      "DOC_LEGAL_HEIR_CERT"
+    ]
+  },
+  "scans": []
+}

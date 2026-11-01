@@ -1,0 +1,25 @@
+{
+  "case_id": "h01",
+  "deceased": {
+    "name": "Sundaram Chandrasekhar",
+    "aliases": [],
+    "dob": "1931-08-01",
+    "dod": "2021-10-04",
+    "city": "Mangaluru",
+    "addresses": [
+      "Mangaluru"
+    ]
+  },
+  "claimant": {
+    "name": "Mekhala Batra",
+    "relationship": "daughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT",
+      "DOC_INDEMNITY_BOND"
+    ]
+  },
+  "scans": []
+}

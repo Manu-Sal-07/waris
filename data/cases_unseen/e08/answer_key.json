@@ -1,0 +1,43 @@
+{
+  "case_id": "e08",
+  "difficulty": "easy",
+  "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
+  "assets": [
+    {
+      "asset_type": "shares",
+      "record_id": "R002",
+      "needs_human_confirmation": false,
+      "status": "MISSING_ITEMS",
+      "required_docs": [
+        "DOC_TRANSMISSION_FORM",
+        "DOC_DEATH_CERT",
+        "DOC_LEGAL_HEIR_CERT",
+        "DOC_CLAIMANT_KYC"
+      ],
+      "missing": [
+        "DOC_TRANSMISSION_FORM",
+        "DOC_LEGAL_HEIR_CERT"
+      ],
+      "rule_id": "REG-LH-01"
+    }
+  ],
+  "namesake_record_ids": [],
+  "lookalike_record_ids": [
+    "B001",
+    "R004"
+  ],
+  "expected_questions": [],
+  "expect_tool_error": false,
+  "unreachable_assets": [],
+  "doc_conflict": false,
+  "unreadable_scans": [],
+  "injection_scans": [],
+  "no_assets": false,
+  "tags": [
+    "amount_small",
+    "claimant_legal_heir",
+    "clean",
+    "clean_case",
+    "docs_missing"
+  ]
+}

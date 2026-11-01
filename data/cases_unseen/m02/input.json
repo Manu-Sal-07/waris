@@ -1,0 +1,25 @@
+{
+  "case_id": "m02",
+  "deceased": {
+    "name": "Narasimhan Ramachandran",
+    "aliases": [],
+    "dob": "1958-02-21",
+    "dod": "2024-04-20",
+    "city": "Mumbai",
+    "addresses": [
+      "Mumbai"
+    ]
+  },
+  "claimant": {
+    "name": "Inaya Seshadri",
+    "relationship": "spouse",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_CLAIM_FORM_INSURER",
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

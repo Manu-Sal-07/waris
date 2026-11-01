@@ -1,0 +1,25 @@
+{
+  "case_id": "e14",
+  "deceased": {
+    "name": "Krishnan Nair",
+    "aliases": [],
+    "dob": "1945-03-04",
+    "dod": "2017-07-01",
+    "city": "Vijayawada",
+    "addresses": [
+      "Vijayawada"
+    ]
+  },
+  "claimant": {
+    "name": "Prisha Chakrabarti",
+    "relationship": "daughter",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png"
+  ]
+}

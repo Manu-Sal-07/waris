@@ -1,0 +1,27 @@
+{
+  "case_id": "s03",
+  "deceased": {
+    "name": "Krishnan Rao",
+    "aliases": [],
+    "dob": "1943-07-15",
+    "dod": "2018-02-13",
+    "city": "Indore",
+    "addresses": [
+      "Indore"
+    ]
+  },
+  "claimant": {
+    "name": "Vivaan Majumdar",
+    "relationship": "daughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_CLAIM_FORM_BANK",
+      "DOC_DEATH_CERT",
+      "DOC_INDEMNITY_BOND",
+      "DOC_LEGAL_HEIR_CERT"
+    ]
+  },
+  "scans": []
+}

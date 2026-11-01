@@ -1,0 +1,6 @@
+difficulty,variant,runs,status_accuracy,checklist_f1,wrong_person,abstention_correct,case_perfect
+medium,baseline,12,0.6666666666666666,0.6019417475728156,0,1.0,0.0
+medium,no_grading,12,1.0,0.7478260869565218,0,1.0,0.3333333333333333
+medium,no_verifier,12,0.0,0.896551724137931,0,1.0,0.0
+medium,full_nollm,12,1.0,1.0,0,1.0,1.0
+medium,full,12,1.0,1.0,0,1.0,1.0

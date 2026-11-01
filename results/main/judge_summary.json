@@ -1,0 +1,52 @@
+{
+  "baseline": {
+    "letters": 74,
+    "judge_mean_of_5": 3.5405405405405403,
+    "reference_mean_of_5": 3.6621621621621623,
+    "judge_asset_claimant": 0.8378378378378378,
+    "judge_documents": 0.16216216216216217,
+    "judge_formal": 1.0,
+    "judge_no_invented": 0.5405405405405406,
+    "judge_clear_request": 1.0
+  },
+  "full": {
+    "letters": 68,
+    "judge_mean_of_5": 4.161764705882353,
+    "reference_mean_of_5": 4.764705882352941,
+    "judge_asset_claimant": 1.0,
+    "judge_documents": 0.7205882352941176,
+    "judge_formal": 1.0,
+    "judge_no_invented": 0.4411764705882353,
+    "judge_clear_request": 1.0
+  },
+  "full_nollm": {
+    "letters": 68,
+    "judge_mean_of_5": 4.294117647058823,
+    "reference_mean_of_5": 4.764705882352941,
+    "judge_asset_claimant": 1.0,
+    "judge_documents": 0.7647058823529411,
+    "judge_formal": 1.0,
+    "judge_no_invented": 0.5294117647058824,
+    "judge_clear_request": 1.0
+  },
+  "no_grading": {
+    "letters": 72,
+    "judge_mean_of_5": 3.736111111111111,
+    "reference_mean_of_5": 4.083333333333333,
+    "judge_asset_claimant": 1.0,
+    "judge_documents": 0.20833333333333334,
+    "judge_formal": 1.0,
+    "judge_no_invented": 0.5277777777777778,
+    "judge_clear_request": 1.0
+  },
+  "no_verifier": {
+    "letters": 68,
+    "judge_mean_of_5": 3.9411764705882355,
+    "reference_mean_of_5": 4.455882352941177,
+    "judge_asset_claimant": 1.0,
+    "judge_documents": 0.5441176470588235,
+    "judge_formal": 1.0,
+    "judge_no_invented": 0.39705882352941174,
+    "judge_clear_request": 1.0
+  }
+}

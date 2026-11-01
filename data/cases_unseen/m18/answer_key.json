@@ -1,0 +1,21 @@
+{
+  "case_id": "m18",
+  "difficulty": "medium",
+  "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
+  "assets": [],
+  "namesake_record_ids": [],
+  "lookalike_record_ids": [
+    "B003"
+  ],
+  "expected_questions": [],
+  "expect_tool_error": false,
+  "unreachable_assets": [],
+  "doc_conflict": false,
+  "unreadable_scans": [],
+  "injection_scans": [],
+  "no_assets": true,
+  "tags": [
+    "claimant_legal_heir",
+    "no_assets"
+  ]
+}

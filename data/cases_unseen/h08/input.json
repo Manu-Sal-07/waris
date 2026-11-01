@@ -1,0 +1,25 @@
+{
+  "case_id": "h08",
+  "deceased": {
+    "name": "Anantharaman Srinivasan",
+    "aliases": [],
+    "dob": "1943-09-16",
+    "dod": "2019-04-15",
+    "city": "Madurai",
+    "addresses": [
+      "Madurai"
+    ]
+  },
+  "claimant": {
+    "name": "Manya Lad",
+    "relationship": "son",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png"
+  ]
+}

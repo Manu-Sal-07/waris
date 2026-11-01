@@ -1,0 +1,24 @@
+{
+  "case_id": "m19",
+  "deceased": {
+    "name": "Parthasarathy Subramanian",
+    "aliases": [],
+    "dob": "1945-06-18",
+    "dod": "2018-11-12",
+    "city": "Lucknow",
+    "addresses": [
+      "Lucknow"
+    ]
+  },
+  "claimant": {
+    "name": "Hredhaan Amble",
+    "relationship": "daughter",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

@@ -1,0 +1,24 @@
+{
+  "case_id": "m05",
+  "deceased": {
+    "name": "Gopalakrishnan Raghavan",
+    "aliases": [],
+    "dob": "1938-07-26",
+    "dod": "2019-10-12",
+    "city": "Lucknow",
+    "addresses": [
+      "Lucknow"
+    ]
+  },
+  "claimant": {
+    "name": "Mekhala Devi",
+    "relationship": "son",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

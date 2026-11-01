@@ -1,0 +1,26 @@
+{
+  "case_id": "m13",
+  "deceased": {
+    "name": "Rukmini Reddy",
+    "aliases": [
+      "Rukmini Gowda"
+    ],
+    "dob": "1954-05-23",
+    "dod": "2023-08-11",
+    "city": "Bhopal",
+    "addresses": [
+      "Bhopal"
+    ]
+  },
+  "claimant": {
+    "name": "Ojasvi Dugal",
+    "relationship": "son",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

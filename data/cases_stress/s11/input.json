@@ -1,0 +1,25 @@
+{
+  "case_id": "s11",
+  "deceased": {
+    "name": "Gopalakrishnan Venkataraman",
+    "aliases": [],
+    "dob": "1945-09-04",
+    "dod": "2024-04-06",
+    "city": "Indore",
+    "addresses": [
+      "Indore"
+    ]
+  },
+  "claimant": {
+    "name": "Ekapad Khare",
+    "relationship": "brother",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC",
+      "DOC_TRANSMISSION_FORM"
+    ]
+  },
+  "scans": []
+}

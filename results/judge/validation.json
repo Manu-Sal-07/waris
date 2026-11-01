@@ -1,0 +1,20 @@
+{
+  "letters": 33,
+  "judge_model": "llama3.1:8b",
+  "agreement": 0.9090909090909091,
+  "kappa_overall": 0.6143057503506311,
+  "kappa_by_criterion": {
+    "asset_claimant": 0.0,
+    "documents": 0.4677419354838711,
+    "formal": 1.0,
+    "no_invented": 0.717948717948718,
+    "clear_request": 1.0
+  },
+  "agreement_by_criterion": {
+    "asset_claimant": 0.8484848484848485,
+    "documents": 0.8181818181818182,
+    "formal": 1.0,
+    "no_invented": 0.8787878787878788,
+    "clear_request": 1.0
+  }
+}

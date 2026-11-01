@@ -1,0 +1,25 @@
+{
+  "case_id": "e13",
+  "deceased": {
+    "name": "Anantharaman Venkataraman",
+    "aliases": [],
+    "dob": "1937-05-25",
+    "dod": "2016-06-28",
+    "city": "Nagpur",
+    "addresses": [
+      "Nagpur"
+    ]
+  },
+  "claimant": {
+    "name": "Harrison Brar",
+    "relationship": "daughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png"
+  ]
+}

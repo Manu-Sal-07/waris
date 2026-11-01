@@ -1,0 +1,69 @@
+{
+  "case_id": "h09",
+  "difficulty": "hard",
+  "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
+  "assets": [
+    {
+      "asset_type": "shares",
+      "record_id": "R003",
+      "needs_human_confirmation": false,
+      "status": "NEEDS_HUMAN_REVIEW",
+      "required_docs": [
+        "DOC_TRANSMISSION_FORM",
+        "DOC_DEATH_CERT",
+        "DOC_LEGAL_HEIR_CERT",
+        "DOC_CLAIMANT_KYC"
+      ],
+      "missing": [
+        "DOC_TRANSMISSION_FORM",
+        "DOC_LEGAL_HEIR_CERT"
+      ],
+      "rule_id": "REG-LH-01",
+      "reason": "documents disagree on the date of birth: flagged, not resolved"
+    },
+    {
+      "asset_type": "bank_deposit",
+      "record_id": "B004",
+      "needs_human_confirmation": false,
+      "status": "NEEDS_HUMAN_REVIEW",
+      "required_docs": [
+        "DOC_CLAIM_FORM_BANK",
+        "DOC_DEATH_CERT",
+        "DOC_LEGAL_HEIR_CERT",
+        "DOC_INDEMNITY_BOND",
+        "DOC_CLAIMANT_KYC",
+        "DOC_NAME_VARIATION_AFFIDAVIT"
+      ],
+      "missing": [
+        "DOC_CLAIM_FORM_BANK",
+        "DOC_LEGAL_HEIR_CERT",
+        "DOC_INDEMNITY_BOND",
+        "DOC_NAME_VARIATION_AFFIDAVIT"
+      ],
+      "rule_id": "BANK-LH-01",
+      "name_variant": "spelling",
+      "reason": "documents disagree on the date of birth: flagged, not resolved"
+    }
+  ],
+  "namesake_record_ids": [],
+  "lookalike_record_ids": [
+    "B002",
+    "R001"
+  ],
+  "expected_questions": [],
+  "expect_tool_error": false,
+  "unreachable_assets": [],
+  "doc_conflict": true,
+  "unreadable_scans": [],
+  "injection_scans": [],
+  "no_assets": false,
+  "tags": [
+    "amount_small",
+    "claimant_legal_heir",
+    "clean",
+    "doc_conflict",
+    "docs_missing",
+    "name_spelling",
+    "scan_rotated"
+  ]
+}

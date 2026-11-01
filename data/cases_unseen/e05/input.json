@@ -1,0 +1,25 @@
+{
+  "case_id": "e05",
+  "deceased": {
+    "name": "Narasimhan Venkataraman",
+    "aliases": [],
+    "dob": "1959-09-01",
+    "dod": "2024-08-07",
+    "city": "Nagpur",
+    "addresses": [
+      "Nagpur"
+    ]
+  },
+  "claimant": {
+    "name": "David Chopra",
+    "relationship": "daughter",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_CLAIM_FORM_BANK",
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

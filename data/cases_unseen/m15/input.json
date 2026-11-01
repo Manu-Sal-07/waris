@@ -1,0 +1,27 @@
+{
+  "case_id": "m15",
+  "deceased": {
+    "name": "Sundaram Iyer",
+    "aliases": [],
+    "dob": null,
+    "dod": "2023-06-01",
+    "city": "Vijayawada",
+    "addresses": [
+      "Vijayawada"
+    ]
+  },
+  "claimant": {
+    "name": "Lucky Balakrishnan",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": [],
+  "session2_scans": [
+    "scans/legal_heir_certificate.png"
+  ]
+}

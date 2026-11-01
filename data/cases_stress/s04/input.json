@@ -1,0 +1,25 @@
+{
+  "case_id": "s04",
+  "deceased": {
+    "name": "Sundaram Pillai",
+    "aliases": [],
+    "dob": "1936-04-25",
+    "dod": "2018-09-02",
+    "city": "Chennai",
+    "addresses": [
+      "Chennai"
+    ]
+  },
+  "claimant": {
+    "name": "Mekhala Chandra",
+    "relationship": "spouse",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_CLAIM_FORM_BANK",
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

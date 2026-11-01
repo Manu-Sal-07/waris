@@ -1,0 +1,27 @@
+{
+  "case_id": "m03",
+  "deceased": {
+    "name": "Seshadri Krishnamurthy",
+    "aliases": [],
+    "dob": "1939-04-26",
+    "dod": "2020-09-24",
+    "city": "Thrissur",
+    "addresses": [
+      "Thrissur"
+    ]
+  },
+  "claimant": {
+    "name": "Manan Gandhi",
+    "relationship": "grandson",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT",
+      "DOC_LEGAL_HEIR_CERT",
+      "DOC_NAME_VARIATION_AFFIDAVIT",
+      "DOC_TRANSMISSION_FORM"
+    ]
+  },
+  "scans": []
+}

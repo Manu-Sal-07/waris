@@ -1,0 +1,27 @@
+{
+  "case_id": "e11",
+  "deceased": {
+    "name": "Narasimhan Ramachandran",
+    "aliases": [],
+    "dob": "1959-03-22",
+    "dod": "2021-05-03",
+    "city": "Hubballi",
+    "addresses": [
+      "Hubballi"
+    ]
+  },
+  "claimant": {
+    "name": "Sai Mutti",
+    "relationship": "spouse",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_CLAIM_FORM_BANK",
+      "DOC_NOMINEE_KYC",
+      "DOC_TRANSMISSION_FORM"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "case_id": "s01",
+  "deceased": {
+    "name": "Seshadri Iyer",
+    "aliases": [],
+    "dob": "1951-09-24",
+    "dod": "2016-12-17",
+    "city": "Chennai",
+    "addresses": [
+      "Chennai"
+    ]
+  },
+  "claimant": {
+    "name": "Hamsini Varty",
+    "relationship": "granddaughter",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_CLAIM_FORM_BANK",
+      "DOC_DEATH_CERT",
+      "DOC_INDEMNITY_BOND",
+      "DOC_LEGAL_HEIR_CERT"
+    ]
+  },
+  "scans": []
+}

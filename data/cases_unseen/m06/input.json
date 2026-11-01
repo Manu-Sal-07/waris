@@ -1,0 +1,24 @@
+{
+  "case_id": "m06",
+  "deceased": {
+    "name": "Muthuswamy Balasubramanian",
+    "aliases": [],
+    "dob": "1938-10-20",
+    "dod": "2017-10-18",
+    "city": "Kolkata",
+    "addresses": [
+      "Kolkata"
+    ]
+  },
+  "claimant": {
+    "name": "Sanya Dave",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

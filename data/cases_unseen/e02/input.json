@@ -1,0 +1,25 @@
+{
+  "case_id": "e02",
+  "deceased": {
+    "name": "Seshadri Reddy",
+    "aliases": [],
+    "dob": "1955-07-14",
+    "dod": "2015-11-21",
+    "city": "Pune",
+    "addresses": [
+      "Pune"
+    ]
+  },
+  "claimant": {
+    "name": "Nidhi Rout",
+    "relationship": "grandson",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_CLAIM_FORM_BANK",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

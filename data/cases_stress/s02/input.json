@@ -1,0 +1,27 @@
+{
+  "case_id": "s02",
+  "deceased": {
+    "name": "Narasimhan Raghavan",
+    "aliases": [],
+    "dob": "1931-09-04",
+    "dod": "2017-07-08",
+    "city": "Kochi",
+    "addresses": [
+      "Kochi"
+    ]
+  },
+  "claimant": {
+    "name": "George Viswanathan",
+    "relationship": "spouse",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_CLAIM_FORM_BANK",
+      "DOC_DEATH_CERT",
+      "DOC_INDEMNITY_BOND",
+      "DOC_LEGAL_HEIR_CERT"
+    ]
+  },
+  "scans": []
+}

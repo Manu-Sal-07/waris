@@ -1,0 +1,57 @@
+{
+  "case_id": "e14",
+  "difficulty": "easy",
+  "note": "Written by the generator from the hidden truth with plain-Python rules. Never produced by an LLM.",
+  "assets": [
+    {
+      "asset_type": "bank_deposit",
+      "record_id": "B001",
+      "needs_human_confirmation": false,
+      "status": "MISSING_ITEMS",
+      "required_docs": [
+        "DOC_CLAIM_FORM_BANK",
+        "DOC_DEATH_CERT",
+        "DOC_NOMINEE_KYC"
+      ],
+      "missing": [
+        "DOC_CLAIM_FORM_BANK"
+      ],
+      "rule_id": "BANK-NOM-01"
+    },
+    {
+      "asset_type": "life_insurance",
+      "record_id": "I001",
+      "needs_human_confirmation": false,
+      "status": "MISSING_ITEMS",
+      "required_docs": [
+        "DOC_CLAIM_FORM_INSURER",
+        "DOC_DEATH_CERT",
+        "DOC_POLICY_BOND",
+        "DOC_NOMINEE_KYC"
+      ],
+      "missing": [
+        "DOC_CLAIM_FORM_INSURER",
+        "DOC_POLICY_BOND"
+      ],
+      "rule_id": "INS-NOM-01"
+    }
+  ],
+  "namesake_record_ids": [],
+  "lookalike_record_ids": [
+    "B004"
+  ],
+  "expected_questions": [],
+  "expect_tool_error": false,
+  "unreachable_assets": [],
+  "doc_conflict": false,
+  "unreadable_scans": [],
+  "injection_scans": [],
+  "no_assets": false,
+  "tags": [
+    "amount_small",
+    "claimant_nominee",
+    "clean",
+    "docs_missing",
+    "scan_rotated"
+  ]
+}

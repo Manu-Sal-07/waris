@@ -1,0 +1,24 @@
+{
+  "case_id": "e08",
+  "deceased": {
+    "name": "Krishnan Venkataraman",
+    "aliases": [],
+    "dob": "1951-08-22",
+    "dod": "2018-02-14",
+    "city": "Nagpur",
+    "addresses": [
+      "Nagpur"
+    ]
+  },
+  "claimant": {
+    "name": "Anirudh Wagle",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

@@ -1,0 +1,26 @@
+{
+  "case_id": "s07",
+  "deceased": {
+    "name": "Gopalakrishnan Srinivasan",
+    "aliases": [],
+    "dob": "1956-10-04",
+    "dod": "2019-07-16",
+    "city": "Mumbai",
+    "addresses": [
+      "Mumbai"
+    ]
+  },
+  "claimant": {
+    "name": "Shaurya Kurian",
+    "relationship": "daughter",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_CLAIM_FORM_INSURER",
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC",
+      "DOC_POLICY_BOND"
+    ]
+  },
+  "scans": []
+}

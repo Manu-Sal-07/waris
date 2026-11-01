@@ -1,0 +1,23 @@
+{
+  "case_id": "e03",
+  "deceased": {
+    "name": "Krishnan Rao",
+    "aliases": [],
+    "dob": "1950-05-11",
+    "dod": "2015-03-06",
+    "city": "Mangaluru",
+    "addresses": [
+      "Mangaluru"
+    ]
+  },
+  "claimant": {
+    "name": "Chasmum Murthy",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC"
+    ]
+  },
+  "scans": []
+}

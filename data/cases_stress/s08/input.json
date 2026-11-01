@@ -1,0 +1,27 @@
+{
+  "case_id": "s08",
+  "deceased": {
+    "name": "Muthuswamy Balasubramanian",
+    "aliases": [],
+    "dob": "1940-02-18",
+    "dod": "2022-02-23",
+    "city": "Bengaluru",
+    "addresses": [
+      "Bengaluru"
+    ]
+  },
+  "claimant": {
+    "name": "Waida Sawhney",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_CLAIM_FORM_INSURER",
+      "DOC_DEATH_CERT",
+      "DOC_POLICY_BOND",
+      "DOC_SUCCESSION_CERT"
+    ]
+  },
+  "scans": []
+}

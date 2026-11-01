@@ -1,0 +1,23 @@
+{
+  "case_id": "e09",
+  "deceased": {
+    "name": "Gopalakrishnan Ramachandran",
+    "aliases": [],
+    "dob": "1950-12-22",
+    "dod": "2019-01-15",
+    "city": "Mumbai",
+    "addresses": [
+      "Mumbai"
+    ]
+  },
+  "claimant": {
+    "name": "Jalsa Murty",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC"
+    ]
+  },
+  "scans": []
+}

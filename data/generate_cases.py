@@ -173,6 +173,19 @@ def recipes() -> list[R]:
     return rs
 
 
+def recipes_stress() -> list[R]:
+    """Targeted stress set (12 cases): the family holds EVERYTHING the rule asks for except the name-variation affidavit they
+    did not know about. Without a Verifier the checklist silently omits the affidavit and the claim looks READY."""
+    b, i, g = "bank", "insurer", "registry"
+    spec = [("legal_heir", "m", A(b, "fd", "initials", 240000)), ("legal_heir", "m", A(b, "savings", "spelling", 120000)),
+            ("legal_heir", "m", A(b, "savings", "order", 90000)), ("nominee", "m", A(b, "savings", "initials", 70000, nominee="alive")),
+            ("legal_heir", "x", A(b, "fd", "translit", 260000)), ("legal_heir", "f", A(b, "fd", "maiden", 190000)),
+            ("nominee", "m", A(i, "policy", "initials", 180000, nominee="alive")), ("legal_heir", "m", A(i, "policy", "spelling", 125000)),
+            ("nominee", "f", A(i, "endow", "maiden", 240000, nominee="alive")), ("legal_heir", "m", A(g, "shares", "initials", 56000)),
+            ("nominee", "m", A(g, "shares", "spelling", 38000, nominee="alive")), ("legal_heir", "x", A(g, "shares", "translit", 52000))]
+    return [R(f"s{n:02d}", "medium", ct, style=st, assets=[a], docs="all_but_name_proof") for n, (ct, st, a) in enumerate(spec, 1)]
+
+
 # ---------------------------------------------------------------- independent rule book for the answer key
 def pick_rule(inst: str, claimant: str, rec_nominee: str | None, amount: int) -> str | None:
     """Which corpus rule SHOULD apply (plain Python, independent of the agent's retrieval and grading)."""
@@ -205,7 +218,7 @@ def _rules():
 
 
 # ---------------------------------------------------------------- generation helpers
-def _person(rng: random.Random, style: str) -> dict:
+def _person(rng: random.Random, style: str, need_pair: bool = False) -> dict:
     if style == "x":
         first, (mid, last) = "Mohammed", rng.choice(MUSLIM)
         return {"given": first, "surname": f"{mid} {last}", "full": f"{first} {mid} {last}", "pair": None}
@@ -213,7 +226,8 @@ def _person(rng: random.Random, style: str) -> dict:
         given = rng.choice(FEMALE_GIVEN)
     else:
         given = rng.choice(MALE_GIVEN)
-    if rng.random() < 0.65:
+    draw = rng.random()
+    if need_pair or draw < 0.65:                  # a spelling variant needs a surname that has an alternative spelling
         pair = rng.choice(SURNAME_PAIRS)
         surname = pair[0]
     else:
@@ -273,7 +287,7 @@ def build_case(r: R) -> dict:
     rules = _rules()
 
     # ---- 1. the true world
-    p = _person(rng, r.style)
+    p = _person(rng, r.style, need_pair=any(a.variant == "spelling" for a in r.assets))
     maiden = None
     if r.style == "f":
         other = rng.choice([s for s in PLAIN_SURNAMES if s != p["surname"]])
@@ -340,6 +354,8 @@ def build_case(r: R) -> dict:
         if held_profile == "plus":
             extra = sorted(set(claimable_required) - set(base))
             return base + ([rng.choice(extra)] if extra else [])
+        if held_profile == "all_but_name_proof":
+            return sorted((set(claimable_required) - {"DOC_NAME_VARIATION_AFFIDAVIT"}) | {kyc_code})
         return sorted(set(claimable_required) | {kyc_code})        # complete
 
     # required documents per asset, by plain-Python rules
@@ -586,8 +602,8 @@ def split(cases: list[dict]) -> dict:
     return out
 
 
-def main(check_ocr: bool = True) -> None:
-    cases = [build_case(r) for r in recipes()]
+def main(check_ocr: bool = True, which: str = "main") -> None:
+    cases = [build_case(r) for r in (recipes_stress() if which == "stress" else recipes())]
     for c in cases:
         write_case(c)
     problems = []
@@ -606,6 +622,21 @@ def main(check_ocr: bool = True) -> None:
     print(f"generated {len(cases)} cases -> {CASES}   (dev {len(sp['dev'])}, test {len(sp['test'])}); self-check passed")
 
 
+def cli(argv=None) -> None:
+    """python -m data.generate_cases [--seed N --out DIR]   (a different seed + folder = a fresh, never-seen draw of all 60 cases)"""
+    import argparse
+    global SEED, CASES
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=SEED)
+    ap.add_argument("--out", default=str(CASES))
+    ap.add_argument("--no-ocr", action="store_true")
+    ap.add_argument("--set", default="main", choices=["main", "stress"])
+    a = ap.parse_args(argv)
+    SEED = a.seed
+    CASES = Path(a.out) if Path(a.out).is_absolute() else ROOT / a.out
+    CASES.mkdir(parents=True, exist_ok=True)
+    main(check_ocr=not a.no_ocr, which=a.set)
+
+
 if __name__ == "__main__":
-    import sys
-    main(check_ocr="--no-ocr" not in sys.argv)
+    cli()

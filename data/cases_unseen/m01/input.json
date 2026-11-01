@@ -1,0 +1,25 @@
+{
+  "case_id": "m01",
+  "deceased": {
+    "name": "Anantharaman Balasubramanian",
+    "aliases": [],
+    "dob": "1962-11-18",
+    "dod": "2018-05-04",
+    "city": "Bengaluru",
+    "addresses": [
+      "Bengaluru"
+    ]
+  },
+  "claimant": {
+    "name": "Balhaar Sampath",
+    "relationship": "spouse",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT",
+      "DOC_NAME_VARIATION_AFFIDAVIT"
+    ]
+  },
+  "scans": []
+}

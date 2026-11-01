@@ -1,0 +1,24 @@
+{
+  "case_id": "m07",
+  "deceased": {
+    "name": "Mohammed Ismail Khan",
+    "aliases": [],
+    "dob": "1933-03-08",
+    "dod": "2017-07-09",
+    "city": "Mysuru",
+    "addresses": [
+      "Mysuru"
+    ]
+  },
+  "claimant": {
+    "name": "Darpan Dhar",
+    "relationship": "son",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

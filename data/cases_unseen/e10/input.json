@@ -1,0 +1,24 @@
+{
+  "case_id": "e10",
+  "deceased": {
+    "name": "Narasimhan Raghavan",
+    "aliases": [],
+    "dob": "1934-03-08",
+    "dod": "2023-09-18",
+    "city": "Kolkata",
+    "addresses": [
+      "Kolkata"
+    ]
+  },
+  "claimant": {
+    "name": "Osha Ratta",
+    "relationship": "daughter",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

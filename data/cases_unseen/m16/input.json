@@ -1,0 +1,24 @@
+{
+  "case_id": "m16",
+  "deceased": {
+    "name": "Gopalakrishnan Balasubramanian",
+    "aliases": [],
+    "dob": null,
+    "dod": "2022-04-16",
+    "city": "Indore",
+    "addresses": [
+      "Indore"
+    ]
+  },
+  "claimant": {
+    "name": "Vasana Chand",
+    "relationship": "son",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

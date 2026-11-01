@@ -20,10 +20,13 @@ _ROLE = {"legal_heir": "a legal heir of the deceased (no nomination is registere
          "joint_holder": "the surviving joint holder of the account"}
 _TO = {"bank": "The Manager, Deceased Customer Claims", "insurer": "The Manager, Death Claims Department",
        "registry": "The Registrar, Transmission Department"}
-_FORBID = re.compile(r"guarantee|urgent|immediately|assure|promise|compensation|interest|penalt", re.I)
+_FORBID = re.compile(r"guarantee|urgent|immediately|assure|promise|compensation|interest|penalt|matur|entitled|proceeds|"
+                     r"balance|payable|credited|settle|due to me|rightful", re.I)
+_DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
 
-_SYSTEM = ("You write one short formal paragraph for a claim letter in Indian English. Use ONLY the facts supplied. "
-           "Do not add any other name, number, date, amount or promise. 40 to 70 words. "
+_SYSTEM = ("You rewrite one short formal paragraph for a claim letter in Indian English. Use ONLY the facts supplied: the "
+           "deceased, the date of death, the claimant, the relationship, the kind of asset and the reference. Do NOT say anything "
+           "about maturity, balances, amounts, entitlement or payment, and do not mention any other date. 40 to 70 words. "
            'Reply with JSON only: {"paragraph": "..."}')
 
 
@@ -52,7 +55,12 @@ def paragraph_ok(par: str, f: dict) -> bool:
     if f["deceased"].lower() not in low or f["claimant"].lower() not in low or f["product"].split()[0] not in low:
         return False
     allowed = set(re.findall(r"\d+", f"{f['dod']} {f['ref']}"))
-    return all(n in allowed for n in re.findall(r"\d+", par))
+    if not all(n in allowed for n in re.findall(r"\d+", par)):
+        return False
+    for m in _DATE.finditer(par):                         # the only date allowed is the date of death, said as such
+        if m.group(0) != f["dod"] or not re.search(r"passed away|died|death|demise", par[max(0, m.start() - 40):m.start()], re.I):
+            return False
+    return True
 
 
 def render(f: dict, paragraph: str) -> str:

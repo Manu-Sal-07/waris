@@ -1,0 +1,25 @@
+{
+  "case_id": "h10",
+  "deceased": {
+    "name": "Sundaram Menon",
+    "aliases": [],
+    "dob": "1941-08-24",
+    "dod": "2016-09-26",
+    "city": "Coimbatore",
+    "addresses": [
+      "Coimbatore"
+    ]
+  },
+  "claimant": {
+    "name": "Hema Gole",
+    "relationship": "spouse",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png"
+  ]
+}

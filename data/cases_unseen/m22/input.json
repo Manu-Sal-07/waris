@@ -1,0 +1,24 @@
+{
+  "case_id": "m22",
+  "deceased": {
+    "name": "Ramaswamy Balasubramanian",
+    "aliases": [],
+    "dob": "1952-11-04",
+    "dod": "2024-01-10",
+    "city": "Pune",
+    "addresses": [
+      "Pune"
+    ]
+  },
+  "claimant": {
+    "name": "Anjali Taneja",
+    "relationship": "daughter",
+    "claimant_type": "nominee",
+    "has_nomination": true,
+    "documents_available": [
+      "DOC_DEATH_CERT",
+      "DOC_NOMINEE_KYC"
+    ]
+  },
+  "scans": []
+}

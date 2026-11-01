@@ -1,0 +1,24 @@
+{
+  "case_id": "h17",
+  "deceased": {
+    "name": "Parthasarathy Srinivasan",
+    "aliases": [],
+    "dob": "1939-01-10",
+    "dod": "2018-03-13",
+    "city": "Indore",
+    "addresses": [
+      "Indore"
+    ]
+  },
+  "claimant": {
+    "name": "Adya Din",
+    "relationship": "spouse",
+    "claimant_type": "joint_holder",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT"
+    ]
+  },
+  "scans": []
+}

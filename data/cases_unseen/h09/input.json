@@ -1,0 +1,25 @@
+{
+  "case_id": "h09",
+  "deceased": {
+    "name": "Sundaram Raghavan",
+    "aliases": [],
+    "dob": "1949-02-14",
+    "dod": "2021-07-17",
+    "city": "Nagpur",
+    "addresses": [
+      "Nagpur"
+    ]
+  },
+  "claimant": {
+    "name": "Wyatt Tella",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC"
+    ]
+  },
+  "scans": [
+    "scans/death_certificate.png"
+  ]
+}

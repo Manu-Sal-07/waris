@@ -1,0 +1,630 @@
+{
+ "e01-B001-genuine": {
+  "id": "e01-B001-genuine",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Sundaram Iyer\n\nDear Sir/Madam,\n\nI am Anmol Dasgupta, the grandson of the late Sundaram Iyer, who passed away on 2017-07-01. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the deposit held in the name of Sundaram Iyer, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Legal heir certificate issued by the competent authority\n  3. Indemnity bond by the claimant(s)\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nAnmol Dasgupta\n(grandson of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Sundaram Iyer",
+   "claimant": "Anmol Dasgupta",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2017-07-01"
+  },
+  "kind": "genuine"
+ },
+ "e02-B002-genuine": {
+  "id": "e02-B002-genuine",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Seshadri Venkataraman\n\nDear Sir/Madam,\n\nI am Hardik Palan, the son of the late Seshadri Venkataraman, who passed away on 2023-01-18. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the deposit held in the name of Seshadri Venkataraman, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. Legal heir certificate issued by the competent authority\n  3. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Indemnity bond by the claimant(s)\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nHardik Palan\n(son of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Seshadri Venkataraman",
+   "claimant": "Hardik Palan",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2023-01-18"
+  },
+  "kind": "genuine"
+ },
+ "e03-B001-genuine": {
+  "id": "e03-B001-genuine",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Venkatesh Krishnamurthy\n\nDear Sir/Madam,\n\nI am Barkha Dass, the granddaughter of the late Venkatesh Krishnamurthy, who passed away on 2018-04-21. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the deposit held in the name of Venkatesh Krishnamurthy, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Death certificate of the deceased (certified copy)\n  3. Legal heir certificate issued by the competent authority\n  4. Indemnity bond by the claimant(s)\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nBarkha Dass\n(granddaughter of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Venkatesh Krishnamurthy",
+   "claimant": "Barkha Dass",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_DEATH_CERT",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2018-04-21"
+  },
+  "kind": "genuine"
+ },
+ "e04-B004-genuine": {
+  "id": "e04-B004-genuine",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Ranganathan Balasubramanian\n\nDear Sir/Madam,\n\nI am Yuvraj Tandon, the spouse of the late Ranganathan Balasubramanian, who passed away on 2020-03-14. I am the registered nominee of the deceased. I am writing to start the claim for the deposit held in the name of Ranganathan Balasubramanian, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. KYC of the nominee\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nYuvraj Tandon\n(spouse of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Ranganathan Balasubramanian",
+   "claimant": "Yuvraj Tandon",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_NOMINEE_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK"
+   ],
+   "dod": "2020-03-14"
+  },
+  "kind": "genuine"
+ },
+ "e05-B003-genuine": {
+  "id": "e05-B003-genuine",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Ranganathan Raghavan\n\nDear Sir/Madam,\n\nI am Hitesh Savant, the brother of the late Ranganathan Raghavan, who passed away on 2015-11-12. I am the registered nominee of the deceased. I am writing to start the claim for the deposit held in the name of Ranganathan Raghavan, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Bank's deceased-depositor claim form\n  2. Death certificate of the deceased (certified copy)\n  3. KYC of the nominee\n\nNo further documents are pending from my side.\n\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nHitesh Savant\n(brother of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Ranganathan Raghavan",
+   "claimant": "Hitesh Savant",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_DEATH_CERT",
+    "DOC_NOMINEE_KYC"
+   ],
+   "to_follow": [],
+   "dod": "2015-11-12"
+  },
+  "kind": "genuine"
+ },
+ "e06-I001-genuine": {
+  "id": "e06-I001-genuine",
+  "letter": "To,\nThe Manager, Death Claims Department\n\nSubject: Claim for the policy of the late Seshadri Ramachandran\n\nDear Sir/Madam,\n\nI am Yadavi Prakash, the daughter of the late Seshadri Ramachandran, who passed away on 2020-09-25. I am the registered nominee of the deceased. I am writing to start the claim for the policy held in the name of Seshadri Ramachandran, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. KYC of the nominee\n\nDocuments I will submit shortly:\n  1. Insurer's death-claim form\n  2. Original life insurance policy bond / policy document\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nYadavi Prakash\n(daughter of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Seshadri Ramachandran",
+   "claimant": "Yadavi Prakash",
+   "asset_type": "life_insurance",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_NOMINEE_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_INSURER",
+    "DOC_POLICY_BOND"
+   ],
+   "dod": "2020-09-25"
+  },
+  "kind": "genuine"
+ },
+ "e07-I003-genuine": {
+  "id": "e07-I003-genuine",
+  "letter": "To,\nThe Manager, Death Claims Department\n\nSubject: Claim for the policy of the late Sundaram Ramachandran\n\nDear Sir/Madam,\n\nI am Jyoti Kumar, the spouse of the late Sundaram Ramachandran, who passed away on 2018-06-03. I am the registered nominee of the deceased. I am writing to start the claim for the policy held in the name of Sundaram Ramachandran, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. Original life insurance policy bond / policy document\n  3. KYC of the nominee\n\nDocuments I will submit shortly:\n  1. Insurer's death-claim form\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nJyoti Kumar\n(spouse of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Sundaram Ramachandran",
+   "claimant": "Jyoti Kumar",
+   "asset_type": "life_insurance",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_POLICY_BOND",
+    "DOC_NOMINEE_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_INSURER"
+   ],
+   "dod": "2018-06-03"
+  },
+  "kind": "genuine"
+ },
+ "e08-R002-genuine": {
+  "id": "e08-R002-genuine",
+  "letter": "To,\nThe Registrar, Transmission Department\n\nSubject: Claim for the shares of the late Thyagarajan Chandrasekhar\n\nDear Sir/Madam,\n\nI am Chakrika Kaul, the daughter of the late Thyagarajan Chandrasekhar, who passed away on 2019-09-10. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the shares held in the name of Thyagarajan Chandrasekhar, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Transmission-of-shares request form\n  2. Legal heir certificate issued by the competent authority\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nChakrika Kaul\n(daughter of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Thyagarajan Chandrasekhar",
+   "claimant": "Chakrika Kaul",
+   "asset_type": "shares",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_TRANSMISSION_FORM",
+    "DOC_LEGAL_HEIR_CERT"
+   ],
+   "dod": "2019-09-10"
+  },
+  "kind": "genuine"
+ },
+ "e09-R002-genuine": {
+  "id": "e09-R002-genuine",
+  "letter": "To,\nThe Registrar, Transmission Department\n\nSubject: Claim for the shares of the late Narasimhan Chandrasekhar\n\nDear Sir/Madam,\n\nI am Samesh Tak, the son of the late Narasimhan Chandrasekhar, who passed away on 2017-09-13. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the shares held in the name of Narasimhan Chandrasekhar, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Transmission-of-shares request form\n  2. Death certificate of the deceased (certified copy)\n  3. Legal heir certificate issued by the competent authority\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nSamesh Tak\n(son of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Narasimhan Chandrasekhar",
+   "claimant": "Samesh Tak",
+   "asset_type": "shares",
+   "enclosed": [
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_TRANSMISSION_FORM",
+    "DOC_DEATH_CERT",
+    "DOC_LEGAL_HEIR_CERT"
+   ],
+   "dod": "2017-09-13"
+  },
+  "kind": "genuine"
+ },
+ "e10-R002-genuine": {
+  "id": "e10-R002-genuine",
+  "letter": "To,\nThe Registrar, Transmission Department\n\nSubject: Claim for the shares of the late Muthuswamy Menon\n\nDear Sir/Madam,\n\nI am Ijaya Lanka, the daughter of the late Muthuswamy Menon, who passed away on 2017-03-27. I am the registered nominee of the deceased. I am writing to start the claim for the shares held in the name of Muthuswamy Menon, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. KYC of the nominee\n\nDocuments I will submit shortly:\n  1. Transmission-of-shares request form\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nIjaya Lanka\n(daughter of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Muthuswamy Menon",
+   "claimant": "Ijaya Lanka",
+   "asset_type": "shares",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_NOMINEE_KYC"
+   ],
+   "to_follow": [
+    "DOC_TRANSMISSION_FORM"
+   ],
+   "dod": "2017-03-27"
+  },
+  "kind": "genuine"
+ },
+ "e11-B003-genuine": {
+  "id": "e11-B003-genuine",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Krishnan Raghavan\n\nDear Sir/Madam,\n\nI am Dakshesh Uppal, the spouse of the late Krishnan Raghavan, who passed away on 2015-12-12. I am the registered nominee of the deceased. I am writing to start the claim for the deposit held in the name of Krishnan Raghavan, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Bank's deceased-depositor claim form\n  2. Death certificate of the deceased (certified copy)\n  3. KYC of the nominee\n\nNo further documents are pending from my side.\n\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nDakshesh Uppal\n(spouse of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Krishnan Raghavan",
+   "claimant": "Dakshesh Uppal",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_DEATH_CERT",
+    "DOC_NOMINEE_KYC"
+   ],
+   "to_follow": [],
+   "dod": "2015-12-12"
+  },
+  "kind": "genuine"
+ },
+ "e11-R003-genuine": {
+  "id": "e11-R003-genuine",
+  "letter": "To,\nThe Registrar, Transmission Department\n\nSubject: Claim for the shares of the late Krishnan Raghavan\n\nDear Sir/Madam,\n\nI am Dakshesh Uppal, the spouse of the late Krishnan Raghavan, who passed away on 2015-12-12. I am the registered nominee of the deceased. I am writing to start the claim for the shares held in the name of Krishnan Raghavan, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Transmission-of-shares request form\n  2. Death certificate of the deceased (certified copy)\n  3. KYC of the nominee\n\nNo further documents are pending from my side.\n\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nDakshesh Uppal\n(spouse of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Krishnan Raghavan",
+   "claimant": "Dakshesh Uppal",
+   "asset_type": "shares",
+   "enclosed": [
+    "DOC_TRANSMISSION_FORM",
+    "DOC_DEATH_CERT",
+    "DOC_NOMINEE_KYC"
+   ],
+   "to_follow": [],
+   "dod": "2015-12-12"
+  },
+  "kind": "genuine"
+ },
+ "e01-B001-drop_doc": {
+  "id": "e01-B001-drop_doc",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Sundaram Iyer\n\nDear Sir/Madam,\n\nI am Anmol Dasgupta, the grandson of the late Sundaram Iyer, who passed away on 2017-07-01. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the deposit held in the name of Sundaram Iyer, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  2. Legal heir certificate issued by the competent authority\n  3. Indemnity bond by the claimant(s)\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nAnmol Dasgupta\n(grandson of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Sundaram Iyer",
+   "claimant": "Anmol Dasgupta",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2017-07-01"
+  },
+  "kind": "drop_doc"
+ },
+ "e02-B002-drop_doc": {
+  "id": "e02-B002-drop_doc",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Seshadri Venkataraman\n\nDear Sir/Madam,\n\nI am Hardik Palan, the son of the late Seshadri Venkataraman, who passed away on 2023-01-18. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the deposit held in the name of Seshadri Venkataraman, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  3. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Indemnity bond by the claimant(s)\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nHardik Palan\n(son of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Seshadri Venkataraman",
+   "claimant": "Hardik Palan",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2023-01-18"
+  },
+  "kind": "drop_doc"
+ },
+ "e03-B001-drop_doc": {
+  "id": "e03-B001-drop_doc",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Venkatesh Krishnamurthy\n\nDear Sir/Madam,\n\nI am Barkha Dass, the granddaughter of the late Venkatesh Krishnamurthy, who passed away on 2018-04-21. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the deposit held in the name of Venkatesh Krishnamurthy, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Death certificate of the deceased (certified copy)\n  4. Indemnity bond by the claimant(s)\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nBarkha Dass\n(granddaughter of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Venkatesh Krishnamurthy",
+   "claimant": "Barkha Dass",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_DEATH_CERT",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2018-04-21"
+  },
+  "kind": "drop_doc"
+ },
+ "e04-B004-drop_doc": {
+  "id": "e04-B004-drop_doc",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Ranganathan Balasubramanian\n\nDear Sir/Madam,\n\nI am Yuvraj Tandon, the spouse of the late Ranganathan Balasubramanian, who passed away on 2020-03-14. I am the registered nominee of the deceased. I am writing to start the claim for the deposit held in the name of Ranganathan Balasubramanian, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. KYC of the nominee\n\nDocuments I will submit shortly:\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nYuvraj Tandon\n(spouse of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Ranganathan Balasubramanian",
+   "claimant": "Yuvraj Tandon",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_NOMINEE_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK"
+   ],
+   "dod": "2020-03-14"
+  },
+  "kind": "drop_doc"
+ },
+ "e05-B003-drop_doc": {
+  "id": "e05-B003-drop_doc",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Ranganathan Raghavan\n\nDear Sir/Madam,\n\nI am Hitesh Savant, the brother of the late Ranganathan Raghavan, who passed away on 2015-11-12. I am the registered nominee of the deceased. I am writing to start the claim for the deposit held in the name of Ranganathan Raghavan, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  2. Death certificate of the deceased (certified copy)\n  3. KYC of the nominee\n\nNo further documents are pending from my side.\n\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nHitesh Savant\n(brother of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Ranganathan Raghavan",
+   "claimant": "Hitesh Savant",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_DEATH_CERT",
+    "DOC_NOMINEE_KYC"
+   ],
+   "to_follow": [],
+   "dod": "2015-11-12"
+  },
+  "kind": "drop_doc"
+ },
+ "e01-B001-wrong_name": {
+  "id": "e01-B001-wrong_name",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Sundaram Iyer\n\nDear Sir/Madam,\n\nI am Rohan Mehta, the grandson of the late Sundaram Iyer, who passed away on 2017-07-01. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the deposit held in the name of Sundaram Iyer, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Legal heir certificate issued by the competent authority\n  3. Indemnity bond by the claimant(s)\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nRohan Mehta\n(grandson of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Sundaram Iyer",
+   "claimant": "Anmol Dasgupta",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2017-07-01"
+  },
+  "kind": "wrong_name"
+ },
+ "e02-B002-wrong_name": {
+  "id": "e02-B002-wrong_name",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Seshadri Venkataraman\n\nDear Sir/Madam,\n\nI am Rohan Mehta, the son of the late Seshadri Venkataraman, who passed away on 2023-01-18. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the deposit held in the name of Seshadri Venkataraman, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. Legal heir certificate issued by the competent authority\n  3. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Indemnity bond by the claimant(s)\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nRohan Mehta\n(son of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Seshadri Venkataraman",
+   "claimant": "Hardik Palan",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2023-01-18"
+  },
+  "kind": "wrong_name"
+ },
+ "e03-B001-wrong_name": {
+  "id": "e03-B001-wrong_name",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Venkatesh Krishnamurthy\n\nDear Sir/Madam,\n\nI am Rohan Mehta, the granddaughter of the late Venkatesh Krishnamurthy, who passed away on 2018-04-21. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the deposit held in the name of Venkatesh Krishnamurthy, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Death certificate of the deceased (certified copy)\n  3. Legal heir certificate issued by the competent authority\n  4. Indemnity bond by the claimant(s)\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nRohan Mehta\n(granddaughter of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Venkatesh Krishnamurthy",
+   "claimant": "Barkha Dass",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_DEATH_CERT",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2018-04-21"
+  },
+  "kind": "wrong_name"
+ },
+ "e04-B004-wrong_name": {
+  "id": "e04-B004-wrong_name",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Ranganathan Balasubramanian\n\nDear Sir/Madam,\n\nI am Rohan Mehta, the spouse of the late Ranganathan Balasubramanian, who passed away on 2020-03-14. I am the registered nominee of the deceased. I am writing to start the claim for the deposit held in the name of Ranganathan Balasubramanian, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. KYC of the nominee\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nRohan Mehta\n(spouse of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Ranganathan Balasubramanian",
+   "claimant": "Yuvraj Tandon",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_NOMINEE_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK"
+   ],
+   "dod": "2020-03-14"
+  },
+  "kind": "wrong_name"
+ },
+ "e05-B003-wrong_name": {
+  "id": "e05-B003-wrong_name",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Ranganathan Raghavan\n\nDear Sir/Madam,\n\nI am Rohan Mehta, the brother of the late Ranganathan Raghavan, who passed away on 2015-11-12. I am the registered nominee of the deceased. I am writing to start the claim for the deposit held in the name of Ranganathan Raghavan, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Bank's deceased-depositor claim form\n  2. Death certificate of the deceased (certified copy)\n  3. KYC of the nominee\n\nNo further documents are pending from my side.\n\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nRohan Mehta\n(brother of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Ranganathan Raghavan",
+   "claimant": "Hitesh Savant",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_DEATH_CERT",
+    "DOC_NOMINEE_KYC"
+   ],
+   "to_follow": [],
+   "dod": "2015-11-12"
+  },
+  "kind": "wrong_name"
+ },
+ "e01-B001-invent": {
+  "id": "e01-B001-invent",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Sundaram Iyer\n\nDear Sir/Madam,\n\nI am Anmol Dasgupta, the grandson of the late Sundaram Iyer, who passed away on 2017-07-01. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the deposit held in the name of Sundaram Iyer, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Legal heir certificate issued by the competent authority\n  3. Indemnity bond by the claimant(s)\n\nThe bank has assured a payment of Rs 5,00,000 within 7 days. Kindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nAnmol Dasgupta\n(grandson of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Sundaram Iyer",
+   "claimant": "Anmol Dasgupta",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2017-07-01"
+  },
+  "kind": "invent"
+ },
+ "e02-B002-invent": {
+  "id": "e02-B002-invent",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Seshadri Venkataraman\n\nDear Sir/Madam,\n\nI am Hardik Palan, the son of the late Seshadri Venkataraman, who passed away on 2023-01-18. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the deposit held in the name of Seshadri Venkataraman, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. Legal heir certificate issued by the competent authority\n  3. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Indemnity bond by the claimant(s)\n\nThe bank has assured a payment of Rs 5,00,000 within 7 days. Kindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nHardik Palan\n(son of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Seshadri Venkataraman",
+   "claimant": "Hardik Palan",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2023-01-18"
+  },
+  "kind": "invent"
+ },
+ "e03-B001-invent": {
+  "id": "e03-B001-invent",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Venkatesh Krishnamurthy\n\nDear Sir/Madam,\n\nI am Barkha Dass, the granddaughter of the late Venkatesh Krishnamurthy, who passed away on 2018-04-21. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the deposit held in the name of Venkatesh Krishnamurthy, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Death certificate of the deceased (certified copy)\n  3. Legal heir certificate issued by the competent authority\n  4. Indemnity bond by the claimant(s)\n\nThe bank has assured a payment of Rs 5,00,000 within 7 days. Kindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nBarkha Dass\n(granddaughter of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Venkatesh Krishnamurthy",
+   "claimant": "Barkha Dass",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_DEATH_CERT",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2018-04-21"
+  },
+  "kind": "invent"
+ },
+ "e04-B004-invent": {
+  "id": "e04-B004-invent",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Ranganathan Balasubramanian\n\nDear Sir/Madam,\n\nI am Yuvraj Tandon, the spouse of the late Ranganathan Balasubramanian, who passed away on 2020-03-14. I am the registered nominee of the deceased. I am writing to start the claim for the deposit held in the name of Ranganathan Balasubramanian, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. KYC of the nominee\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n\nThe bank has assured a payment of Rs 5,00,000 within 7 days. Kindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nYuvraj Tandon\n(spouse of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Ranganathan Balasubramanian",
+   "claimant": "Yuvraj Tandon",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_NOMINEE_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK"
+   ],
+   "dod": "2020-03-14"
+  },
+  "kind": "invent"
+ },
+ "e05-B003-invent": {
+  "id": "e05-B003-invent",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Ranganathan Raghavan\n\nDear Sir/Madam,\n\nI am Hitesh Savant, the brother of the late Ranganathan Raghavan, who passed away on 2015-11-12. I am the registered nominee of the deceased. I am writing to start the claim for the deposit held in the name of Ranganathan Raghavan, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Bank's deceased-depositor claim form\n  2. Death certificate of the deceased (certified copy)\n  3. KYC of the nominee\n\nNo further documents are pending from my side.\n\n\nThe bank has assured a payment of Rs 5,00,000 within 7 days. Kindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nHitesh Savant\n(brother of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Ranganathan Raghavan",
+   "claimant": "Hitesh Savant",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_DEATH_CERT",
+    "DOC_NOMINEE_KYC"
+   ],
+   "to_follow": [],
+   "dod": "2015-11-12"
+  },
+  "kind": "invent"
+ },
+ "e01-B001-invent_date": {
+  "id": "e01-B001-invent_date",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Sundaram Iyer\n\nDear Sir/Madam,\n\nI am Anmol Dasgupta, the grandson of the late Sundaram Iyer, who passed away on 2017-07-01. I am a legal heir of the deceased (no nomination is registered). The deposit matured on 2017-07-01 and I am entitled to the proceeds. I am writing to start the claim for the deposit held in the name of Sundaram Iyer, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Legal heir certificate issued by the competent authority\n  3. Indemnity bond by the claimant(s)\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nAnmol Dasgupta\n(grandson of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Sundaram Iyer",
+   "claimant": "Anmol Dasgupta",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2017-07-01"
+  },
+  "kind": "invent_date"
+ },
+ "e02-B002-invent_date": {
+  "id": "e02-B002-invent_date",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Seshadri Venkataraman\n\nDear Sir/Madam,\n\nI am Hardik Palan, the son of the late Seshadri Venkataraman, who passed away on 2023-01-18. I am a legal heir of the deceased (no nomination is registered). The deposit matured on 2017-07-01 and I am entitled to the proceeds. I am writing to start the claim for the deposit held in the name of Seshadri Venkataraman, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. Legal heir certificate issued by the competent authority\n  3. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Indemnity bond by the claimant(s)\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nHardik Palan\n(son of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Seshadri Venkataraman",
+   "claimant": "Hardik Palan",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2023-01-18"
+  },
+  "kind": "invent_date"
+ },
+ "e03-B001-invent_date": {
+  "id": "e03-B001-invent_date",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Venkatesh Krishnamurthy\n\nDear Sir/Madam,\n\nI am Barkha Dass, the granddaughter of the late Venkatesh Krishnamurthy, who passed away on 2018-04-21. I am a legal heir of the deceased (no nomination is registered). The deposit matured on 2017-07-01 and I am entitled to the proceeds. I am writing to start the claim for the deposit held in the name of Venkatesh Krishnamurthy, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Death certificate of the deceased (certified copy)\n  3. Legal heir certificate issued by the competent authority\n  4. Indemnity bond by the claimant(s)\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nYours faithfully,\nBarkha Dass\n(granddaughter of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Venkatesh Krishnamurthy",
+   "claimant": "Barkha Dass",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_DEATH_CERT",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2018-04-21"
+  },
+  "kind": "invent_date"
+ },
+ "e01-B001-informal": {
+  "id": "e01-B001-informal",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Sundaram Iyer\n\nHey guys!!\n\nI am Anmol Dasgupta, the grandson of the late Sundaram Iyer, who passed away on 2017-07-01. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the deposit held in the name of Sundaram Iyer, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Legal heir certificate issued by the competent authority\n  3. Indemnity bond by the claimant(s)\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nThanks a lot!,\nAnmol Dasgupta\n(grandson of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Sundaram Iyer",
+   "claimant": "Anmol Dasgupta",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2017-07-01"
+  },
+  "kind": "informal"
+ },
+ "e02-B002-informal": {
+  "id": "e02-B002-informal",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Seshadri Venkataraman\n\nHey guys!!\n\nI am Hardik Palan, the son of the late Seshadri Venkataraman, who passed away on 2023-01-18. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the deposit held in the name of Seshadri Venkataraman, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. Death certificate of the deceased (certified copy)\n  2. Legal heir certificate issued by the competent authority\n  3. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Indemnity bond by the claimant(s)\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nThanks a lot!,\nHardik Palan\n(son of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Seshadri Venkataraman",
+   "claimant": "Hardik Palan",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_DEATH_CERT",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2023-01-18"
+  },
+  "kind": "informal"
+ },
+ "e03-B001-informal": {
+  "id": "e03-B001-informal",
+  "letter": "To,\nThe Manager, Deceased Customer Claims\n\nSubject: Claim for the deposit of the late Venkatesh Krishnamurthy\n\nHey guys!!\n\nI am Barkha Dass, the granddaughter of the late Venkatesh Krishnamurthy, who passed away on 2018-04-21. I am a legal heir of the deceased (no nomination is registered). I am writing to start the claim for the deposit held in the name of Venkatesh Krishnamurthy, and I request your guidance on completing it.\n\nDocuments enclosed with this letter:\n  1. KYC of the claimant (ID and address proof)\n\nDocuments I will submit shortly:\n  1. Bank's deceased-depositor claim form\n  2. Death certificate of the deceased (certified copy)\n  3. Legal heir certificate issued by the competent authority\n  4. Indemnity bond by the claimant(s)\n\nKindly acknowledge receipt and tell me if anything else is required.\n\nThanks a lot!,\nBarkha Dass\n(granddaughter of the deceased)\n\nDraft prepared with Waris (advisory tool). The claimant reviews and submits this letter; Waris files nothing.",
+  "facts": {
+   "deceased": "Venkatesh Krishnamurthy",
+   "claimant": "Barkha Dass",
+   "asset_type": "bank_deposit",
+   "enclosed": [
+    "DOC_CLAIMANT_KYC"
+   ],
+   "to_follow": [
+    "DOC_CLAIM_FORM_BANK",
+    "DOC_DEATH_CERT",
+    "DOC_LEGAL_HEIR_CERT",
+    "DOC_INDEMNITY_BOND"
+   ],
+   "dod": "2018-04-21"
+  },
+  "kind": "informal"
+ }
+}

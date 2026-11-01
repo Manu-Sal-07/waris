@@ -1,0 +1,25 @@
+{
+  "case_id": "m24",
+  "deceased": {
+    "name": "Seshadri Chandrasekhar",
+    "aliases": [],
+    "dob": "1956-05-03",
+    "dod": "2017-02-16",
+    "city": "Coimbatore",
+    "addresses": [
+      "Coimbatore"
+    ]
+  },
+  "claimant": {
+    "name": "Yuvraj Sachdeva",
+    "relationship": "son",
+    "claimant_type": "legal_heir",
+    "has_nomination": false,
+    "documents_available": [
+      "DOC_CLAIMANT_KYC",
+      "DOC_DEATH_CERT",
+      "DOC_SUCCESSION_CERT"
+    ]
+  },
+  "scans": []
+}
