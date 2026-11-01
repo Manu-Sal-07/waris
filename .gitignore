@@ -16,3 +16,4 @@ results/*_log.txt
 traces/
 ~$*
 *.docx#
+data/uploads/

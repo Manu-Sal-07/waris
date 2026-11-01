@@ -24,6 +24,7 @@ from waris import config, llm, memory
 from waris.doc_codes import DOC_CODES
 from waris.graph import build_graph, clear_thread, open_checkpointer
 from waris.run import start_portals
+from waris.tools import ocr as ocr_tool
 from waris.tools import portals as portal_tools
 from waris.tools import retrieval
 from waris.tracing import TRACE
@@ -118,8 +119,25 @@ def drive(inp, ph_events, ph_steps) -> None:
     TRACE.finish()
 
 
-def start_case(case_name: str, use_llm: bool, fresh_memory: bool, session2: bool = False) -> dict:
+UPLOAD_DIR = ROOT / "data" / "uploads"
+
+
+def save_uploads(case_name: str, files) -> list[str]:
+    """Store the family's uploaded scans under data/uploads/<case>/ and return their absolute paths."""
+    d = UPLOAD_DIR / case_name
+    d.mkdir(parents=True, exist_ok=True)
+    out = []
+    for f in files or []:
+        p = d / Path(f.name).name
+        p.write_bytes(f.getvalue())
+        out.append(str(p))
+    return out
+
+
+def start_case(case_name: str, use_llm: bool, fresh_memory: bool, session2: bool = False, uploads: list[str] | None = None) -> dict:
     case = json.loads((config.CASES_DIR / case_name / "input.json").read_text(encoding="utf-8"))
+    if uploads:
+        case = {**case, "scans": case.get("scans", []) + uploads}
     if session2:
         case = {**case, "scans": case.get("scans", []) + case.get("session2_scans", [])}
     portal_tools.set_case(case["case_id"] if (config.CASES_DIR / case_name / "portals.db").exists() else None)
@@ -155,13 +173,22 @@ with st.sidebar:
     cases = sorted(p.name for p in config.CASES_DIR.iterdir() if (p / "input.json").exists())
     _idx = {c["case_id"]: c for c in json.loads((config.CASES_DIR / "index.json").read_text(encoding="utf-8"))} \
         if (config.CASES_DIR / "index.json").exists() else {}
-    case_name = st.selectbox("Case", cases, format_func=lambda c: f"{c}  ·  {_idx[c]['difficulty']}" if c in _idx else f"{c}  ·  hand-built demo")
+    case_name = st.selectbox("Case", cases, index=cases.index("meena") if "meena" in cases else 0, format_func=lambda c: f"{c}  ·  {_idx[c]['difficulty']}" if c in _idx else f"{c}  ·  hand-built demo")
     if case_name in _idx:
         st.caption("Tests: " + ", ".join(_idx[case_name]["tags"]))
     use_llm = st.checkbox(f"Use local LLM ({config.OLLAMA_MODEL})", value=True,
                           help="The LLM only chooses which portal to search next. Off = fixed fallback order (still a full run).")
     fresh_mem = st.checkbox("Forget the family's earlier answers", value=True,
                             help="Untick and run twice to see long-term memory skip the identity question.")
+    uploaded = st.file_uploader("Upload scanned documents (PNG / JPG)", type=["png", "jpg", "jpeg"], accept_multiple_files=True,
+                                help="Death certificate, legal heir certificate or ID proof. They are read by the OCR step and added to the case.")
+    if uploaded:
+        with st.expander(f"OCR preview of {len(uploaded)} uploaded file(s)", expanded=True):
+            for pth in save_uploads(case_name, uploaded):
+                r = ocr_tool.read_scan(pth)
+                st.image(pth, width="stretch")
+                st.caption(f"**{Path(pth).name}**: " + (f"{r['doc_code']} read, confidence {r['confidence']}, fields {r['fields']}" if r["readable"]
+                                                       else f"unreadable ({r['reason']}); it would not be counted"))
     start = st.button("▶  Start case", type="primary", width="stretch")
     st.divider()
     st.markdown(f"**Embeddings:** `{EMBED}`  \n**Langfuse:** {'on, [open](http://localhost:3001)' if langfuse_up() else 'off (local trace only)'}")
@@ -209,7 +236,8 @@ with tab_run:
     # ---- actions
     if start or ss.pop("go_session2", False):
         is_s2 = not start
-        ss.run = run = start_case(case_name if start else ss.run["case_name"], use_llm, fresh_mem, session2=is_s2)
+        ss.run = run = start_case(case_name if start else ss.run["case_name"], use_llm, fresh_mem, session2=is_s2,
+                                  uploads=save_uploads(case_name, uploaded) if (start and uploaded) else None)
         with st.spinner("Running agents..."):
             drive({"case_id": run["case"]["case_id"], "deceased": run["case"]["deceased"],
                    "claimant": run["case"]["claimant"], "scans": run["case"].get("scans", [])}, ev_ph, steps_ph)
@@ -237,7 +265,7 @@ with tab_run:
                 st.markdown("##### Scanned documents (OCR)")
                 cols = st.columns(min(3, len(state["scan_results"])))
                 for i, sr in enumerate(state["scan_results"]):
-                    img = config.CASES_DIR / run["case_name"] / "scans" / sr["file"]
+                    img = Path(sr.get("path") or config.CASES_DIR / run["case_name"] / "scans" / sr["file"])
                     with cols[i % len(cols)]:
                         if img.exists():
                             st.image(str(img), width="stretch")

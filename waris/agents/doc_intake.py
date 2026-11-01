@@ -6,6 +6,8 @@
                     -> flagged as a conflict; Waris does not pick a side, the asset goes to a human
   * instruction-like text inside a scan ("ignore the rules...") -> treated as data and dropped (injection guard)
 """
+from pathlib import Path
+
 from .. import config
 from ..guardrails import flag_injection
 from ..tools import ocr
@@ -22,7 +24,7 @@ def doc_intake(state: dict) -> dict:
     names = [dec["name"], *dec.get("aliases", [])]
     results, docs, conflicts, notes = [], [], [], []
     for rel in scans:
-        path = case_dir / rel
+        path = Path(rel) if Path(rel).is_absolute() else case_dir / rel         # absolute = a file the family uploaded
         if not path.exists():
             notes.append(f"scan {rel} not found")
             TRACE.event("tracer", "OCR", f"{rel}: file not found; ignored", level="warn")
@@ -31,7 +33,7 @@ def doc_intake(state: dict) -> dict:
         if flag_injection(res["text"]):
             TRACE.event("tracer", "GUARD", f"instruction-like text inside scan {res['file']} treated as data and "
                         "dropped (prompt-injection guard)", level="warn")
-        slim = {k: res[k] for k in ("file", "doc_code", "readable", "confidence", "fields", "reason")}
+        slim = {k: res[k] for k in ("file", "doc_code", "readable", "confidence", "fields", "reason")} | {"path": str(path)}
         results.append(slim)
         if not res["readable"]:
             notes.append(f"scan {res['file']} unreadable ({res['reason']}): ask the family for a clearer copy")
