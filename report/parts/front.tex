@@ -1,0 +1,44 @@
+%-------------------- Abstract ---------------------------------------
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\thispagestyle{frontmatter}
+Families in India frequently fail to recover the bank deposits, life-insurance policies and shares that a deceased relative left behind, because they do not know which assets exist and every institution demands a different set of documents. This report presents Waris, an advisory multi-agent system that supports one decision for each asset of a deceased person: whether the claim is ready to file, is missing items, or needs human review, and exactly which documents are missing. The family uploads the proof documents it already holds, and offline optical character recognition builds the case from them. A LangGraph workflow combines a plan-and-execute Supervisor, a ReAct Tracer that searches three mock institutional portals and rejects namesakes through an explicit identity policy, a corrective retrieval-augmented generation Rules Expert that grades retrieved rules, re-queries and abstains when no rule fits, and a Verifier that sends weak checklists back for repair. Execution is durable, bounded, traced and pauses for the family whenever an identity match is uncertain. All data are synthetic: 60 seeded families with their documents, and answer keys produced by a generator rather than by a language model. The full system was compared with a one-pass baseline and three ablations, with three repetitions each, a fresh-seed set and a stress set. On the 20 held-out families the full system reached 100\% status accuracy, a checklist F1-score of 100\% and no wrong-person claims, whereas the baseline reached 73.1\%, 61.7\% and three wrong-person claims. Removing the Verifier lowered the F1-score to 97.1\% and the stress-set status accuracy from 100\% to 0\%. Switching the language model off did not change accuracy. The main limitation is that the benchmark, portals and rules are synthetic and written by the team, so the results demonstrate the mechanism rather than real-world performance.
+
+\medskip
+\noindent\textbf{Keywords:} agentic AI, corrective retrieval-augmented generation, human-in-the-loop, identity resolution, unclaimed inheritance, multi-agent verification.
+
+%-------------------- Lists ------------------------------------------
+\tableofcontents
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+
+\chapter*{List of Abbreviations}
+\addcontentsline{toc}{chapter}{List of Abbreviations}
+\thispagestyle{frontmatter}
+\begin{tabular}{@{}p{2.8cm}l@{}}
+AAT & Alternative Assessment Tool \\
+API & Application Programming Interface \\
+CPU & Central Processing Unit \\
+CRAG & Corrective Retrieval-Augmented Generation \\
+DOB & Date of Birth \\
+DOD & Date of Death \\
+FR / NFR & Functional / Non-Functional Requirement \\
+GPU & Graphics Processing Unit \\
+HITL & Human-in-the-Loop \\
+IEPF & Investor Education and Protection Fund \\
+IRDAI & Insurance Regulatory and Development Authority of India \\
+JSON & JavaScript Object Notation \\
+KYC & Know Your Customer \\
+LLM & Large Language Model \\
+OCR & Optical Character Recognition \\
+ONNX & Open Neural Network Exchange \\
+PII & Personally Identifiable Information \\
+RAG & Retrieval-Augmented Generation \\
+RBI & Reserve Bank of India \\
+ReAct & Reasoning and Acting \\
+SQL & Structured Query Language \\
+UDGAM & Unclaimed Deposits -- Gateway to Access Information \\
+UI & User Interface \\
+\end{tabular}

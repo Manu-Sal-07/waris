@@ -1,0 +1,82 @@
+%---------------------------------------------------------------------
+\chapter{Requirements and System Analysis}
+%---------------------------------------------------------------------
+\section{Stakeholders and Users}
+\begin{table}[H]
+\centering\small\setstretch{1.0}
+\caption{Stakeholders and what each needs from the system.}\label{tab:stake}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\linewidth}{@{}p{3.2cm}X X@{}}
+\toprule
+\textbf{Stakeholder} & \textbf{Need} & \textbf{Consequence for the design} \\ \midrule
+Bereaved family (primary user) & Know which assets exist, whether each claim is ready, and exactly what is missing, without legal vocabulary. & Documents-first intake, plain-language status, a question only when the system is unsure. \\
+Institution (bank, insurer, registrar) & Receive complete claims from the right claimant. & Cited checklists; drafted letters that list what is enclosed and what will follow. \\
+Legal adviser or bank officer (reviewer) & Be able to audit why a status was given. & Every item cites a rule; full trace of each run. \\
+Course evaluator and the team & Reproducible evidence that the agentic components matter. & Seeded benchmark, same-tools baseline, ablation switches. \\ \bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Functional Requirements}
+\begin{description}[leftmargin=1.2cm,labelwidth=1.1cm,itemsep=2pt]
+\item[FR1] Accept proof documents (images) from the family and three fields (institutions to check, capacity of the claimant, other names of the deceased).
+\item[FR2] Recognise the type of each document and extract its fields by OCR; flag unreadable documents and never count them as held.
+\item[FR3] Build the case (deceased, claimant, relationship) from the documents, fall back to typed values only where a document is unreadable, and let the family confirm before the run.
+\item[FR4] Plan one search task per institution type requested and search the corresponding portals through tools, with timeout, retries and a recorded failure when a source is unavailable.
+\item[FR5] Score every returned record for identity against all names the family knows; accept a strong match, ask the family about a moderate match, reject a weak match and record the reason.
+\item[FR6] Retrieve the applicable claim-procedure rule for each accepted asset, grade its fit against the case facts, re-query when unfit, and abstain when no rule fits.
+\item[FR7] Build a checklist in which every item cites a rule, marking each item as held or missing.
+\item[FR8] Verify each checklist and send it back to the responsible agent with a reason when a check fails.
+\item[FR9] Compute the status (\textsc{ready}, \textsc{missing\_items}, \textsc{needs\_human\_review}) by fixed code from the checklist and the run flags.
+\item[FR10] Detect documents that disagree with each other (name, date of birth, relationship) and refer such cases to a person instead of choosing.
+\item[FR11] Draft a claim letter for every claimable asset and ask the family to approve the release; nothing is submitted anywhere.
+\item[FR12] Persist the run state after every step so that an interrupted run resumes, and keep the family's answers across sessions.
+\item[FR13] Write a trace of every run to local files and to Langfuse.
+\end{description}
+
+\section{Non-Functional Requirements}
+\begin{table}[H]
+\centering\small\setstretch{1.0}
+\caption{Non-functional requirements, the bound set for each, and the evidence in this report.}\label{tab:nfr}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\linewidth}{@{}l p{3.6cm} X l@{}}
+\toprule
+\textbf{ID} & \textbf{Property} & \textbf{Bound / target} & \textbf{Evidence} \\ \midrule
+NFR1 & Latency per case & mean $\le$ 10 s including the language model on a laptop GPU & 3.3 s (Table~\ref{tab:main}) \\
+NFR2 & Boundedness & Verifier rounds $\le$ 6; re-queries $\le$ 2 per need; Tracer steps $\le$ 8; LLM calls $\le$ 40 per case; tool timeout 10 s with 2 retries & Section~\ref{sec:guard}, tests \\
+NFR3 & Safety of identity & wrong-person claims $=0$ & 0 in 180 full-system runs (Table~\ref{tab:main}) \\
+NFR4 & Traceability & 100\% of checklist items cite an existing rule & citation coverage 100\% \\
+NFR5 & Privacy & identifiers masked in traces and prompts; no real personal data & Section~\ref{sec:guard} \\
+NFR6 & Reproducibility & seeded data and fixed model; the same inputs give the same statuses & spread 0.0 over three repetitions \\
+NFR7 & Offline and free & no paid API; runs on one machine & Section~\ref{sec:feas} \\
+NFR8 & Robustness & portal failure, invalid model output and unreadable documents never crash a run & tool-fault cases, Chapter~9 \\
+NFR9 & Durability & kill and resume from the checkpoint & test and UI check, Chapter~5 \\ \bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Data Sources}\label{sec:data}
+\begin{table}[H]
+\centering\small\setstretch{1.0}
+\caption{Data sources. All data are synthetic; no real person, account or document is used.}\label{tab:datasrc}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\linewidth}{@{}p{3.1cm}Xp{2.3cm}p{1.9cm}@{}}
+\toprule
+\textbf{Source} & \textbf{Content and size} & \textbf{Origin} & \textbf{Synthetic?} \\ \midrule
+Proof documents & Per family: death certificate, claimant ID, proof of relationship, optional forms; images drawn with Pillow and degraded (rotation, blur, fading, injected text) & project generator & yes \\
+Portal records & One shared database of 496 records (201 bank, 140 insurer, 155 registry) containing the 60 families' assets, namesakes, look-alikes and every other family's records & project generator & yes \\
+Rule corpus & 11 markdown rules with metadata (institution, capacity, amount band, nominee condition, required document codes) & written by the team from the public procedures of banks, insurers and registrars & illustrative, not legal text \\
+Answer keys & True assets, status, required and missing documents, expected family questions, written by the generator from the hidden truth & project generator & yes \\
+Family answers & Yes/no to identity questions, taken from the answer key by a scripted oracle during evaluation & project generator & yes \\ \bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Hardware and Software Requirements}
+All reported runs used one Windows 11 laptop with an NVIDIA GeForce RTX 4060 Laptop GPU (8~GB), Python 3.12.4 in a virtual environment with the pinned packages of Table~\ref{tab:stack}, Ollama with \texttt{llama3.1:8b} (4.9~GB) and \texttt{nomic-embed-text} (274~MB), Langfuse 2.x in Docker Desktop (optional; local JSONL and HTML traces are always written), and Google Chrome for the interface and the browser tests.
+
+\section{Feasibility Study}\label{sec:feas}
+\textbf{Technical.} Every component runs locally: the language model and the embedding model through Ollama, the vector store (Chroma) and the checkpointer (SQLite) in process, the OCR engine on the CPU, and the three portals as one small FastAPI service. A full case takes 3.3~s on average with the language model on the laptop GPU, so the complete main evaluation of 900 runs was run on this one laptop.
+
+\textbf{Economic.} The software is open source, there is no API charge and no cloud resource. The marginal cost of a run is the electricity of one laptop. A deployment on a hosted model would add a per-token cost: a full case uses about 2.5 model calls of fewer than 700 tokens in total, so the cost would be small, but this was not measured and no figure is claimed.
+
+\textbf{Operational and ethical.} The project handles only synthetic data. Real use would involve identifiers of a deceased person and of a grieving family, which requires consent, retention limits and legal review (Chapter~9). The system is advisory and does not submit anything, which limits the harm of an error to a family's time.
+
+\textbf{Schedule.} The work was organised around the four course reviews (charter, design, working prototype, final evaluation), and the evaluation harness was completed before the final review.

@@ -1,0 +1,50 @@
+%---------------------------------------------------------------------
+\chapter{Introduction}
+%---------------------------------------------------------------------
+\section{Background}
+When a person dies, the financial assets that remain in the person's name do not automatically reach the family. A bank deposit is released only after the bank is satisfied about who the claimant is, how the claimant is related to the deceased, and whether another claimant exists. A life-insurance policy is released against the insurer's own claim form and the policy documents. Shares and dividends are transmitted through the registrar of the company, again with a separate form. Each institution publishes its own procedure, the procedure changes with the claimant's capacity (registered nominee, legal heir or surviving joint holder), and it changes again with the value of the asset and with whether the nominee is still alive.
+
+Public reporting indicates that the amounts left unclaimed are large: unclaimed financial assets in India were reported to have crossed roughly Rs~1.1 lakh crore in the financial year 2025--26, and close to Rs~2.2 lakh crore when provident-fund balances, shares and dividends are included \cite{lapaas2026,bt2026}. When deposits remain dormant for years they are transferred to government-managed funds, from which the legal owner can still claim them. Regulators have therefore built search portals, such as the Reserve Bank of India (RBI) UDGAM portal for deposits \cite{rbi_udgam}. These portals help a family discover that an asset exists. They do not tell the family what to submit, in what form, to which institution, and in what order. That gap, between discovering an asset and assembling a claim that will be accepted, is the subject of this project.
+
+\section{Problem Statement}
+A bereaved family usually holds only a few papers: a death certificate, the identity card of one family member and some evidence of the relationship. The family does not know which institutions held assets of the deceased, whether the records at those institutions carry the same spelling of the name, and which documents each institution will insist on. Submitting an incomplete claim wastes months, because each rejection restarts the wait. Submitting a claim for the wrong person's account is worse, because it is both futile and improper.
+
+The decision that Waris supports is therefore the following.
+
+\begin{quote}
+\textbf{For each financial asset that a deceased person held (bank deposit, life-insurance policy or shares), is the claim ready to be filed by this family, and if it is not, exactly which documents are missing and under which institutional rule are they required?}
+\end{quote}
+
+The answer for each asset is one of three statuses: \textsc{ready}, \textsc{missing\_items} (with the list of missing documents) or \textsc{needs\_human\_review} (when the system cannot answer safely). The system is advisory. It does not file any claim, move any money or decide who is a legal heir.
+
+\section{Motivation and Why Agentic AI}
+The problem is a poor fit for a single prompt to a language model, for four reasons that can each be traced to a property of the task.
+
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+\item \textbf{The work is multi-step and depends on what is observed.} The system must read the documents, search three independent sources, decide which of the returned records belong to the deceased, and only then look up the procedure for each confirmed asset. Which procedure applies depends on the record found (for example, whether the nominee is alive), so the later steps cannot be planned before the earlier ones have run.
+\item \textbf{The sources contain look-alikes.} A search for a common name returns several people with the same or similar names. Accepting a namesake's account is a serious error. The system must weigh name, date of birth and city, and must stop and ask the family when the evidence is only moderate.
+\item \textbf{The knowledge must be grounded and cited.} The procedures are institution-specific. A language model that answers from its parameters would invent plausible but unverifiable checklists. The system needs retrieval, and because the most similar rule is not necessarily the applicable one (a nominee's procedure is textually very close to a legal heir's), it needs a step that grades the retrieved rule against the facts and re-queries or abstains.
+\item \textbf{The cost of a confident error is high and the system must know when to stop.} The output must be checked before it reaches a family, every loop must be bounded, and the system must pause for a person when it is unsure.
+\end{enumerate}
+
+These properties match the guidance on when an agentic design is justified, that is, when a task needs tool use, intermediate decisions, grounding and verification, and not merely text generation \cite{anthropic2024agents,yao2023react}. Chapter~\ref{ch:eval} and Chapter~\ref{ch:exp} test that claim directly by comparing the agentic system with a one-pass pipeline that uses the same tools but none of the agentic decisions.
+
+\section{Objectives}
+The project set the following measurable objectives. Each is answered with a number in Chapters~\ref{ch:eval} and~\ref{ch:exp}, and revisited in Chapter~\ref{ch:concl}.
+
+\begin{description}[leftmargin=1.4cm,labelwidth=1.1cm,itemsep=2pt]
+\item[O1] Build an end-to-end workflow that starts from the family's uploaded documents and produces a cited claim pack for every asset, with a status computed by fixed code.
+\item[O2] Achieve zero wrong-person claims, and an asset recall of at least 95\%, on a benchmark of 60 synthetic families that contains namesakes and name variants.
+\item[O3] Achieve a status accuracy of at least 95\% and a checklist F1-score of at least 90\% on the held-out test families, and exceed a one-pass baseline that uses the same tools.
+\item[O4] Show, by ablation, what each agentic component (rule grading with re-query, the Verifier, the language model) contributes to these numbers.
+\item[O5] Guarantee that every loop is bounded, every checklist item cites an existing rule, and the family is asked whenever an identity match is uncertain; verify these properties from traces.
+\item[O6] Provide observability: every run produces a trace with the language-model calls, tool calls, retrieval decisions and verifier verdicts, viewable in Langfuse and as local files.
+\end{description}
+
+\section{Scope}
+\textbf{In scope.} Three asset types (bank deposit, life-insurance policy, shares); three claimant capacities (registered nominee, legal heir, surviving joint holder); eleven claim-procedure rules; scanned documents in a clean printed layout, including rotated, blurred and faded variants; name variants (initials, spelling, transliteration, word order, maiden name and alias); claim-letter drafts; a web interface and a command-line interface.
+
+\textbf{Out of scope.} Filing a claim, communicating with any real institution, deciding legal heirship, estimating the value of a claim or tax consequences, mutual funds and provident-fund balances, handwritten documents and photographs of real certificates, and any use of real personal data. The portals are mocks written for this project, the documents are drawn by the project's own generator, and the rules are summaries written for the project and labelled illustrative (Section~\ref{sec:data}). The system does not provide legal advice.
+
+\section{Organisation of the Report}
+Chapter~2 surveys existing practice and related technical work and states the research gap. Chapter~3 lists the requirements, data sources and feasibility. Chapter~4 presents the architecture, the components, the patterns, the control flow and the data flow. Chapter~5 maps the implementation to the agentic concepts of the course with evidence. Chapter~6 describes the implementation, including the exact parameters, the core algorithm, the tools, the prompts and the guardrails. Chapter~7 describes observability, the evaluation dataset, the metrics, the baselines, the results and an error analysis. Chapter~8 reports a controlled experiment on the retrieval-grading step and the Verifier. Chapter~9 discusses limitations, failure modes and ethics. Chapter~10 concludes by answering each objective and lists future work. The appendices give the team contribution, the setup instructions, sample traces and screenshots, and the full prompts.

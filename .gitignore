@@ -19,3 +19,11 @@ traces/
 data/uploads/
 results/ui_check/
 data/uploads/
+
+# LaTeX build files
+report/*.aux
+report/*.log
+report/*.out
+report/*.toc
+report/*.lof
+report/*.lot

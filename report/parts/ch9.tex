@@ -1,0 +1,43 @@
+%---------------------------------------------------------------------
+\chapter{Limitations, Ethics and Safety}\label{ch:limits}
+%---------------------------------------------------------------------
+\section{Limitations}
+\begin{enumerate}[leftmargin=*,itemsep=3pt]
+\item \textbf{The benchmark is ours.} The generator, the portals, the rules and the system were written by the same team, so the labels agree with the system's assumptions by construction. A score of 100\% shows that the machinery works end to end on the cases that the team could imagine; it does not estimate accuracy on real families, real institutions or real rules. The development of the identity thresholds on the development split and a fresh-seed set reduce, but do not remove, the risk of fitting to our own generator.
+\item \textbf{Synthetic everything.} The portals are mocks, the documents are printed in a clean synthetic layout with four controlled degradations, and the rules are short summaries marked illustrative. Photographs of real certificates, handwriting, stamps, other languages and scripts, and real portal behaviour (captchas, sessions, rate limits) were not tested. OCR accuracy on real documents is unknown; the confirm screen exists for that reason.
+\item \textbf{Small held-out set and no variance.} The test split has 20 families and 26 assets, so one asset moves a percentage by 3.8 points. The spread over repetitions is zero because fixed code decides the metrics, so the repetitions test the model's influence on the outcome, not sampling variation of the system.
+\item \textbf{Scripted family.} Identity questions were answered by an oracle from the answer key. Real families make mistakes, hesitate and misunderstand, which was not tested.
+\item \textbf{Judge not validated against people.} The language-model judge was compared with a deterministic checker only ($\kappa=0.56$), and the human marking of letters was not carried out.
+\item \textbf{Scope.} Three asset types, three claimant capacities, eleven rules, India only. Mutual funds, provident funds, property and multiple jurisdictions are not covered. Parallel branches and learning from past cases are not implemented (Chapter~\ref{ch:concepts}).
+\end{enumerate}
+
+\section{Failure Modes and Mitigations}
+\begin{table}[H]
+\centering\footnotesize\setstretch{1.0}
+\caption{Failure modes, their effects, mitigations and residual risk.}\label{tab:fmea}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabularx}{\linewidth}{@{}p{2.5cm}p{2.7cm}p{3.7cm}X@{}}
+\toprule
+\textbf{Failure mode} & \textbf{Effect} & \textbf{Mitigation in the system} & \textbf{Residual risk} \\ \midrule
+Namesake taken as the deceased & claim for a stranger's asset & DOB conflict rejects; medium match asks the family; wrong-person claims 0 in all full runs & Records without DOB and a coincident city could still be a medium match that the family wrongly confirms. \\
+Wrong rule applied & unusable checklist & Grading, re-query, abstention; Verifier check V2 & Rules that are close in text and in metadata, or a corpus gap that the metadata does not expose. \\
+OCR misreads a name or date & wrong case facts & Confidence threshold; unreadable files never counted; family confirms the read facts & A confident misread that the family does not notice. \\
+Model returns invalid or unlisted output & run fails or wrong tool & Schema validation, one retry, fixed fallback order, call budget & Letter paragraphs failed validation in some runs (for example the shares letter of the worked example) and the template was used; no run failed. \\
+Prompt injection in a document or record & agent hijacked & Text treated as data; pattern filter; model chooses only among listed tools; test on three families & Novel phrasing evades a pattern filter; a stronger defence is open research \cite{greshake2023}. \\
+Over-trust in \textsc{ready} & family files an incomplete claim & Status computed by fixed code; advisory banner; family approval before release & The rules may be incomplete for a particular institution. \\
+Invented content in a letter & false statement to an institution & Model writes only one validated paragraph; template fallback; forbidden-word validator & Subtle wording not covered by the validator. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Ethics and Responsible Use}
+\textbf{Advisory only.} Waris does not file a claim, does not move money, does not decide who is a legal heir and does not give legal advice. Every pack is released only after the family approves it, and the final decision lies with the institution and, where necessary, a court. The interface says so on every screen.
+
+\textbf{Human oversight.} A medium identity match is never accepted without a person, and an asset for which no rule fits is passed to a person together with the reason. The design aims at the cases where an automated answer is most dangerous, not at maximum automation.
+
+\textbf{Privacy and data protection.} The project used only synthetic data. A real deployment would process the identifiers of a deceased person and the personal documents of a family, and would have to obtain consent, minimise what is stored, limit retention, and comply with the applicable data-protection law. The local model and the masking of identifiers in traces are design choices in that direction, but they are not a compliance programme. The identity question also shows the family some fields of a record of another person that might be a namesake; a real system would have to limit what is disclosed before the family confirms.
+
+\textbf{Misuse.} A tool that prepares claims for the assets of a deceased person could be used by someone who is not entitled to them. Waris mitigates this by being advisory, by relying on documents that the institution will verify, and by never submitting anything, but it cannot prove a claimant's entitlement and does not try to.
+
+\textbf{Fairness and access.} The interface is in English and assumes that the family can scan or photograph documents, so families without digital access are not served without an assisted channel.
+

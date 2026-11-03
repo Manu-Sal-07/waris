@@ -1,0 +1,25 @@
+%---------------------------------------------------------------------
+\chapter{Conclusion and Future Work}\label{ch:concl}
+%---------------------------------------------------------------------
+\section{Conclusion}
+Waris addresses one decision for a bereaved family: for each asset of the deceased, is the claim ready to file, and if not, what is missing. It was built as an eight-role LangGraph pipeline that starts from the documents the family already holds, and it was evaluated against a one-pass baseline and ablations on 60 synthetic families, a fresh-seed set of 60 families and a stress set of 12. The objectives of Section~1.4 are answered as follows.
+
+\begin{description}[leftmargin=1.4cm,labelwidth=1.1cm,itemsep=3pt]
+\item[O1 (end-to-end workflow)] Achieved. The system reads uploaded documents, builds the case, traces assets, grades rules, verifies cited checklists, computes the status by fixed code and drafts letters. OCR rebuilt the case exactly for all 60 families (420 of 420 readable fields).
+\item[O2 (safety of identity and recall)] Achieved on the benchmark: 0 wrong-person claims in all full-system runs on all three sets and an asset recall of 100\%, against 8 wrong-person claims (main set) and 15 (fresh-seed set) for the baseline and an asset recall of 84.2\%.
+\item[O3 (accuracy against a baseline)] Achieved: on the 20 held-out families the full system reached status accuracy 100\% and checklist F1 100\%, against 73.1\% and 61.7\% for the baseline; the targets of 95\% and 90\% were met, with the caveat that the benchmark is our own (Chapter~\ref{ch:limits}).
+\item[O4 (contribution of components)] Achieved by ablation: removing grading lowers the F1 by 31.0 points and the fully correct cases from 100\% to 35\%; removing the Verifier lowers the F1 by 2.9 points on the held-out set, the fully correct cases to 70\%, and the stress-set status accuracy from 100\% to 0\%; removing the language model changes nothing measurable.
+\item[O5 (bounded and cited)] Achieved: every loop has a numeric bound that is tested; the largest number of Verifier rounds observed was 2 of 6; citation coverage was 100\%; the family was asked in every case in which the key expected a question (recall 100\%, precision 100\%).
+\item[O6 (observability)] Achieved: each run yields a typed trace in JSONL, HTML and Langfuse, reproduced in Chapter~\ref{ch:eval} and Appendix~C.
+\end{description}
+
+The main lesson concerns where the value lies. In this task the accuracy came from the structure around the model: an identity policy that asks a person when evidence is moderate, a retrieval step that grades what it retrieves and is allowed to say ``I don't know'', and a critic that checks every item against a cited rule. The language model contributed flexibility and wording, not accuracy, and we report that finding as it is.
+
+\section{Future Work}
+\begin{enumerate}[leftmargin=*,itemsep=3pt]
+\item \textbf{Real documents and real people} (Limitations 1, 2 and 5). Collect a small set of real, consented or redacted certificates and IDs, measure OCR accuracy and the confirm-screen error rate, and run a usability study with volunteers instead of a scripted family.
+\item \textbf{Verified rules and a maintenance process} (Limitation 2 and the stale-rule risk). Replace the illustrative corpus with rules reviewed against the published procedures of specific institutions, with version tracking and a legal review step, and measure the rule-grading behaviour on the larger and noisier corpus.
+\item \textbf{Human validation of the judge} (Limitation 6). Complete the marking of letters by the team and by an independent reader, compute agreement with the judge and, if it is low, replace the judge by a stronger model or by the deterministic checker alone.
+\item \textbf{Independent benchmark and harder cases} (Limitations 1 and 3). Have another group write adversarial families, enlarge the held-out set, and add noisier portals (partial records, different spellings across portals) so that the identity policy and the Verifier are tested on cases that the authors did not anticipate.
+\item \textbf{Learning and parallelism} (Limitation 8). Learn from the answers of earlier families (for example which rules are often rejected), run the three portal searches in parallel, and add regional-language support for the interface and the letters.
+\end{enumerate}

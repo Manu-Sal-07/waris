@@ -1,0 +1,86 @@
+%---------------------------------------------------------------------
+\chapter{Agentic Concepts Demonstrated}\label{ch:concepts}
+%---------------------------------------------------------------------
+\section{Concept Coverage Matrix}
+The course prescribes five mandatory and five optional (bonus) agentic concepts. Table~\ref{tab:matrix} states for each one where it is implemented and what evidence supports the claim. The status column is deliberately conservative: a concept is marked \emph{Partial} when it exists but is narrower than the full concept, and the reasons are given in the table.
+
+\begin{table}[H]
+\centering\footnotesize\setstretch{1.0}
+\caption{Coverage of the ten agentic concepts. Evidence refers to figures, listings and tables of this report.}\label{tab:matrix}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabularx}{\linewidth}{@{}p{0.9cm}p{2.1cm}p{2.6cm}Xp{2.3cm}@{}}
+\toprule
+\textbf{Type} & \textbf{Concept} & \textbf{Where} & \textbf{Evidence} & \textbf{Status} \\ \midrule
+Mand. & Tool use & Tracer, Intake (OCR), Rules Expert & Portal searches and OCR calls in Listing~\ref{lst:trace1}; tool failures handled (Section~\ref{sec:guard}) & Done \\
+Mand. & Agentic RAG & Rules Expert & Retrieve $\to$ grade $\to$ re-query $\to$ abstain, Listing~\ref{lst:trace2}, Fig.~\ref{fig:lf-b}; measured by ablation (Table~\ref{tab:main}) & Done \\
+Mand. & Planning and reasoning & Supervisor, Tracer, Verifier & Plan event, ReAct thoughts, reflection loop; Fig.~\ref{fig:lf-a}, Listing~\ref{lst:trace1} & Done \\
+Mand. & Observability & all agents & Local JSONL/HTML traces and Langfuse, Fig.~\ref{fig:lf-a}, Fig.~\ref{fig:lf-b}, Section~\ref{sec:trace} & Done \\
+Mand. & Evaluation & \texttt{eval/} & 900 + 300 + 60 runs, deterministic metrics, validated judge (Chapter~\ref{ch:eval}) & Done \\
+Bonus & Multi-agent collaboration & LangGraph graph & Supervisor routing and Verifier send-backs between separate agents, Fig.~\ref{fig:flow} & Done (a supervisor pattern, not free dialogue) \\
+Bonus & Memory & checkpoints; case file & Short-term state per run; the family's answers persist across sessions, Section~\ref{sec:memory} & Partial: facts only, no learning from past cases \\
+Bonus & Human-in-the-loop and guardrails & Identity gate; final approval; \texttt{guardrails.py} & Interrupts, PII masking, injection filter, numeric limits (Section~\ref{sec:guard}) & Done \\
+Bonus & Durable workflow & SQLite checkpointer & Kill and resume test, Section~\ref{sec:durable} & Partial: no parallel branches \\
+Bonus & Experimentation & \texttt{eval/run\_eval.py} & Ablations and a controlled experiment, Chapter~\ref{ch:exp} & Done \\ \bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Evidence for Each Concept}
+
+\subsection{Tool use}
+Waris calls three kinds of tool: the OCR engine, the three portal searches, and the rule retriever. Listing~\ref{lst:trace1} is an excerpt from the real trace of the worked example of Section~4.5. The Tracer's model proposes \texttt{search\_bank}; the code runs the search with the arguments taken from the validated case, receives five records, and scores each of them. The tool arguments never come from the model, only the choice among the permitted tools does, so a malformed or adversarial model output cannot produce an arbitrary call. When the model returns an unlisted tool or invalid JSON, a \texttt{GUARD} event is written and the fixed order is used.
+
+\begin{lstlisting}[caption={Excerpt of the trace of the worked example: OCR, a model-chosen tool call and identity scoring (timestamps in seconds; long lines shortened).},label={lst:trace1},numbers=none,basicstyle=\ttfamily\scriptsize\setstretch{1.0}]
+0.61 tracer OCR  01_death_certificate.png: DOC_DEATH_CERT read (confidence 0.97); counted as held
+0.61 tracer OCR  02_claimant_id.png: DOC_CLAIMANT_KYC read (confidence 0.99); counted as held
+1.43 llm LLM     llama3.1:8b answered in 0.8s (39 tokens): {"thought": "No information about
+                 Ramaswamy Subramanian's assets, so I start with the bank ...", "tool": "search_bank"}
+1.45 tracer TOOL search_bank(name='Ramaswamy Subramanian') -> 5 record(s)
+1.45 tracer MATCH bank_deposit:B1502 'Muthuswamy Subramanian' REJECTED: namesake: date of birth
+                 conflicts (score 0.42)
+1.45 tracer MATCH bank_deposit:B001 'R. Subramanian' ACCEPTED: initials name variant, score 0.94
+3.22 tracer MATCH shares:R001 'Ramaswamy Subramanian' UNSURE -> must ask the family: exact name
+                 variant, score 0.65
+\end{lstlisting}
+
+\subsection{Agentic retrieval-augmented generation}
+The retrieval step is controlled by the agent: it decides the query, judges whether the retrieved rule fits, and chooses between re-querying and abstaining. Listing~\ref{lst:trace2} shows the three outcomes in one run. For the bank deposit the first retrieval returned the nominee rule \texttt{BANK-NOM-01} at distance 0.07, the closest rule in the corpus, but the claimant is a legal heir; the grader rejected it, the query was reformulated with the claimant's situation, and \texttt{BANK-LH-01} fitted. For the insurance policy both candidate rules were rejected (the second because the record has a deceased nominee on file) and the agent abstained, so the asset was passed to a person with the reason. This is the behaviour that plain top-1 retrieval cannot show, and Chapter~\ref{ch:exp} measures what is lost without it.
+
+\begin{lstlisting}[caption={Retrieval grading, re-query and abstention in the worked example (from the trace).},label={lst:trace2},numbers=none,basicstyle=\ttfamily\scriptsize\setstretch{1.0}]
+RAG     bank_deposit:B001 [claim_procedure] query #0: top match BANK-NOM-01 (distance 0.07)
+GRADE   BANK-NOM-01 UNFIT: rule applies to a nominee; claimant is a legal_heir
+REQUERY bank_deposit:B001 re-query 1/2: refining the query with the claimant's situation
+RAG     bank_deposit:B001 query #1: top match BANK-LH-01 (distance 0.099)
+GRADE   BANK-LH-01 FITS: rule applies to a legal_heir; claimant is a legal_heir
+RAG     life_insurance:I001 query #0: top match INS-NOM-01 (distance 0.171)
+GRADE   INS-NOM-01 UNFIT: rule applies to a nominee; claimant is a legal_heir
+GRADE   INS-LH-01 UNFIT: record has a nominee on file (deceased); rule covers only records
+        without a nominee
+ABSTAIN life_insurance:I001: I don't know. no trusted claim procedure rule found for this
+        situation (rejected: INS-NOM-01, INS-LH-01). Marked NEEDS_HUMAN_REVIEW
+\end{lstlisting}
+
+Across the 60 main-set cases the full system used on average 0.98 re-queries per case: 21 cases needed none, 22 needed one, 14 needed two and three needed three (several assets in the case).
+
+\subsection{Planning and reasoning}
+Three explicit loops are visible in the traces. The Supervisor writes a \texttt{PLAN} event with its three tasks and its limits. The Tracer writes a \texttt{THINK} event, the model's one-sentence reason, before every tool call (Listing~\ref{lst:trace1}). The Verifier is a reflection loop: in the worked example round~1 failed check V3 for the bank deposit (the initials variant had been accepted, but the checklist contained no name affidavit) and sent the work back to the Rules Expert, which retrieved \texttt{BANK-NAME-01}; round~2 passed. Of the 60 main-set cases, 37 passed the Verifier in one round and 23 needed a second.
+
+\subsection{Observability and tracing}
+Every event of every agent is written to a JSONL file and an HTML view, and, when Langfuse is running, to a Langfuse trace. Section~\ref{sec:trace} reproduces annotated screenshots of the worked example's trace (Figures~\ref{fig:lf-a} and~\ref{fig:lf-b}).
+
+\subsection{Evaluation}
+The evaluation (Chapter~\ref{ch:eval}) uses a seeded benchmark with generator-written labels, deterministic metrics, a one-pass baseline, ablations, repetitions, a fresh-seed set and a stress set. Letters are scored by a deterministic checker and by a language-model judge whose agreement with the checker is reported.
+
+\subsection{Multi-agent collaboration}
+The collaboration is a supervisor pattern: the Supervisor plans and routes, specialised agents do one job each, and the Verifier returns work to a named agent with a reason (Figure~\ref{fig:flow}). The agents do not hold free-form conversations; the shared state is the only channel. We regard this as a deliberate choice, since free dialogue between model-driven agents is harder to bound and to test, but it means that the concept is demonstrated in its orchestrated form only.
+
+\subsection{Memory}\label{sec:memory}
+There are two memories. The \emph{short-term} memory is the graph state, checkpointed after every node. The \emph{long-term} memory is a per-case SQLite file that stores the family's answers to identity questions. In the three benchmark cases that continue in a second session (\texttt{h18}, \texttt{m15}, \texttt{m17}) the family answered 2, 1 and 1 questions in the first session and the system asked 0 questions again in the second session. The memory stores facts only; the system does not learn from earlier cases, so this concept is marked Partial.
+
+\subsection{Human-in-the-loop and guardrails}\label{sec:hitl}
+Two interrupts pause the run: the identity question for every medium match, and the final approval before a pack is released. In the 60 main-set cases the system asked 9 questions in 7 cases (5 cases with one question, 2 with two), and its question precision and recall against the answer key were both 100\%. Section~\ref{sec:guard} lists the guardrails and their bounds.
+
+\subsection{Durable workflow}\label{sec:durable}
+The graph uses a SQLite checkpointer keyed by a case identifier. The command-line interface has an option that exits at the first pause; running the same case again without the fresh flag resumes from the checkpoint and asks the pending question. The web interface offers a button that discards every in-memory object and rebuilds the graph from the checkpoint, which was used in the browser test (Section~\ref{sec:ui}). Branches are executed sequentially, so the optional parallel steps were not implemented.
+
+\subsection{Experimentation}
+Chapter~\ref{ch:exp} reports a controlled experiment with one factor changed at a time, with three repetitions, and states the decision taken.

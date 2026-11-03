@@ -1,0 +1,118 @@
+%---------------------------------------------------------------------
+\chapter{Agent Design and Architecture}\label{ch:design}
+%---------------------------------------------------------------------
+\section{Architecture}
+Figure~\ref{fig:arch} shows the architecture. The system is a pipeline of eight agent roles (Supervisor, Doc intake, Tracer, Identity gate, Rules Expert, Builder, Verifier, and Finalize with Letters), implemented as nodes of one LangGraph state graph and preceded by an Intake step that reads the uploaded proofs. Around the pipeline are three kinds of external parties: the family, tools and services, and persistent stores. The pipeline mirrors the way a careful human helper would work: read the papers, find the records, make sure the records belong to the deceased, find the applicable rule, write the checklist, check it, and only then tell the family.
+
+\input{parts/fig_arch}
+
+Every box of Figure~\ref{fig:arch} is explained below; the arrows are labelled with the data they carry.
+
+\textbf{Intake} runs before the graph: it sends each image to the OCR engine, receives text lines with confidences, decides the document type from the printed header, parses the fields, builds the case (deceased, claimant, relationship) and shows it to the family for confirmation. The \textbf{Supervisor} validates the case against a schema, plans one search task per institution type requested, routes between agents and enforces the limits of Section~\ref{sec:guard}; it also loads the family's earlier answers. \textbf{Doc intake} turns scan results into facts: a readable document counts as held, an unreadable one never counts, a document that disagrees with the family's facts is recorded as a conflict, and instruction-like text in a document is dropped. The \textbf{Tracer} is the ReAct agent: the language model chooses the next portal, and the code runs the search and scores each record. The \textbf{Identity gate} applies the policy of Section~\ref{sec:identity}: strong matches are accepted, weak ones rejected, and medium ones are put to the family, whose answers are stored in the case file so that no question is asked twice. The \textbf{Rules Expert} is the corrective-RAG agent: it queries the rule corpus, grades the top rule against the case facts (a metadata check first, the model only if metadata cannot decide), re-queries and, if nothing fits, abstains. The \textbf{Builder} turns graded rules and held documents into a schema-validated checklist in which every item cites a rule. The \textbf{Verifier} is the critic of Section~\ref{sec:components}. \textbf{Finalize and Letters} compute the status by fixed code, assemble the claim packs and draft a letter per claimable asset.
+
+The external parties are the \textbf{OCR engine} (RapidOCR); the \textbf{mock portals}, one FastAPI service with bank, insurer and registry search over one shared database; the \textbf{rule corpus}, 11 markdown rules indexed in Chroma with \texttt{nomic-embed-text} embeddings; the \textbf{LLM service} (Ollama, \texttt{llama3.1:8b}); the \textbf{case file} (long-term memory in SQLite); the \textbf{checkpoints} (short-term memory, saved after every node); and the \textbf{trace sinks} (JSONL and HTML files, and Langfuse), which receive masked events.
+
+\section{Component Description}\label{sec:components}
+Table~\ref{tab:components} states, for each component, what it receives, what it returns, and, as required for a system that must not fail silently, how it behaves when something goes wrong.
+
+\begin{table}[H]
+\centering\footnotesize\setstretch{1.0}
+\caption{Components, their inputs and outputs, and their behaviour on failure.}\label{tab:components}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabularx}{\linewidth}{@{}p{1.9cm}p{3.2cm}p{2.9cm}X@{}}
+\toprule
+\textbf{Component} & \textbf{Input} & \textbf{Output} & \textbf{Behaviour on failure} \\ \midrule
+Intake & image files; three form fields & case; per-file type, fields, confidence & A file that is not recognised or is read with confidence below the threshold is marked unreadable and never counted; the family types the missing facts on the confirm screen. \\
+Supervisor & case; state & plan; routing decision & Invalid input raises a validation error before any tool is called. When a limit is hit, routing goes to \texttt{finalize} and unresolved assets become \textsc{needs\_human\_review}. \\
+Doc intake & scan results; claimant facts & held documents; conflicts & Conflicting name, date of birth or relationship are recorded and the asset is referred to a person; injection-like text is dropped. \\
+Tracer & case; allowed tools & scored candidates; rejected candidates & Invalid or unlisted model output is replaced by a fixed tool order; a portal that fails after two retries is recorded as unavailable and the family is told; nothing is guessed. \\
+Identity gate & candidates & accepted, asked, rejected & A \texttt{no} answer rejects the record; an unanswered question keeps the run paused (interrupt) and the state is checkpointed. \\
+Rules Expert & asset facts; query & graded rules; abstentions & After at most two re-queries without a fitting rule, the asset is marked abstained, with the rules that were rejected. \\
+Builder & graded rules; held documents & claim pack & A pack that fails schema validation is caught by check V5 and rebuilt. \\
+Verifier & claim packs & verdict; feedback & The same check failing twice for the same asset escalates it to \textsc{needs\_human\_review}, so the loop cannot oscillate. \\
+Letters & claim packs; case & letters & A model paragraph that fails validation is replaced by a fixed template; a missing model never stops a run. \\ \bottomrule
+\end{tabularx}
+\end{table}
+
+The Verifier's checks are the following. \textbf{V1}: every checklist item carries a rule identifier. \textbf{V2}: the rule exists in the corpus and really requires that document. \textbf{V3}: if a name variant (initials, spelling, order, alias) was accepted, the checklist contains the name-variation affidavit. \textbf{V4}: a medium identity match must have been confirmed by the family. \textbf{V5}: the pack validates against the \texttt{ClaimPack} schema. A failure of V1, V2 or V5 returns to the Builder, V3 returns to the Rules Expert (with the need ``name variation''), and V4 returns to the Identity gate.
+
+\subsection{Identity policy}\label{sec:identity}
+For each record returned by a portal the Tracer computes
+\begin{equation}
+s = 0.5\,s_{\text{name}} + 0.3\,s_{\text{dob}} + 0.2\,s_{\text{city}},
+\end{equation}
+where the name score $s_{\text{name}}$ is the best score over all names the family knows: exact 1.0, spelling or transliteration about 0.93, word order 0.92, alias 0.92, initials 0.88, otherwise a fuzzy ratio. The date-of-birth score is 1 for equality and 0.5 when the record has no date of birth; a \emph{conflicting} date of birth makes the record a namesake and rejects it outright. The city score is 1 for a match, 0 for a different city and 0.5 when unknown. The decision follows the three regions of Section~ef{sec:linkage}: accept if $s\ge 0.85$ and the name score is at least 0.80; ask the family if $0.60\le s<0.85$; reject otherwise. These constants were fixed on the development split only (Chapter~7).
+
+\section{Agentic Design Patterns}
+\begin{table}[H]
+\centering\footnotesize\setstretch{1.0}
+\caption{Design patterns, where each is used, why, and the alternative that was rejected.}\label{tab:patterns}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabularx}{\linewidth}{@{}p{2.3cm}p{2.3cm}XX@{}}
+\toprule
+\textbf{Pattern} & \textbf{Where} & \textbf{Why} & \textbf{Alternative rejected} \\ \midrule
+Plan-and-execute & Supervisor & The tasks (one per asset type) are known in advance, so the plan can be fixed and audited; only the routing reacts to observations. & A free-running planner: harder to bound and to test. \\
+ReAct & Tracer & Which portal to search next is an open choice that depends on observations; the thought and the observation are logged. & A fixed sequence for everything; kept only as the fallback when the model is unavailable. \\
+Corrective RAG & Rules Expert & The most similar rule is often the wrong one (nominee vs.\ legal heir), so the rule is graded, re-queried and, if nothing fits, abstained. & Plain top-1 RAG; measured as the no-grading ablation (Chapter~8). \\
+Reflection / critic & Verifier & A separate, rule-based critic catches missing citations and missing name proof before the family sees the pack. & Self-critique by the same model: not deterministic, not testable. \\
+Human-in-the-loop & Identity gate; final approval & A medium match must never be accepted automatically, and the release of a pack is the family's decision. & Auto-accepting above a lower threshold. \\
+Durable workflow & Checkpointer & A run that is killed or paused for days resumes from the last node. & In-memory state. \\
+Two memories & Checkpoints; case file & Short-term state is per run; the family's answers must survive a new session. & A single store: mixes run state with facts about the family. \\
+Guardrails & All agents & Schema validation, PII masking, injection filter, numeric limits (Section~\ref{sec:guard}). & Prompt-only instructions. \\ \bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Control Flow and Agent State}
+Figure~\ref{fig:flow} shows the state graph. The graph has fixed edges for the main pipeline and two kinds of conditional edge: after the Identity gate, the run goes to the Family if any medium match is unconfirmed, and otherwise to the Rules Expert; after the Verifier, the run goes to Finalize on a pass, or back to the agent named in the failing check.
+
+\input{parts/fig_flow}
+
+The state is a typed dictionary (\texttt{CaseState}) that is saved after every node. It holds the validated case facts, the scan results, the documents credited as held and the documents that conflict, the scored and the rejected candidates, the graded rules per asset, the assets that abstained, the claim packs and Verifier feedback, the counters for the numeric limits (\texttt{round}, \texttt{llm\_calls}) and the family's answers.
+
+\paragraph{Every loop is bounded.} Table~\ref{tab:loops} lists each loop, its bound, the place in the code where the bound is checked and what happens when it is reached.
+
+\begin{table}[H]
+\centering\footnotesize\setstretch{1.0}
+\caption{Loop bounds.}\label{tab:loops}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabularx}{\linewidth}{@{}p{3.2cm}p{2.8cm}X@{}}
+\toprule
+\textbf{Loop} & \textbf{Bound} & \textbf{When the bound is reached} \\ \midrule
+Verifier send-back & 6 rounds per case; the same check failing twice for one asset & Route to \texttt{finalize}; unresolved assets become \textsc{needs\_human\_review}. \\
+Rules re-query & 2 re-queries per asset and need; a rejected rule is never retrieved again & The asset abstains. \\
+Tracer steps & 8 per run (3 tools are planned) & The loop ends; unsearched sources are reported. \\
+Family question & one question per medium candidate; answers are stored & The record is accepted or rejected by the answer. \\
+Model calls & 40 per case & Calls stop and fixed fallbacks are used. \\
+Tool call & 10 s timeout, 2 retries & The source is marked unavailable. \\ \bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Data Flow}
+Table~\ref{tab:seq} follows one family through the system, with the real values taken from the trace of the run reproduced in Appendix~C. Figure~\ref{fig:seq} shows the same sequence. The deceased is Ramaswamy Subramanian (born 12~March 1944, died 21~June 2019, Chennai); the claimant is his granddaughter Meena Krishnan, who claims as a legal heir. The family uploaded three images (Figure~\ref{fig:docs} of Appendix~C) and asked for all three institution types.
+
+
+
+\input{parts/fig_seq}
+
+{\footnotesize\setstretch{1.0}
+\renewcommand{\arraystretch}{1.1}
+\begin{longtable}{@{}l p{2.5cm} p{9.0cm}@{}}
+\caption{Worked example: the data passed at each numbered step of Figure~\ref{fig:seq}.}\label{tab:seq}\\
+\toprule
+\textbf{\#} & \textbf{From $\to$ to} & \textbf{Data} \\ \midrule
+\endfirsthead
+\toprule
+\textbf{\#} & \textbf{From $\to$ to} & \textbf{Data} \\ \midrule
+\endhead
+1 & Family $\to$ Intake & Three images: death certificate, claimant ID, proof of relationship; fields: all three institutions, ``legal heir'', no other names. \\
+2 & Intake $\to$ Supervisor & Case read from the documents (confidences 0.97, 0.99, 0.99): deceased, date of birth, date of death, city; claimant, relationship ``granddaughter''. \\
+3 & Supervisor $\to$ Tracer & Plan: \texttt{search\_bank}, \texttt{search\_insurer}, \texttt{search\_registry}. All three documents counted as held. \\
+4--5 & Tracer $\leftrightarrow$ Portals & The model picks \texttt{search\_bank}; the portal returns 5 records for ``Ramaswamy Subramanian'' (3 for the registry, 2 for the insurer). \\
+6 & Tracer $\to$ Identity gate & Bank: B001 ``R.\ Subramanian'' accepted (initials, $s=0.94$); four namesakes rejected because their dates of birth conflict ($s=0.26$--$0.57$). Insurer: I001 accepted (0.94); one namesake rejected. Registry: R001 ``Ramaswamy Subramanian'' has the exact name, no date of birth on record and a different city, so $s=0.65$: ask. \\
+7--8 & Identity gate $\leftrightarrow$ Family & ``Is this record your relative? shares ``Ramaswamy Subramanian'', 50 equity shares, city Coimbatore.'' The family answers yes; the answer is stored. \\
+9 & Identity gate $\to$ Rules Expert & Three accepted assets: B001, I001, R001. \\
+10 & Rules Expert & Bank: \texttt{BANK-NOM-01} retrieved first (distance 0.07) and graded unfit (rule is for a nominee), re-query, \texttt{BANK-LH-01} fits. Insurance: \texttt{INS-NOM-01} unfit, \texttt{INS-LH-01} unfit (the record has a nominee on file, deceased), two re-queries used, abstain. Shares: \texttt{REG-NOM-01} unfit, \texttt{REG-LH-01} fits. \\
+11--12 & Builder $\to$ Verifier & B001: five documents, three missing; R001: four documents, two missing. \\
+13 & Verifier $\to$ Rules Expert & V3 fails for B001 (initials variant accepted, no name proof): need \texttt{name\_variation}; \texttt{BANK-NAME-01} fits; the checklist grows to six documents, four missing. \\
+14 & Verifier $\to$ Letters & Round 2 passes. Result: B001 \textsc{missing\_items} (claim form, legal-heir certificate, indemnity bond, name affidavit); I001 \textsc{needs\_human\_review} (no trusted rule); R001 \textsc{missing\_items} (transmission form, legal-heir certificate). Two letters drafted. \\ \bottomrule
+\end{longtable}}

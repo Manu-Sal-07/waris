@@ -1,0 +1,83 @@
+\begin{figure}[p]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+  font=\small,
+  agent/.style={draw=bmsblue, fill=bmsblue!10, rounded corners=3pt, minimum width=4.2cm, minimum height=1.05cm, align=center, thick},
+  tool/.style={draw=orange!70!black, fill=orange!12, minimum width=3.4cm, minimum height=1.05cm, align=center},
+  store/.style={draw=violet!70!black, fill=violet!8, cylinder, shape border rotate=90, aspect=0.22, minimum width=3.4cm, minimum height=1.15cm, align=center},
+  human/.style={draw=ForestGreen, fill=ForestGreen!10, rounded corners=7pt, minimum width=3.0cm, minimum height=1.05cm, align=center, thick},
+  arr/.style={-{Stealth[length=2.2mm]}, thick},
+  bi/.style={{Stealth[length=2mm]}-{Stealth[length=2mm]}, thick},
+  darr/.style={-{Stealth[length=2.2mm]}, thick, dashed, BrickRed},
+  lab/.style={font=\scriptsize, align=center, fill=white, inner sep=1pt}]
+% ---- agents (centre column)
+\node[agent] (intake) at (0,0)      {\textbf{Intake}\\[-1pt]\scriptsize read the uploaded proofs};
+\node[agent] (sup)    at (0,-1.7)   {\textbf{Supervisor}\\[-1pt]\scriptsize plan, route, enforce limits};
+\node[agent] (doc)    at (0,-3.4)   {\textbf{Doc intake}\\[-1pt]\scriptsize credit or flag documents};
+\node[agent] (tr)     at (0,-5.1)   {\textbf{Tracer} (ReAct)\\[-1pt]\scriptsize search portals, score records};
+\node[agent] (gate)   at (0,-6.8)   {\textbf{Identity gate}\\[-1pt]\scriptsize accept / ask / reject};
+\node[agent] (rules)  at (0,-8.5)   {\textbf{Rules Expert} (CRAG)\\[-1pt]\scriptsize retrieve, grade, re-query, abstain};
+\node[agent] (bld)    at (0,-10.2)  {\textbf{Builder}\\[-1pt]\scriptsize cited checklist per asset};
+\node[agent] (ver)    at (0,-11.9)  {\textbf{Verifier}\\[-1pt]\scriptsize checks V1--V5};
+\node[agent] (let)    at (0,-13.6)  {\textbf{Finalize + Letters}\\[-1pt]\scriptsize status, claim letters};
+% ---- people and LLM (left column)
+\node[human] (fup)  at (-6.4,0)     {Family\\[-1pt]\scriptsize uploads proofs};
+\node[human] (fcon) at (-6.4,-6.8)  {Family\\[-1pt]\scriptsize answers identity question};
+\node[tool]  (llm)  at (-6.4,-10.2) {\textbf{LLM service}\\[-1pt]\scriptsize Ollama, llama3.1:8b};
+\node[human] (fapp) at (-6.4,-13.6) {Family\\[-1pt]\scriptsize approves release};
+
+% ---- tools and stores (right column)
+\node[tool]  (ocr)  at (7.2,0)      {\textbf{OCR engine}\\[-1pt]\scriptsize RapidOCR (ONNX, CPU)};
+\node[tool]  (port) at (7.2,-5.1)   {\textbf{Mock portals}\\[-1pt]\scriptsize bank, insurer, registry};
+\node[store] (case) at (7.2,-6.9)   {\textbf{Case file}\\[-3pt]\scriptsize SQLite};
+\node[store] (corp) at (7.2,-8.6)   {\textbf{Rule corpus}\\[-3pt]\scriptsize Chroma, 11 rules};
+% ---- bottom stores
+\node[store] (ckp) at (-2.2,-16.2)  {\textbf{Checkpoints}\\[-3pt]\scriptsize SQLite};
+\node[store] (trc) at (3.0,-16.2)   {\textbf{Trace sinks}\\[-3pt]\scriptsize JSONL, Langfuse};
+% ---- graph boundary
+\begin{scope}[on background layer]
+\node[draw=bmsblue, dashed, rounded corners=4pt, fit=(sup)(let), inner sep=7pt, fill=bmsblue!3] (graph) {};
+\end{scope}
+\node[font=\scriptsize\itshape, text=bmsblue, anchor=north west, align=left] at ([xshift=4pt]graph.north east) {LangGraph\\state graph};
+% ---- pipeline arrows
+\draw[arr] (intake) -- node[lab,right=2pt]{case, scans} (sup);
+\draw[arr] (sup) -- node[lab,right=2pt]{plan: one task per asset type} (doc);
+\draw[arr] (doc) -- node[lab,right=2pt]{documents held, conflicts} (tr);
+\draw[arr] (tr) -- node[lab,right=2pt]{scored candidates} (gate);
+\draw[arr] (gate) -- node[lab,right=2pt]{accepted assets} (rules);
+\draw[arr] (rules) -- node[lab,right=2pt]{graded, cited rules} (bld);
+\draw[arr] (bld) -- node[lab,right=2pt]{claim packs} (ver);
+\draw[arr] (ver) -- node[lab,right=2pt]{pass: verified packs} (let);
+% ---- people
+\draw[arr] (fup) -- node[lab,above]{images,\\3 fields} (intake.west |- fup);
+\draw[bi] (gate.west |- fcon) -- node[lab,above]{question /\\answer} (fcon);
+\draw[arr] (let.west |- fapp) -- (fapp);
+\node[lab] at (-4.15,-13.95) {drafts, packs};
+% ---- tools
+\draw[bi] (intake.east |- ocr) -- node[lab,above]{image /\\fields} (ocr);
+\draw[bi] (tr.east |- port) -- node[lab,above]{search(name) /\\records} (port);
+\draw[bi] ([yshift=0.15cm]gate.east |- case) -- node[lab,above,pos=0.8]{save, load\\answers} ([yshift=0.15cm]case.west);
+\draw[bi] ([yshift=0.2cm]rules.east |- corp) -- node[lab,above,pos=0.8]{query /\\top-1 rule} ([yshift=0.2cm]corp.west);
+% ---- LLM rail (left)
+\draw[thick] (-3.4,-5.1) -- (-3.4,-13.6);
+\draw[arr] (tr.west) -- node[lab,above]{pick\\tool} (-3.4,-5.1);
+\draw[arr] (rules.west) -- node[lab,above]{grade\\fit} (-3.4,-8.5);
+\draw[arr] (let.west) -- node[lab,above]{letter\\text} (-3.4,-13.6);
+\draw[bi] (-3.4,-10.2) -- node[lab,above]{JSON} (llm);
+% ---- send-back rail (right, dashed)
+\draw[thick, dashed, BrickRed] (ver.east) -- (3.9,-11.9) -- (3.9,-7.1);
+\draw[darr] (3.9,-10.2) --  (bld.east);
+\draw[darr] (3.9,-8.8) --  ([yshift=-0.3cm]rules.east);
+\draw[darr] (3.9,-7.1) --  ([yshift=-0.3cm]gate.east);
+\node[font=\tiny, text=BrickRed, anchor=west] at (4.0,-10.2) {V1, V2, V5 $\to$ Builder};
+\node[font=\tiny, text=BrickRed, anchor=west] at (4.0,-8.95) {V3 $\to$ Rules};
+\node[font=\tiny, text=BrickRed, anchor=west] at (4.0,-7.3) {V4 $\to$ Gate};
+\node[lab,text=BrickRed,anchor=west] at (4.05,-11.9) {send back with reason (rounds $\le 6$)};
+% ---- cross-cutting stores
+\draw[arr] ([xshift=-1cm]graph.south) -- node[lab,left]{state after every node} (ckp.north);
+\draw[arr] ([xshift=1.2cm]graph.south) -- node[lab,right]{events, PII masked} (trc.north);
+\end{tikzpicture}}
+\caption{Architecture of Waris. Blue boxes are agents (nodes of the LangGraph state graph), green boxes are the family's three interactions, orange boxes are tools and services, violet cylinders are persistent stores. Solid arrows carry the data named on them; double-headed arrows are request and response; red dashed arrows are Verifier send-backs (V1--V5 are the checks of Section~\ref{sec:components}).}
+\label{fig:arch}
+\end{figure}

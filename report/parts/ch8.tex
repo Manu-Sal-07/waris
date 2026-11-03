@@ -1,0 +1,59 @@
+%---------------------------------------------------------------------
+\chapter{Experimentation}\label{ch:exp}
+%---------------------------------------------------------------------
+\section{Hypotheses}
+The experiment tests whether the components that make the system agentic are responsible for its accuracy. Three hypotheses were written down before the final runs. Each states a threshold at which it would be rejected.
+
+\begin{description}[leftmargin=1.4cm,labelwidth=1.1cm,itemsep=2pt]
+\item[H1] \textbf{Retrieval grading with re-query.} Adding the grading and re-query step to the Rules Expert raises status accuracy on the held-out families by at least 10 percentage points and checklist F1 by at least 20 points, at a cost of at most 1\,s per case.
+\item[H2] \textbf{Verifier.} Adding the Verifier raises checklist recall to 100\% on the held-out families and, on the stress set, status accuracy from below 50\% to above 90\%, at a cost of at most 0.5\,s per case.
+\item[H3] \textbf{Language model.} Removing the language model lowers status accuracy or checklist F1 by at least 5 percentage points.
+\end{description}
+
+\section{Experimental Setup}
+In each comparison exactly one factor differs from the full system, selected by an ablation switch in the configuration: grading and re-query on or off (H1), the Verifier on or off (H2), the model on or off (H3). The families, the documents, the portal database, the rule corpus, the code and the oracle that answers identity questions are identical. Each configuration was run three times on every family with different model temperature and seed (0/0.3/0.7 and 0/1/2). The primary data are the 20 held-out test families (26 assets), which were not used for any design decision; the all-60, fresh-seed and stress sets are used for confirmation. Cost is measured as model calls per case and wall-clock seconds per case on the laptop of Section~3.5. There is no per-token charge because the model runs locally, so no monetary cost is reported.
+
+\section{Results}
+Table~\ref{tab:exp} gives the held-out results for each factor and the added cost (model calls and seconds per case are in Table~\ref{tab:main}); Figure~\ref{fig:diff} shows the effect by difficulty.
+
+\begin{table}[H]
+\centering\footnotesize\setstretch{1.0}
+\caption{Controlled comparisons on the 20 held-out test families (3 repetitions each; identical in every repetition). Arrows read ``without the component $\to$ with it''.}\label{tab:exp}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}p{2.5cm}p{1.8cm}p{1.8cm}p{1.8cm}p{1.6cm}p{4.0cm}@{}}
+\toprule
+\textbf{Comparison} & \textbf{Status acc.} & \textbf{F1} & \textbf{Recall} & \textbf{Fully correct} & \textbf{Added cost; verdict} \\ \midrule
+H1: grading and re-query & 92.3 $\to$ 100\% & 69.0 $\to$ 100\% & 63.6 $\to$ 100\% & 35 $\to$ 100\% & no measurable cost (3.3 against 3.4\,s). Status $+7.7$ points: \textbf{rejected}; F1 $+31.0$ and cost: supported \\
+H2: Verifier & 100 $\to$ 100\% & 97.1 $\to$ 100\% & 94.4 $\to$ 100\% & 70 $\to$ 100\% & +0.0\,s. Recall and cost: supported \\
+H2, stress set & 0 $\to$ 100\% & 89.7 $\to$ 100\% & 81.4 $\to$ 100\% & 0 $\to$ 100\% & +0.3\,s. Status: supported \\
+H3: language model & 100 $\to$ 100\% & 100 $\to$ 100\% & 100 $\to$ 100\% & 100 $\to$ 100\% & +3.3\,s, +2.6 calls for the model. \textbf{Rejected}: no gain \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[ybar, width=0.9\linewidth, height=5.4cm, bar width=9pt, ymin=0, ymax=135, ylabel={cases fully correct (\%)},
+  symbolic x coords={Easy,Medium,Hard}, xtick=data, enlarge x limits=0.25,
+  legend style={at={(0.5,1.03)},anchor=south,legend columns=4,font=\footnotesize},
+  nodes near coords, every node near coord/.append style={font=\tiny, rotate=90, anchor=west},
+  tick label style={font=\footnotesize}]
+\addplot[fill=gray!60] coordinates {(Easy,46.7) (Medium,16.0) (Hard,10.0)};
+\addplot[fill=orange!80] coordinates {(Easy,46.7) (Medium,40.0) (Hard,20.0)};
+\addplot[fill=ForestGreen!70] coordinates {(Easy,100) (Medium,44.0) (Hard,55.0)};
+\addplot[fill=bmsblue!85] coordinates {(Easy,100) (Medium,100) (Hard,100)};
+\legend{Baseline, $-$Grading, $-$Verifier, Full}
+\end{axis}
+\end{tikzpicture}
+\caption{Share of fully correct runs by family difficulty over the main set (60 families, 3 repetitions). Each component matters more as the families get harder.}
+\label{fig:diff}
+\end{figure}
+
+\section{Discussion and Decision}
+\textbf{H1 is partly rejected.} The grading step improves the checklist F1 by 31.0 points and the share of fully correct cases from 35\% to 100\%, and adds no measurable time (3.3\,s against 3.4\,s per case, 2.6 against 2.7 model calls). It improves status accuracy by only 7.7 points, which is below the 10-point threshold we set, because without grading most assets still end as \textsc{missing\_items}, which is the right status even when the checklist is wrong. This result shows that status accuracy alone would have hidden most of the value of grading, and it is the reason for reporting the checklist metrics. It also shows the limit of the status labels: a family that is told the wrong list of documents has the right status and an unusable checklist.
+
+\textbf{H2 is supported.} The Verifier leaves status accuracy unchanged on the held-out set, but it raises the checklist recall from 94.4\% to 100\% and the fully correct cases from 70\% to 100\%. On the stress set, where the family holds everything except the name affidavit, the status without the Verifier is \textsc{ready} for every one of the 12 families, which is wrong, and with the Verifier it is correct for all of them. This is the failure the critic exists to catch: a confident ``ready'' for a claim that the institution would reject.
+
+\textbf{H3 is rejected, and this is the most informative result.} With the model switched off, the statuses, citations and checklists are identical to those of the full system on every family, in every set. The accuracy of Waris therefore comes from the loops and the fixed code (identity policy, rule grading, Verifier checks, status function) and not from the language model. What the model adds is flexibility that the benchmark does not measure: it picks the order of portal searches from observations, and it writes the opening paragraph of letters. The letter quality scores do not favour it (Section~\ref{sec:judge}). We do not claim more than this.
+
+\textbf{Decision.} (1) Keep the grading with re-query and the Verifier in the system: they raise the fully correct cases from 35\% and 70\% to 100\% with no measurable added time on the held-out set. (2) Keep the language model optional: the system runs with the model on by default, because the tool choice is the only place where an open-ended decision is made and the traces of its reasoning are useful to a reviewer, but the model is not needed for correctness, and a deployment that values determinism or low cost can run with the model off at no loss measured here. (3) Do not claim that a language model improves accuracy on this task. (4) Treat the 100\% results as evidence that the machinery is correct on a benchmark that the team wrote for it, not as an estimate of real-world accuracy (Chapter~\ref{ch:limits}).

@@ -1,0 +1,57 @@
+%---------------------------------------------------------------------
+\chapter{Literature Survey and Existing Practice}
+%---------------------------------------------------------------------
+\section{Existing Practice}
+In practice a family recovers an inherited asset through three steps that are performed by hand: finding the asset, working out the claimant's capacity, and assembling the documents that the institution requires.
+
+\textbf{Finding assets.} Regulators operate separate search services for each class of asset: the RBI UDGAM portal for unclaimed bank deposits \cite{rbi_udgam}, the insurance regulator's policy-search service for life-insurance policies, and the Investor Education and Protection Fund (IEPF) portal for shares and dividends that have been transferred to the fund. A family that suspects several assets must query each service separately, and each requires the exact name, identifiers and, often, the date of birth of the deceased. These services return whether a record exists. They do not decide whether a returned record is the deceased's rather than a namesake's, and they do not produce a claim.
+
+\textbf{Preparing the claim.} Each bank, insurer and registrar publishes its own claim procedure and forms. The set of documents depends on whether the claimant is the registered nominee, a legal heir, or the surviving holder of a joint account, on the value of the asset, and on whether the nominee is alive. Families typically learn what is missing only when the institution rejects the first submission. No tool in common use takes the family's existing papers and produces, for each asset, the exact list of what is still required.
+
+\textbf{Consequence.} The delay is paid by the family, and the amounts that remain unclaimed are reported in the order of lakhs of crores of rupees \cite{lapaas2026,bt2026}. The gap that this project addresses is thus not the discovery of assets, which the portals already support, but the step after discovery: confirming identity under name variation, selecting the applicable rule, and producing a cited checklist.
+
+\section{Related Technical Work}
+
+\subsection{Agents that reason and act}
+ReAct interleaves reasoning traces with actions on external tools, so that observations can change the next thought \cite{yao2023react}. Plan-and-Solve prompting first devises a plan and then carries it out \cite{wang2023plansolve}, and Toolformer shows that a model can learn when to call external interfaces \cite{schick2023toolformer}. Reflexion adds verbal feedback from earlier attempts into the context of later ones \cite{shinn2023reflexion}. Practical guidance from industry advocates composing a small number of such patterns (routing, orchestrator--workers, evaluator--optimiser) and preferring the simplest workflow that works \cite{anthropic2024agents}. Waris follows this advice: a fixed plan with observation-dependent routing, a ReAct step where the choice of tool is genuinely open, and an evaluator loop (the Verifier).
+
+\subsection{Retrieval-augmented generation and its correction}
+Retrieval-augmented generation (RAG) combines a generator with a non-parametric memory that is searched at query time \cite{lewis2020rag}. Plain RAG trusts the retrieved passages. Self-RAG trains a model to decide when to retrieve and to critique the passages and its own output \cite{asai2024selfrag}, and Corrective RAG (CRAG) adds a lightweight evaluator that scores the retrieved documents and triggers a corrective action when they are judged irrelevant or ambiguous \cite{yan2024crag}. The Rules Expert of Waris is a CRAG-style loop with two differences that matter in this domain. First, the grader is a deterministic metadata check (institution, topic, claimant capacity, amount band, nominee status), with a language-model grader consulted only if metadata cannot decide. Second, the corrective actions are re-query with the claimant's situation and exclusion of the rejected rule, and finally abstention, instead of a web-search fallback.
+
+\subsection{Multi-agent orchestration frameworks}
+AutoGen organises applications as conversations between agents \cite{wu2023autogen}. LangGraph represents an application as a state graph with typed shared state, conditional edges, persistence of the state after every node and interrupts for human input \cite{langgraph}. We chose the second style because the workflow here is a mostly fixed pipeline with a few bounded loops, and because durable checkpoints and human interrupts were hard requirements (Chapter~3).
+
+\subsection{Identity resolution}\label{sec:linkage}
+Deciding whether a record in a portal refers to the deceased is a record-linkage problem. The classical Fellegi--Sunter model scores agreement on several fields and partitions the score into three regions: link, possible link (to be reviewed by a clerk) and non-link \cite{fellegi1969}. String comparators designed for personal names, such as the Jaro--Winkler family, make the field comparison tolerant of typographical variation \cite{winkler1990}. The identity gate of Waris adopts the three-region structure directly: a strong match is accepted, a moderate match is sent to the family as the clerical-review step, and a weak match is rejected. Name comparison also accepts the variants common in Indian names (initials, word order, transliteration, alias).
+
+\subsection{Evaluation of language-model systems}
+Using a strong language model as a judge of free-text output agrees with human preferences in more than 80\% of cases in the study that introduced the practice, but it exhibits position, verbosity and self-preference biases \cite{zheng2023judge}. RAGAs proposes reference-free measures of faithfulness and relevance for retrieval pipelines \cite{es2024ragas}. Chance-corrected agreement is conventionally reported with Cohen's kappa \cite{cohen1960kappa}. Because the judge available to this project is the same open model that drafts the letters, we treat the judge as an instrument that has to be validated against a deterministic reference checker, and we report kappa (Section~\ref{sec:judge}).
+
+\subsection{Safety and document reading}
+Instructions embedded in data that an agent reads can hijack it; this is called indirect prompt injection \cite{greshake2023}. Documents and portal records are therefore treated as data throughout Waris. For document reading we use an offline OCR engine. The widely used Tesseract engine is described in \cite{smith2007tess}; we use RapidOCR \cite{rapidocr}, which runs the PaddleOCR models through ONNX Runtime on a CPU. The models are open: Llama~3.1 8B for the language model \cite{llama3} and nomic-embed-text for embeddings \cite{nomic2024}.
+
+\section{Comparative Summary}
+Table~\ref{tab:compare} compares the closest related approaches with this project along the four dimensions that matter for the decision of Chapter~1.
+
+\begin{table}[H]
+\centering\small\setstretch{1.0}
+\caption{Comparison of related approaches with Waris. A tick means that the approach addresses the dimension as part of its design.}\label{tab:compare}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\linewidth}{@{}p{2.7cm}Xcccc@{}}
+\toprule
+\textbf{Approach} & \textbf{Core idea} & \textbf{Tools} & \textbf{Grounded} & \textbf{Verifies} & \textbf{Asks human} \\ \midrule
+ReAct \cite{yao2023react} & reason--act--observe loop & \checkmark & -- & -- & -- \\
+Plan-and-Solve \cite{wang2023plansolve} & plan first, then execute & -- & -- & -- & -- \\
+Reflexion \cite{shinn2023reflexion} & learn from verbal feedback & \checkmark & -- & \checkmark & -- \\
+RAG \cite{lewis2020rag} & retrieve, then generate & -- & \checkmark & -- & -- \\
+Self-RAG \cite{asai2024selfrag} & model critiques retrieval & -- & \checkmark & \checkmark & -- \\
+CRAG \cite{yan2024crag} & evaluator corrects retrieval & -- & \checkmark & \checkmark & -- \\
+AutoGen \cite{wu2023autogen} & agent conversations & \checkmark & -- & -- & optional \\
+Record linkage \cite{fellegi1969} & three-region match decision & -- & -- & -- & \checkmark \\
+Search portals \cite{rbi_udgam} & find that an asset exists & -- & -- & -- & -- \\
+\textbf{Waris (this work)} & document-first, identity-gated, graded rules, verified checklist & \checkmark & \checkmark & \checkmark & \checkmark \\ \bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Research Gap}
+The surveyed agent and retrieval methods are general. They are evaluated on question answering and web tasks, not on a decision in which a wrong identity or a wrong rule has a concrete cost, and they do not combine an identity-resolution policy that asks a person, rule grading with abstention, and a critic that checks every checklist item against a cited rule. The portals solve discovery but not claim preparation. The gap is thus a documented, reproducible, end-to-end system for the step after discovery, together with an evaluation that separates the contribution of each agentic component from that of the underlying language model. This project builds such a system on synthetic data and measures it against a same-tools baseline and ablations.
