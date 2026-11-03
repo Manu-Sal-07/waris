@@ -18,9 +18,9 @@ Table~\ref{tab:exp} gives the held-out results for each factor and the added cos
 
 \begin{table}[H]
 \centering\footnotesize\setstretch{1.0}
-\caption{Controlled comparisons on the 20 held-out test families (3 repetitions each; identical in every repetition). Arrows read ``without the component $\to$ with it''.}\label{tab:exp}
+\caption[Controlled comparisons on the held-out families]{Controlled comparisons on the 20 held-out test families (3 repetitions each; identical in every repetition). Arrows read ``without the component $\to$ with it''.}\label{tab:exp}
 \renewcommand{\arraystretch}{1.15}
-\begin{tabular}{@{}p{2.5cm}p{1.8cm}p{1.8cm}p{1.8cm}p{1.6cm}p{4.0cm}@{}}
+\begin{tabular}{@{}p{2.5cm}p{1.8cm}p{1.8cm}p{1.8cm}p{1.6cm}p{3.6cm}@{}}
 \toprule
 \textbf{Comparison} & \textbf{Status acc.} & \textbf{F1} & \textbf{Recall} & \textbf{Fully correct} & \textbf{Added cost; verdict} \\ \midrule
 H1: grading and re-query & 92.3 $\to$ 100\% & 69.0 $\to$ 100\% & 63.6 $\to$ 100\% & 35 $\to$ 100\% & no measurable cost (3.3 against 3.4\,s). Status $+7.7$ points: \textbf{rejected}; F1 $+31.0$ and cost: supported \\
@@ -45,7 +45,7 @@ H3: language model & 100 $\to$ 100\% & 100 $\to$ 100\% & 100 $\to$ 100\% & 100 $
 \legend{Baseline, $-$Grading, $-$Verifier, Full}
 \end{axis}
 \end{tikzpicture}
-\caption{Share of fully correct runs by family difficulty over the main set (60 families, 3 repetitions). Each component matters more as the families get harder.}
+\caption[Fully correct runs by difficulty]{Share of fully correct runs by family difficulty over the main set (60 families, 3 repetitions). Each component matters more as the families get harder.}
 \label{fig:diff}
 \end{figure}
 

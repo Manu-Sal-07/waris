@@ -48,6 +48,6 @@
 \draw[darr] ([xshift=0.6cm]ve.north) -- ++(0,1.5) -| node[lab,pos=0.2,above]{V4: identity unconfirmed} ([xshift=0.8cm]ig.north);
 \draw[darr] ([xshift=-1.0cm]ve.south) -- ++(0,-0.6) -| node[lab,pos=0.25,below,text=BrickRed]{limit: round $\ge 6$ or LLM budget} ([xshift=-1.0cm]fi.north);
 \end{tikzpicture}}
-\caption{Control flow of the LangGraph state graph. Solid arrows are fixed edges, the two green nodes pause the run for the family, and red dashed arrows are the conditional edges chosen by the Verifier. Each loop is bounded by the limit written under its node; a limit that is reached ends the loop by routing to \texttt{finalize}, which marks unresolved assets \textsc{needs\_human\_review}.}
+\caption[Control flow of the LangGraph state graph]{Control flow of the LangGraph state graph. Solid arrows are fixed edges, the two green nodes pause the run for the family, and red dashed arrows are the conditional edges chosen by the Verifier. Each loop is bounded by the limit written under its node; a limit that is reached ends the loop by routing to \texttt{finalize}, which marks unresolved assets \textsc{needs\_human\_review}.}
 \label{fig:flow}
 \end{figure}

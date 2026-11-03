@@ -13,16 +13,17 @@ pre = txt[: txt.index("\\begin{document}")]
 rep = {
     r"\newcommand{\ProjectTitle}{": "{Waris: An Agentic AI System for Unclaimed Inheritance Recovery}",
     r"\newcommand{\HeaderTitle}{": "{Waris: Agentic AI for Unclaimed Inheritance Recovery}",
-    r"\newcommand{\TeamNo}{": "{XX}",
+    r"\newcommand{\TeamNo}{": "{8}",
 }
 for key, val in rep.items():
     i = pre.index(key)
     j = pre.index("\n", i)
     pre = pre[:i] + key[:-1] + val + pre[j:]
+USN = {"a": "1BM23CD060", "b": "1BM23CD013", "c": "1BM23CD035", "d": "1BM23CD039"}
 for a, b in {"a": "Srijan C Vachadmath", "b": "Chirag T", "c": "Manohara Salmani", "d": "Mohammed Arshaq"}.items():
     U = a.upper()
     pre = re.sub(r"\\newcommand\{\\USN%s\}\{[^}]*\}\s+\\newcommand\{\\Name%s\}\{[^}]*\}" % (a, U),
-                 lambda m: "\\newcommand{\\USN%s}{1BM23CDXXX}  \\newcommand{\\Name%s}{%s}" % (a, U, b), pre)
+                 lambda m: "\\newcommand{\\USN%s}{%s}  \\newcommand{\\Name%s}{%s}" % (a, USN[a], U, b), pre)
 pre = pre.replace("\\guidancetrue", "\\guidancefalse", 1)
 
 # ---- title page and certificate (verbatim), from "TITLE PAGE" block up to the Abstract

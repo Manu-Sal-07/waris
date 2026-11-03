@@ -9,7 +9,7 @@ Figure~\ref{fig:lf-a} shows the Langfuse trace of the worked example (Section~4.
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.66\linewidth]{figures/fig_langfuse_a.png}
-\caption{Langfuse trace of the worked example, first half. (1) An \texttt{llm.LLM} event; (2) its input: model, system prompt, user prompt and the parsed response; (3) the output text with the 1.1\,s duration and 39 tokens; (4) the trace root \texttt{waris-case}, 7.76\,s in total; (5) the three OCR events of \texttt{doc\_intake}; (6) the model call that chose the first tool; (7) one \texttt{tracer.MATCH} event for each record scored.}
+\caption[Langfuse trace of the worked example (first half)]{Langfuse trace of the worked example, first half. (1) An \texttt{llm.LLM} event; (2) its input: model, system prompt, user prompt and the parsed response; (3) the output text with the 1.1\,s duration and 39 tokens; (4) the trace root \texttt{waris-case}, 7.76\,s in total; (5) the three OCR events of \texttt{doc\_intake}; (6) the model call that chose the first tool; (7) one \texttt{tracer.MATCH} event for each record scored.}
 \label{fig:lf-a}
 \end{figure}
 
@@ -72,7 +72,7 @@ Table~\ref{tab:main} gives the headline results on the 20 held-out test families
 
 \begin{table}[H]
 \centering\footnotesize\setstretch{1.0}
-\caption{Results on the 20 held-out test families (3 repetitions; mean, with standard deviation over repetitions in brackets where non-zero).}\label{tab:main}
+\caption[Results on the held-out test families]{Results on the 20 held-out test families (3 repetitions; mean, with standard deviation over repetitions in brackets where non-zero).}\label{tab:main}
 \renewcommand{\arraystretch}{1.1}
 \begin{tabularx}{\linewidth}{@{}p{3.6cm}rrrrr@{}}
 \toprule
@@ -106,7 +106,7 @@ Seconds / case & 2.9 (0.0) & 3.4 (0.0) & 3.3 (0.0) & 0.0 & 3.3 (0.1) \\ \bottomr
 \legend{Status accuracy, Checklist F1, Cases fully correct}
 \end{axis}
 \end{tikzpicture}
-\caption{Held-out test families: status accuracy, checklist F1 and fully correct cases for the five variants (3 repetitions, identical in each).}
+\caption[Status accuracy, F1 and fully correct cases (test families)]{Held-out test families: status accuracy, checklist F1 and fully correct cases for the five variants (3 repetitions, identical in each).}
 \label{fig:bars}
 \end{figure}
 
@@ -114,7 +114,7 @@ Seconds / case & 2.9 (0.0) & 3.4 (0.0) & 3.3 (0.0) & 0.0 & 3.3 (0.1) \\ \bottomr
 
 \begin{table}[H]
 \centering\small\setstretch{1.0}
-\caption{Key results on the larger sets (status accuracy / checklist F1 / wrong-person claims).}\label{tab:sets}
+\caption[Key results on the larger sets]{Key results on the larger sets (status accuracy / checklist F1 / wrong-person claims).}\label{tab:sets}
 \renewcommand{\arraystretch}{1.1}
 \begin{tabularx}{\linewidth}{@{}p{3.3cm}XXX@{}}
 \toprule
@@ -138,7 +138,7 @@ The full system made no error on the main set (the failure report of repetition 
 
 \begin{table}[H]
 \centering\footnotesize\setstretch{1.0}
-\caption{Failure modes of the variants, with counts, an example and the component that prevents them.}\label{tab:errors}
+\caption[Failure modes of the variants]{Failure modes of the variants, with counts, an example and the component that prevents them.}\label{tab:errors}
 \renewcommand{\arraystretch}{1.1}
 \begin{tabularx}{\linewidth}{@{}p{1.7cm}p{3.1cm}p{3.6cm}X@{}}
 \toprule

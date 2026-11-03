@@ -17,7 +17,7 @@ Table~\ref{tab:components} states, for each component, what it receives, what it
 
 \begin{table}[H]
 \centering\footnotesize\setstretch{1.0}
-\caption{Components, their inputs and outputs, and their behaviour on failure.}\label{tab:components}
+\caption[Components and failure behaviour]{Components, their inputs and outputs, and their behaviour on failure.}\label{tab:components}
 \renewcommand{\arraystretch}{1.1}
 \begin{tabularx}{\linewidth}{@{}p{1.9cm}p{3.2cm}p{2.9cm}X@{}}
 \toprule
@@ -41,12 +41,13 @@ For each record returned by a portal the Tracer computes
 \begin{equation}
 s = 0.5\,s_{\text{name}} + 0.3\,s_{\text{dob}} + 0.2\,s_{\text{city}},
 \end{equation}
-where the name score $s_{\text{name}}$ is the best score over all names the family knows: exact 1.0, spelling or transliteration about 0.93, word order 0.92, alias 0.92, initials 0.88, otherwise a fuzzy ratio. The date-of-birth score is 1 for equality and 0.5 when the record has no date of birth; a \emph{conflicting} date of birth makes the record a namesake and rejects it outright. The city score is 1 for a match, 0 for a different city and 0.5 when unknown. The decision follows the three regions of Section~ef{sec:linkage}: accept if $s\ge 0.85$ and the name score is at least 0.80; ask the family if $0.60\le s<0.85$; reject otherwise. These constants were fixed on the development split only (Chapter~7).
+where the name score $s_{\text{name}}$ is the best score over all names the family knows: exact 1.0, spelling or transliteration about 0.93, word order 0.92, alias 0.92, initials 0.88, otherwise a fuzzy ratio. The date-of-birth score is 1 for equality and 0.5 when the record has no date of birth; a \emph{conflicting} date of birth makes the record a namesake and rejects it outright. The city score is 1 for a match, 0 for a different city and 0.5 when unknown. The decision follows the three regions of Section~
+ef{sec:linkage}: accept if $s\ge 0.85$ and the name score is at least 0.80; ask the family if $0.60\le s<0.85$; reject otherwise. These constants were fixed on the development split only (Chapter~7).
 
 \section{Agentic Design Patterns}
 \begin{table}[H]
 \centering\footnotesize\setstretch{1.0}
-\caption{Design patterns, where each is used, why, and the alternative that was rejected.}\label{tab:patterns}
+\caption[Design patterns]{Design patterns, where each is used, why, and the alternative that was rejected.}\label{tab:patterns}
 \renewcommand{\arraystretch}{1.1}
 \begin{tabularx}{\linewidth}{@{}p{2.3cm}p{2.3cm}XX@{}}
 \toprule
@@ -97,7 +98,7 @@ Table~\ref{tab:seq} follows one family through the system, with the real values 
 {\footnotesize\setstretch{1.0}
 \renewcommand{\arraystretch}{1.1}
 \begin{longtable}{@{}l p{2.5cm} p{9.0cm}@{}}
-\caption{Worked example: the data passed at each numbered step of Figure~\ref{fig:seq}.}\label{tab:seq}\\
+\caption[Worked example: data at each step]{Worked example: the data passed at each numbered step of Figure~\ref{fig:seq}.}\label{tab:seq}\\
 \toprule
 \textbf{\#} & \textbf{From $\to$ to} & \textbf{Data} \\ \midrule
 \endfirsthead
